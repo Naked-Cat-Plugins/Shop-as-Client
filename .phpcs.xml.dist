@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="NIF">
+	<config name="testVersion" value="7.0-"/>
+	<rule ref="PHPCompatibilityWP"/>
+	<rule ref="WordPress">
+		<!-- Allow non-standard filenames as the project is old -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<!-- Ignore the need of file comment + @package tag on the file comments + full stop at the end of comments -->
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<!-- Fuck Yoda conditions! -->
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+	</rule>
+</ruleset>

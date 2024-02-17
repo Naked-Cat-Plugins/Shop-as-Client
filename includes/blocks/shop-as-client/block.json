@@ -1,0 +1,17 @@
+{
+	"apiVersion": 2,
+	"name": "woocommerce/ptwoo-shop-as-client",
+	"version": "0.1.0",
+	"title": "Shop As Client",
+	"category": "woocommerce",
+	"description": "",
+	"supports": {
+		"html": false,
+		"align": false,
+		"multiple": false,
+		"reusable": false
+	},
+	"parent": ["woocommerce/checkout-fields-block"],
+	"attributes": {},
+	"textdomain": "shop-as-client"
+}
