@@ -37,7 +37,7 @@ add_action( 'plugins_loaded', function() {
 		define( 'SHOPASCLIENT_VERSION', $temp_plugin_data['Version'] );
 
 		// Languages
-		add_action( 'plugins_loaded', 'shop_as_client_init', 11 );
+		add_action( 'plugins_loaded', 'shop_as_client_init', 7 );
 		function shop_as_client_init() {
 			load_plugin_textdomain( 'shop-as-client' );
 			add_action( 'wp_enqueue_scripts', 'shop_as_client_enqueue_scripts' );
@@ -345,7 +345,7 @@ add_action( 'plugins_loaded', function() {
 		} );
 
 	}
-}, 10 );
+}, 6 );
 
 /* HPOS Compatible - beta */
 add_action( 'before_woocommerce_init', function() {
