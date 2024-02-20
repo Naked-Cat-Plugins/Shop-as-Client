@@ -45,6 +45,8 @@ In addition to all you can do with the free plugin, the [paid add-on](https://pt
 * Technical support;
 * Continued development;
 
+**Now available in lifetime licensing**
+
 Try the PRO add-on for free [here](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin#testimonials)!
 
 = Other (premium) plugins =
