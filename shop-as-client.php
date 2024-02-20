@@ -3,7 +3,7 @@
  * Plugin Name: Shop as Client for WooCommerce
  * Plugin URI: https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description: Allows a WooCommerce Store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer. Useful for phone or email orders.
- * Version: 3.3
+ * Version: 3.4
  * Author: PT Woo Plugins (by Webdados)
  * Author URI: https://ptwooplugins.com/
  * Text Domain: shop-as-client
@@ -11,8 +11,8 @@
  * Requires at least: 5.4
  * Tested up to: 6.5
  * Requires PHP: 7.0
- * WC requires at least: 5.0
- * WC tested up to: 8.5
+ * WC requires at least: 5.4
+ * WC tested up to: 8.6
 **/
 
 /* WooCommerce CRUD ready */
