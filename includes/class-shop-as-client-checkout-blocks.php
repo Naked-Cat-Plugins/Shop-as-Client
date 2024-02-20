@@ -29,7 +29,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 	 * @return string[]
 	 */
 	public function get_script_handles() {
-		return array( 'ptwoo-shop-as-client-block-frontend' );
+		return array( 'ptwoo-shop-as-client-blocks-frontend' );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 	 * @return string[]
 	 */
 	public function get_editor_script_handles() {
-		return array( 'ptwoo-shop-as-client-block-editor' );
+		return array( 'ptwoo-shop-as-client-blocks-editor' );
 	}
 
 	/**
@@ -76,7 +76,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 			);
 
 		wp_register_script(
-			'ptwoo-shop-as-client-block-editor',
+			'ptwoo-shop-as-client-blocks-editor',
 			$script_url,
 			$script_asset['dependencies'],
 			$script_asset['version'],
@@ -84,7 +84,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 		);
 
 		wp_set_script_translations(
-			'ptwoo-shop-as-client-block-editor',
+			'ptwoo-shop-as-client-blocks-editor',
 			'shop-as-client'
 		);
 	}
@@ -95,8 +95,8 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 	 * @return void
 	 */
 	public function register_block_frontend_scripts() {
-		$script_url        = SHOPASCLIENT_PLUGIN_URL . 'build/ptwoo-shop-as-client-block-frontend.js';
-		$script_asset_path = SHOPASCLIENT_PLUGIN_DIR . 'build/ptwoo-shop-as-client-block-frontend.asset.php';
+		$script_url        = SHOPASCLIENT_PLUGIN_URL . 'build/ptwoo-shop-as-client-blocks-frontend.js';
+		$script_asset_path = SHOPASCLIENT_PLUGIN_DIR . 'build/ptwoo-shop-as-client-blocks-frontend.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
 			? require $script_asset_path
 			: array(
@@ -105,7 +105,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 			);
 
 		wp_register_script(
-			'ptwoo-shop-as-client-block-frontend',
+			'ptwoo-shop-as-client-blocks-frontend',
 			$script_url,
 			$script_asset['dependencies'],
 			$script_asset['version'],
@@ -113,7 +113,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 		);
 
 		wp_set_script_translations(
-			'ptwoo-shop-as-client-block-frontend',
+			'ptwoo-shop-as-client-blocks-frontend',
 			'shop-as-client'
 		);
 	}
