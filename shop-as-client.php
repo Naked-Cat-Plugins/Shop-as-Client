@@ -344,6 +344,22 @@ add_action( 'plugins_loaded', function() {
 			}
 		} );
 
+		if ( version_compare( WC_VERSION, '8.6.0', '>=' ) ) {
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
+
+					add_action(
+						'woocommerce_blocks_checkout_block_registration',
+						function ( $integration_registry ) {
+							$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
+						}
+					);
+				}
+			);
+		}
+
 	}
 }, 6 );
 
@@ -353,19 +369,5 @@ add_action( 'before_woocommerce_init', function() {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 	}
 } );
-
-add_action(
-	'woocommerce_blocks_loaded',
-	function () {
-		require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
-
-		add_action(
-			'woocommerce_blocks_checkout_block_registration',
-			function ( $integration_registry ) {
-				$integration_registry->register( new ShopAsClient_Checkout_Blocks() );
-			}
-		);
-	}
-);
 
 /* If you're reading this you must know what you're doing ;-) Greetings from sunny Portugal! */
