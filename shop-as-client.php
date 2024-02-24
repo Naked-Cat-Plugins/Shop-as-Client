@@ -361,6 +361,15 @@ add_action( 'plugins_loaded', function() {
 					);
 				}
 			);
+
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
+
+					( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
+				}
+			);
 		}
 	}
 }, 6 );
