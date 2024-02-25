@@ -70,11 +70,27 @@ class ShopAsClient_Extend_Store_Endpoint {
 			wc()->session->set_customer_session_cookie( true );
 		}
 
+		// Persist "Shop As Client" option.
 		$shop_as_client = isset( $data['shopAsClient'] ) ? $data['shopAsClient'] : null;
-		$create_user    = isset( $data['createUser'] ) ? $data['createUser'] : null;
-
 		wc()->session->set( $this->get_name() . '_shop_as_client', $shop_as_client );
+
+		// Persist "Create User" option.
+		$create_user = isset( $data['createUser'] ) ? $data['createUser'] : null;
 		wc()->session->set( $this->get_name() . '_create_user', $create_user );
+
+		/**
+		 * Persist current customer data.
+		 *
+		 * This is needed to switch customer data back to its state before the purchase.
+		 *
+		 * @see restore_customer_data()
+		 */
+		$customer_data = wc()->session->get( $this->get_name() . '_current_customer_data' );
+		if ( $customer_data === null ) {
+			$user_id       = get_current_user_id();
+			$customer_data = static::get_customer_data_by_user_id( $user_id );
+			wc()->session->set( $this->get_name() . '_current_customer_data', $customer_data );
+		}
 	}
 
 	/**
@@ -116,15 +132,21 @@ class ShopAsClient_Extend_Store_Endpoint {
 		if ( $user instanceof \WP_User ) {
 			$user_id = $user->ID;
 		} else {
-			$users = get_users(
+
+			$user_query = new \WP_User_Query(
 				array(
-					// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-					'meta_key'     => 'billing_email',
-					'meta_value'   => $user_email,
-					'meta_compare' => '=',
-					// phpcs:enable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+					'exclude'    => array( $order->get_customer_id() ),
+					'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+						array(
+							'key'     => 'your_meta_key',
+							'value'   => $user_email,
+							'compare' => '=',
+						),
+					),
 				)
 			);
+
+			$users = $user_query->get_results();
 
 			if ( ! empty( $users ) ) {
 				$user    = reset( $users );
@@ -139,8 +161,10 @@ class ShopAsClient_Extend_Store_Endpoint {
 		}
 
 		if ( is_wp_error( $user_id ) ) {
+			static::restore_customer_data();
+
 			return new \WP_Error(
-				'invalid_order_update_status',
+				'shop_as_client_checkout_order_process_error',
 				sprintf(
 					/* translators: %s error message. */
 					__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
@@ -152,10 +176,85 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$order->set_customer_id( $user_id );
 		$order->save();
 
-		do_action( 'shop_as_client_store_api_checkout_order_processed', $order, $user_id );
+		do_action( 'shop_as_client_checkout_order_processed', $order, $user_id );
+
+		static::restore_customer_data();
 
 		// Clear the extension's session data.
 		wc()->session->__unset( $this->get_name() . '_shop_as_client' );
 		wc()->session->__unset( $this->get_name() . '_create_user' );
+		wc()->session->__unset( $this->get_name() . '_current_customer_data' );
+	}
+
+	/**
+	 * Restore customer data to its state before the purchase.
+	 *
+	 * @return void
+	 */
+	public static function restore_customer_data() {
+		$user_id  = get_current_user_id();
+		$customer = new \WC_Customer( $user_id );
+
+		$customer_data = wc()->session->get( static::$name . '_current_customer_data' );
+
+		static::switch_customer_data( $customer, $customer_data );
+
+		$customer->save();
+	}
+
+	/**
+	 * Get customer data by user ID.
+	 *
+	 * @param  int|\WC_Customer $user_id The user ID, or the WC_Customer object.
+	 * @return array
+	 */
+	public static function get_customer_data_by_user_id( $user_id ) {
+		$customer = new \WC_Customer( $user_id );
+
+		$customer_data = array(
+			'billing_first_name'  => $customer->get_billing_first_name(),
+			'billing_last_name'   => $customer->get_billing_last_name(),
+			'billing_company'     => $customer->get_billing_company(),
+			'billing_address_1'   => $customer->get_billing_address_1(),
+			'billing_address_2'   => $customer->get_billing_address_2(),
+			'billing_city'        => $customer->get_billing_city(),
+			'billing_state'       => $customer->get_billing_state(),
+			'billing_postcode'    => $customer->get_billing_postcode(),
+			'billing_country'     => $customer->get_billing_country(),
+			'billing_email'       => $customer->get_billing_email(),
+			'billing_phone'       => $customer->get_billing_phone(),
+			'shipping_first_name' => $customer->get_shipping_first_name(),
+			'shipping_last_name'  => $customer->get_shipping_last_name(),
+			'shipping_company'    => $customer->get_shipping_company(),
+			'shipping_address_1'  => $customer->get_shipping_address_1(),
+			'shipping_address_2'  => $customer->get_shipping_address_2(),
+			'shipping_city'       => $customer->get_shipping_city(),
+			'shipping_state'      => $customer->get_shipping_state(),
+			'shipping_postcode'   => $customer->get_shipping_postcode(),
+			'shipping_country'    => $customer->get_shipping_country(),
+			'shipping_phone'      => $customer->get_shipping_phone(),
+		);
+
+		return $customer_data;
+	}
+
+	/**
+	 * Switch customer data.
+	 *
+	 * @param  \WC_Customer $customer Customer object.
+	 * @param  array        $data     Customer data.
+	 * @return void
+	 */
+	public static function switch_customer_data( $customer, $data ) {
+
+		if ( ! $customer instanceof \WC_Customer ) {
+			return;
+		}
+
+		foreach ( $data as $key => $value ) {
+			if ( is_callable( array( $customer, "set_$key" ) ) ) {
+				$customer->{"set_$key"}( $value );
+			}
+		}
 	}
 }
