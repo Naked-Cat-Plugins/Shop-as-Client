@@ -138,7 +138,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 					'exclude'    => array( $order->get_customer_id() ),
 					'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
-							'key'     => 'your_meta_key',
+							'key'     => 'billing_email',
 							'value'   => $user_email,
 							'compare' => '=',
 						),
