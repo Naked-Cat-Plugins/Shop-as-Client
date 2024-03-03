@@ -181,6 +181,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$order->set_customer_id( $user_id );
 		$order->save();
 
+		// Update customer data.
 		if ( apply_filters( 'shop_as_client_update_customer_data', false ) ) {
 			$customer      = new \WC_Customer( $user_id );
 			$customer_data = static::get_customer_data_by_order_id( $order->get_id() );
@@ -300,8 +301,13 @@ class ShopAsClient_Extend_Store_Endpoint {
 		}
 
 		foreach ( $data as $key => $value ) {
-			if ( is_callable( array( $customer, "set_$key" ) ) ) {
+			if ( $key !== 'meta' && is_callable( array( $customer, "set_$key" ) ) ) {
 				$customer->{"set_$key"}( $value );
+			} elseif ( $key === 'meta' ) {
+
+				foreach ( $value as $meta_key => $sub_value ) {
+					$customer->update_meta_data( $meta_key, $sub_value );
+				}
 			}
 		}
 	}
