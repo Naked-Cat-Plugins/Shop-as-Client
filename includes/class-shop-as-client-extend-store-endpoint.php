@@ -81,15 +81,16 @@ class ShopAsClient_Extend_Store_Endpoint {
 		/**
 		 * Persist current customer data.
 		 *
-		 * This is needed to switch customer data back to its state before the purchase.
-		 *
-		 * @see restore_customer_data()
+		 * This is needed to switch customer data back to its state after the purchase.
 		 */
-		$customer_data = wc()->session->get( $this->get_name() . '_current_customer_data' );
-		if ( $customer_data === null ) {
-			$user_id       = get_current_user_id();
-			$customer_data = static::get_customer_data_by_user_id( $user_id );
-			wc()->session->set( $this->get_name() . '_current_customer_data', $customer_data );
+		if ( ! class_exists( 'ShopAsClientPro_Extend_Store_Endpoint' ) ) {
+			$customer_data = wc()->session->get( $this->get_name() . '_current_customer_data' );
+
+			if ( $customer_data === null ) {
+				$user_id       = get_current_user_id();
+				$customer_data = static::get_customer_data_by_user_id( $user_id );
+				wc()->session->set( $this->get_name() . '_current_customer_data', $customer_data );
+			}
 		}
 	}
 
@@ -252,7 +253,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	/**
 	 * Get customer data by order ID.
 	 *
-	 * @param  int $order_id The order ID.
+	 * @param  int $order_id The order ID, or the WC_Order object.
 	 * @return array
 	 */
 	public static function get_customer_data_by_order_id( $order_id ) {
