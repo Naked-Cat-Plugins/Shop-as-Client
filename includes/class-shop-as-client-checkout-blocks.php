@@ -53,6 +53,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 			'defaultShopAsClient' => wc_string_to_bool( apply_filters( 'shop_as_client_default_shop_as_client', 'yes' ) ),
 			'defaultCreateUser'   => wc_string_to_bool( apply_filters( 'shop_as_client_default_create_user', 'no' ) ),
 			'showProAddOnNotice'  => true,
+			'blockPosition'       => '.wp-block-woocommerce-checkout-terms-block',
 		);
 
 		$data = apply_filters( 'shop_as_client_blocks_data', $data );

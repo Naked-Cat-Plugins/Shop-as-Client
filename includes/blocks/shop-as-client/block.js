@@ -20,6 +20,7 @@ import { CHECKOUT_STORE_KEY } from '@woocommerce/block-data';
  */
 import { withFilteredAttributes } from './../utils';
 import attributes from './attributes';
+import FormStep from './frontend/form-step';
 
 const EXTENSION_NAMESPACE = 'ptwoo-shop-as-client';
 
@@ -28,10 +29,12 @@ const {
 	defaultShopAsClient,
 	defaultCreateUser,
 	showProAddOnNotice,
+	blockPosition,
 } = getSetting('ptwoo_shop_as_client_data');
 
 const Block = (props) => {
-	const { className } = props;
+	const { stepTitle, stepDescription, showStepNumber, className, inEditor } =
+		props;
 
 	const [shopAsClient, setShopAsClient] = useState(defaultShopAsClient);
 	const [createUser, setCreateUser] = useState(defaultCreateUser);
@@ -72,8 +75,8 @@ const Block = (props) => {
 		return null;
 	}
 
-	return (
-		<div className={className}>
+	let Component = (
+		<>
 			<CheckboxControl
 				label={__('Shop as client', 'shop-as-client')}
 				checked={shopAsClient}
@@ -115,6 +118,24 @@ const Block = (props) => {
 					)}
 				</div>
 			)}
+		</>
+	);
+
+	if (!inEditor) {
+		Component = (
+			<FormStep
+				title={stepTitle}
+				description={stepDescription}
+				showStepNumber={showStepNumber}
+			>
+				{Component}
+			</FormStep>
+		);
+	}
+
+	return (
+		<div className={className} data-position={blockPosition}>
+			{Component}
 		</div>
 	);
 };

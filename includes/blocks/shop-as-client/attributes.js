@@ -15,4 +15,16 @@ export default {
 		type: 'string',
 		default: '',
 	},
+	stepTitle: {
+		type: 'string',
+		default: __('Shop as client', 'shop-as-client'),
+	},
+	stepDescription: {
+		type: 'string',
+		default: '',
+	},
+	showStepNumber: {
+		type: 'boolean',
+		default: true,
+	},
 };
