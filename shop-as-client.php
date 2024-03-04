@@ -286,6 +286,7 @@ add_action( 'plugins_loaded', function() {
 
 		/**
 		 * Thank you page warning - https://github.com/woocommerce/woocommerce/pull/38983/
+		 * Still not working on the blocks checkout
 		**/
 		if ( version_compare( WC_VERSION, '7.8.1', '>=' ) ) {
 			add_filter( 'do_shortcode_tag', 'shop_as_client_checkout_order_received', 10, 2 );
@@ -339,6 +340,7 @@ add_action( 'plugins_loaded', function() {
 			}
 		}, 15 );
 
+		/* Blocks */
 		add_action(
 			'woocommerce_blocks_loaded',
 			function () {
@@ -353,6 +355,7 @@ add_action( 'plugins_loaded', function() {
 			}
 		);
 
+		/* Blocks - Extend Store endpoint */
 		add_action(
 			'woocommerce_blocks_loaded',
 			function () {
