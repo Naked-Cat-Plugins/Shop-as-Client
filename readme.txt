@@ -94,7 +94,7 @@ Yes, in beta only on the Free version from version 3.5 onwards.
 
 Known limitations:
 
-* Only core WooCommerce fields are saved to the customer user, and not custom or 3rd party fields, if the `shop_as_client_update_customer_data` filter is set to true;
+* Only core WooCommerce fields are saved to the customer user, and not custom or 3rd party fields, if the `shop_as_client_update_customer_data` filter is set to `true`;
 * No warning about the lack of information on the “Order Received” / “Thank You” page on WooCommerce 7.8.1 and above;
 * Report to us if you find more limitations, using the [support forum](https://wordpress.org/support/plugin/shop-as-client/);
 
