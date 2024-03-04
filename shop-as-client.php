@@ -265,6 +265,7 @@ add_action( 'plugins_loaded', function() {
 								)
 							);
 						} else {
+							/* translators: $d: user id */
 							printf( __( 'User %d', 'shop-as-client' ), $user_id );
 						}
 						?>

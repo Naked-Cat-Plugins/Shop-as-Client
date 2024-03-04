@@ -26,6 +26,7 @@
 				<br/>
 				<?php
 				echo sprintf(
+					/* translators: %1$s: link opening tag, %2$s: link closing tag */
 					__( 'Check out our new plugin "%1$sSimple Order Approval for WooCommerce%2$s", the hassle-free solution for WooCommerce orders approval before payment.', 'shop-as-client' ),
 					sprintf(
 						'<a href="%s" target="_blank">',
