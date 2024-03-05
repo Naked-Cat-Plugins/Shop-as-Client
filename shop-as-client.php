@@ -13,6 +13,7 @@
  * Requires PHP: 7.0
  * WC requires at least: 5.4
  * WC tested up to: 8.7
+ * Requires Plugins: woocommerce
 **/
 
 /* WooCommerce CRUD ready */
