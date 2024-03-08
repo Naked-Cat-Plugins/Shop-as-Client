@@ -71,7 +71,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 		}
 
 		if ( ! empty( $data['resetCustomerData'] ) ) {
-			static::restore_customer_data();
+			$this->reset_session();
 		}
 
 		// Persist "Shop As Client" option.
@@ -194,9 +194,17 @@ class ShopAsClient_Extend_Store_Endpoint {
 
 		do_action( 'shop_as_client_checkout_order_processed', $order, $user_id );
 
+		$this->reset_session();
+	}
+
+	/**
+	 * Clear the extension's session data and restore customer data.
+	 *
+	 * @return void
+	 */
+	public function reset_session() {
 		static::restore_customer_data();
 
-		// Clear the extension's session data.
 		wc()->session->__unset( $this->get_name() . '_shop_as_client' );
 		wc()->session->__unset( $this->get_name() . '_create_user' );
 		wc()->session->__unset( $this->get_name() . '_current_customer_data' );
