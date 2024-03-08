@@ -15,6 +15,7 @@ const FormStep = ({
 	className = '',
 	children,
 	stepHeadingContent = () => undefined,
+	blockPosition = '',
 }) => {
 	/**
 	 * If the form step doesn't have a legend or title, render a <div> instead of a <fieldset>.
@@ -31,6 +32,7 @@ const FormStep = ({
 						showStepNumber,
 				}
 			)}
+			data-position={blockPosition}
 		>
 			{title && <legend className="screen-reader-text">{title}</legend>}
 			{title && (

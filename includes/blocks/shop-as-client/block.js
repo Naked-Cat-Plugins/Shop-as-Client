@@ -86,7 +86,7 @@ const Block = (props) => {
 	}
 
 	let Component = (
-		<>
+		<div className={className}>
 			<CheckboxControl
 				label={__('Shop as client', 'shop-as-client')}
 				checked={shopAsClient}
@@ -128,7 +128,7 @@ const Block = (props) => {
 					)}
 				</div>
 			)}
-		</>
+		</div>
 	);
 
 	if (!inEditor) {
@@ -137,17 +137,15 @@ const Block = (props) => {
 				title={stepTitle}
 				description={stepDescription}
 				showStepNumber={showStepNumber}
+				className={className}
+				blockPosition={blockPosition}
 			>
 				{Component}
 			</FormStep>
 		);
 	}
 
-	return (
-		<div className={className} data-position={blockPosition}>
-			{Component}
-		</div>
-	);
+	return Component;
 };
 
 export default withFilteredAttributes(attributes)(Block);
