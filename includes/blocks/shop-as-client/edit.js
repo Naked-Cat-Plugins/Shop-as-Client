@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 
 /**
@@ -12,8 +12,7 @@ import Block from './block';
 import FormStep from './edit/form-step';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { showStepNumber } = attributes;
-	const blockProps = useBlockProps();
+	const { showStepNumber, className } = attributes;
 
 	return (
 		<>
@@ -31,20 +30,22 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<FormStep setAttributes={setAttributes} attributes={attributes}>
-					<div
-						aria-disabled="true"
-						style={{
-							userSelect: 'none',
-							pointerEvents: 'none',
-							cursor: 'normal',
-						}}
-					>
-						<Block inEditor={true} />
-					</div>
-				</FormStep>
-			</div>
+			<FormStep
+				setAttributes={setAttributes}
+				attributes={attributes}
+				className={className}
+			>
+				<div
+					aria-disabled="true"
+					style={{
+						userSelect: 'none',
+						pointerEvents: 'none',
+						cursor: 'normal',
+					}}
+				>
+					<Block inEditor={true} />
+				</div>
+			</FormStep>
 		</>
 	);
 }
