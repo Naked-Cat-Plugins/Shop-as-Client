@@ -16,8 +16,8 @@ const FormStep = ({ attributes, setAttributes, className = '', children }) => {
 	return (
 		<div
 			className={classnames(
-				'wc-block-components-checkout-step',
 				className,
+				'wc-block-components-checkout-step',
 				{
 					'wc-block-components-checkout-step--with-step-number':
 						showStepNumber,

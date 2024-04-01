@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import {
 	useEffect,
@@ -137,7 +138,10 @@ const Block = (props) => {
 				title={stepTitle}
 				description={stepDescription}
 				showStepNumber={showStepNumber}
-				className={className}
+				className={classnames(
+					'wp-block-woocommerce-ptwoo-shop-as-client-block',
+					className
+				)}
 				blockPosition={blockPosition}
 			>
 				{Component}

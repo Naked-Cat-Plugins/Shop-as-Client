@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
@@ -12,7 +13,7 @@ import Block from './block';
 import FormStep from './edit/form-step';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { showStepNumber, className } = attributes;
+	const { showStepNumber, className = '' } = attributes;
 
 	return (
 		<>
@@ -33,7 +34,10 @@ export default function Edit({ attributes, setAttributes }) {
 			<FormStep
 				setAttributes={setAttributes}
 				attributes={attributes}
-				className={className}
+				className={classnames(
+					'wp-block-woocommerce-ptwoo-shop-as-client-block',
+					className
+				)}
 			>
 				<div
 					aria-disabled="true"
