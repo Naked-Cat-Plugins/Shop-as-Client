@@ -18,6 +18,35 @@ class ShopAsClient_Extend_Store_Endpoint {
 	public static $name = 'ptwoo-shop-as-client';
 
 	/**
+	 * List of default checkout keys.
+	 *
+	 * @var array
+	 */
+	public static $default_checkout_keys = array(
+		'billing_first_name',
+		'billing_last_name',
+		'billing_company',
+		'billing_address_1',
+		'billing_address_2',
+		'billing_city',
+		'billing_state',
+		'billing_postcode',
+		'billing_country',
+		'billing_email',
+		'billing_phone',
+		'shipping_first_name',
+		'shipping_last_name',
+		'shipping_company',
+		'shipping_address_1',
+		'shipping_address_2',
+		'shipping_city',
+		'shipping_state',
+		'shipping_postcode',
+		'shipping_country',
+		'shipping_phone',
+	);
+
+	/**
 	 * The name of the extension.
 	 *
 	 * @return string
@@ -185,6 +214,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$order->set_customer_id( $user_id );
 		$order->save();
 
+		// Update customer data.
 		if ( apply_filters( 'shop_as_client_update_customer_data', false ) ) {
 			$customer      = new \WC_Customer( $user_id );
 			$customer_data = static::get_customer_data_by_order_id( $order->get_id() );
@@ -237,29 +267,12 @@ class ShopAsClient_Extend_Store_Endpoint {
 	public static function get_customer_data_by_user_id( $user_id ) {
 		$customer = new \WC_Customer( $user_id );
 
-		$customer_data = array(
-			'billing_first_name'  => $customer->get_billing_first_name(),
-			'billing_last_name'   => $customer->get_billing_last_name(),
-			'billing_company'     => $customer->get_billing_company(),
-			'billing_address_1'   => $customer->get_billing_address_1(),
-			'billing_address_2'   => $customer->get_billing_address_2(),
-			'billing_city'        => $customer->get_billing_city(),
-			'billing_state'       => $customer->get_billing_state(),
-			'billing_postcode'    => $customer->get_billing_postcode(),
-			'billing_country'     => $customer->get_billing_country(),
-			'billing_email'       => $customer->get_billing_email(),
-			'billing_phone'       => $customer->get_billing_phone(),
-			'shipping_first_name' => $customer->get_shipping_first_name(),
-			'shipping_last_name'  => $customer->get_shipping_last_name(),
-			'shipping_company'    => $customer->get_shipping_company(),
-			'shipping_address_1'  => $customer->get_shipping_address_1(),
-			'shipping_address_2'  => $customer->get_shipping_address_2(),
-			'shipping_city'       => $customer->get_shipping_city(),
-			'shipping_state'      => $customer->get_shipping_state(),
-			'shipping_postcode'   => $customer->get_shipping_postcode(),
-			'shipping_country'    => $customer->get_shipping_country(),
-			'shipping_phone'      => $customer->get_shipping_phone(),
-		);
+		$customer_data = array();
+		foreach ( static::$default_checkout_keys as $key ) {
+			if ( is_callable( array( $customer, "get_$key" ) ) ) {
+				$customer_data[ $key ] = $customer->{"get_$key"}();
+			}
+		}
 
 		return $customer_data;
 	}
@@ -273,29 +286,12 @@ class ShopAsClient_Extend_Store_Endpoint {
 	public static function get_customer_data_by_order_id( $order_id ) {
 		$order = new \WC_Order( $order_id );
 
-		$customer_data = array(
-			'billing_first_name'  => $order->get_billing_first_name(),
-			'billing_last_name'   => $order->get_billing_last_name(),
-			'billing_company'     => $order->get_billing_company(),
-			'billing_address_1'   => $order->get_billing_address_1(),
-			'billing_address_2'   => $order->get_billing_address_2(),
-			'billing_city'        => $order->get_billing_city(),
-			'billing_state'       => $order->get_billing_state(),
-			'billing_postcode'    => $order->get_billing_postcode(),
-			'billing_country'     => $order->get_billing_country(),
-			'billing_email'       => $order->get_billing_email(),
-			'billing_phone'       => $order->get_billing_phone(),
-			'shipping_first_name' => $order->get_shipping_first_name(),
-			'shipping_last_name'  => $order->get_shipping_last_name(),
-			'shipping_company'    => $order->get_shipping_company(),
-			'shipping_address_1'  => $order->get_shipping_address_1(),
-			'shipping_address_2'  => $order->get_shipping_address_2(),
-			'shipping_city'       => $order->get_shipping_city(),
-			'shipping_state'      => $order->get_shipping_state(),
-			'shipping_postcode'   => $order->get_shipping_postcode(),
-			'shipping_country'    => $order->get_shipping_country(),
-			'shipping_phone'      => $order->get_shipping_phone(),
-		);
+		$customer_data = array();
+		foreach ( static::$default_checkout_keys as $key ) {
+			if ( is_callable( array( $order, "get_$key" ) ) ) {
+				$customer_data[ $key ] = $order->{"get_$key"}();
+			}
+		}
 
 		return $customer_data;
 	}
