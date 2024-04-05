@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, e-commerce, client, customer, checkout, admin, pho
 Requires at least: 5.4
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 3.5
+Stable tag: 3.5.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -115,6 +115,11 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/)
 
 == Changelog ==
+
+= 3.5.1 - 2024-04-05 =
+* [FIX] Avoid fatal error when trying to load the blocks integration on older WooCommerce versions
+* [DEV] Add “Requires Plugins” header
+* [DEV] Tested with WordPress 6.6-alpha-57928 and WooCommerce 8.8.0-rc.1
 
 = 3.5 - 2024-03-04 =
 * [NEW] BETA compatibility for the WooCommerce block-based Checkout (only on the Free version for now)

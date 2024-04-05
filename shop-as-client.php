@@ -3,7 +3,7 @@
  * Plugin Name: Shop as Client for WooCommerce
  * Plugin URI: https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description: Allows a WooCommerce Store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer. Useful for phone or email orders.
- * Version: 3.5
+ * Version: 3.5.1
  * Author: PT Woo Plugins (by Webdados)
  * Author URI: https://ptwooplugins.com/
  * Text Domain: shop-as-client
@@ -12,7 +12,7 @@
  * Tested up to: 6.5
  * Requires PHP: 7.0
  * WC requires at least: 5.4
- * WC tested up to: 8.7
+ * WC tested up to: 8.8
  * Requires Plugins: woocommerce
 **/
 
@@ -341,30 +341,34 @@ add_action( 'plugins_loaded', function() {
 			}
 		}, 15 );
 
-		/* Blocks */
-		add_action(
-			'woocommerce_blocks_loaded',
-			function () {
-				require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
+		if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
 
-				add_action(
-					'woocommerce_blocks_checkout_block_registration',
-					function ( $integration_registry ) {
-						$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
-					}
-				);
-			}
-		);
+			/* Blocks */
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
 
-		/* Blocks - Extend Store endpoint */
-		add_action(
-			'woocommerce_blocks_loaded',
-			function () {
-				require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
+					add_action(
+						'woocommerce_blocks_checkout_block_registration',
+						function ( $integration_registry ) {
+							$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
+						}
+					);
+				}
+			);
 
-				( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
-			}
-		);
+			/* Blocks - Extend Store endpoint */
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
+
+					( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
+				}
+			);
+
+		}
 	
 		/* Simple Order Approval nag */
 		add_action( 'admin_init', function() {
