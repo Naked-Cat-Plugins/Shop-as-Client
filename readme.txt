@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, e-commerce, client, customer, checkout, admin, pho
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 3.6.1
+Stable tag: 3.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -113,11 +113,15 @@ Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for
 
 == Changelog ==
 
+= 3.7 - 2024-09-27 =
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Make sure OrderUtil is only performed if WooCommerce 7.1 or above is being used
+* [DEV] Tested with WordPress 6.7-alpha-59098 and WooCommerce 9.3.3
+
 = 3.6.1 - 2024-04-17 =
 * [FIX] Fatal error on the classic checkout page
 
 = 3.6 - 2024-04-17 =
-* [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Compatibility for the WooCommerce block-based Checkout
+* [NEW] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Compatibility for the WooCommerce block-based Checkout
 * [DEV] Several fixes on the blocks integration for compatibility with the PRO add-on
 * [DEV] Tested with WordPress 6.6-alpha-58011 and WooCommerce 8.8.1
 
@@ -132,7 +136,7 @@ Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for
 
 = 3.4 - 2024-02-20 =
 * [DEV] Change plugin loading priority
-* [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop As Client (free) 3.4
+* [DEV] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop As Client (free) 3.4
 * [DEV] Requires WooCommerce 5.4 or above
 * [DEV] Tested with WordPress 6.5-beta1-57656 and WooCommerce 8.6.0
 
