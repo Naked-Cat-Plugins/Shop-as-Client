@@ -46,28 +46,33 @@ const Block = (props) => {
 	} = useDispatch(CHECKOUT_STORE_KEY);
 
 	useEffect(() => {
-		extensionCartUpdate({
-			namespace: EXTENSION_NAMESPACE,
-			data: {
-				resetCustomerData: true,
-			},
-		});
+		if (canCheckout) {
+			extensionCartUpdate({
+				namespace: EXTENSION_NAMESPACE,
+				data: {
+					resetCustomerData: true,
+				},
+			});
+		}
 		return () => {};
-	}, []);
+	}, [canCheckout]);
 
 	useEffect(() => {
-		disablePlaceOrderButton();
-		extensionCartUpdate({
-			namespace: EXTENSION_NAMESPACE,
-			data: {
-				shopAsClient,
-				createUser,
-			},
-			cartPropsToReceive: ['extensions'],
-		}).then(() => {
-			enablePlaceOrderButton();
-		});
+		if (canCheckout) {
+			disablePlaceOrderButton();
+			extensionCartUpdate({
+				namespace: EXTENSION_NAMESPACE,
+				data: {
+					shopAsClient,
+					createUser,
+				},
+				cartPropsToReceive: ['extensions'],
+			}).then(() => {
+				enablePlaceOrderButton();
+			});
+		}
 	}, [
+		canCheckout,
 		extensionCartUpdate,
 		shopAsClient,
 		createUser,
@@ -75,16 +80,16 @@ const Block = (props) => {
 		enablePlaceOrderButton,
 	]);
 
+	if (!canCheckout) {
+		return null;
+	}
+
 	const ShopAsClientAddOns = applyFilters('shopAsClient.AddOns', null, {
 		...props,
 		canCheckout,
 		shopAsClient,
 		createUser,
 	});
-
-	if (!canCheckout) {
-		return null;
-	}
 
 	let Component = (
 		<div className={className}>
