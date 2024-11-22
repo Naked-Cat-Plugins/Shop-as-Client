@@ -169,7 +169,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 
 			$query_args = array(
 				'fields'     => 'ID',
-				'exclude'    => get_current_user_id(), // Exclude the current user.
+				'exclude'    => array( get_current_user_id() ), // Exclude the current user.
 				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
 						'key'     => 'billing_email',
