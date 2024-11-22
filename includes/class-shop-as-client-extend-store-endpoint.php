@@ -167,23 +167,24 @@ class ShopAsClient_Extend_Store_Endpoint {
 			$user_id = $user->ID;
 		} else {
 
-			$user_query = new \WP_User_Query(
-				array(
-					'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-						array(
-							'key'     => 'billing_email',
-							'value'   => $user_email,
-							'compare' => '=',
-						),
+			$query_args = array(
+				'fields'     => 'ID',
+				'exclude'    => array( get_current_user_id() ), // Exclude the current user.
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => 'billing_email',
+						'value'   => $user_email,
+						'compare' => '=',
 					),
-				)
+				),
 			);
 
-			$users = $user_query->get_results();
+			$query    = new \WP_User_Query( $query_args );
+			$user_ids = $query->get_results();
 
-			if ( ! empty( $users ) ) {
-				$user    = reset( $users );
-				$user_id = $user->ID;
+			if ( ! empty( $user_ids ) ) {
+				$user_id = reset( $user_ids );
+				$user_id = absint( $user_id );
 			} elseif ( $create_user ) {
 				$user_id = shop_as_client_create_customer(
 					$user_email,
@@ -214,7 +215,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$order->save();
 
 		// Update customer data.
-		if ( apply_filters( 'shop_as_client_update_customer_data', false ) ) {
+		if ( ! empty( $user_id ) && apply_filters( 'shop_as_client_update_customer_data', false ) ) {
 			$customer      = new \WC_Customer( $user_id );
 			$customer_data = static::get_customer_data_by_order_id( $order->get_id() );
 			static::switch_customer_data( $customer, $customer_data );
