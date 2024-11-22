@@ -214,7 +214,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$order->save();
 
 		// Update customer data.
-		if ( apply_filters( 'shop_as_client_update_customer_data', false ) ) {
+		if ( ! empty( $user_id ) && apply_filters( 'shop_as_client_update_customer_data', false ) ) {
 			$customer      = new \WC_Customer( $user_id );
 			$customer_data = static::get_customer_data_by_order_id( $order->get_id() );
 			static::switch_customer_data( $customer, $customer_data );
