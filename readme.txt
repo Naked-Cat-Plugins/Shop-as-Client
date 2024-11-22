@@ -120,7 +120,7 @@ Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for
 [FIX] Several minor fixes, including PHP notices and translation strings
 [DEV] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): License validation on websites with WPML set to have different domains per language
 [DEV] Requires WordPress 5.8 and WooCommerce 7.1
-[DEV] Tested with WordPress 6.8-alpha-59448 and WooCommerce 9.5.0-beta.1
+[DEV] Tested with WordPress 6.8-alpha-59448, WooCommerce 9.5.0-beta.1, and User Switching 1.9.0
 
 = 3.7 - 2024-09-27 =
 * [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Make sure OrderUtil is only performed if WooCommerce 7.1 or above is being used
