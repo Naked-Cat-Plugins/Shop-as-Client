@@ -225,32 +225,36 @@ add_action(
 					$priority = apply_filters( 'shop_as_client_field_priority', 990 );
 					// Shop as client?
 					$fields['billing_shop_as_client'] = array(
-						'label'    => __( 'Shop as client', 'shop-as-client' ),
-						'required' => true,
-						'class'    => array( 'form-row-wide' ),
-						'clear'    => true,
-						'priority' => $priority,
-						'type'     => 'select',
-						'options'  => array(
+						'label'       => __( 'Shop as client', 'shop-as-client' ),
+						'required'    => true,
+						'class'       => apply_filters( 'shop_as_client_field_class', array( 'form-row-wide' ) ),
+						'input_class' => apply_filters( 'shop_as_client_field_input_class', array() ),
+						'label_class' => apply_filters( 'shop_as_client_field_label_class', array() ),
+						'clear'       => true,
+						'priority'    => $priority,
+						'type'        => 'select',
+						'options'     => array(
 							'yes' => __( 'Yes', 'shop-as-client' ),
 							'no'  => __( 'No', 'shop-as-client' ),
 						),
-						'default'  => apply_filters( 'shop_as_client_default_shop_as_client', 'yes' ),
+						'default'     => apply_filters( 'shop_as_client_default_shop_as_client', 'yes' ),
 					);
 					$priority++;
 					// Create user if it doesn't exist?
 					$fields['billing_shop_as_client_create_user'] = array(
-						'label'    => __( 'Create user (if not found by email)?', 'shop-as-client' ),
-						'required' => true,
-						'class'    => array( 'form-row-wide' ),
-						'clear'    => true,
-						'priority' => $priority,
-						'type'     => 'select',
-						'options'  => array(
+						'label'       => __( 'Create user (if not found by email)?', 'shop-as-client' ),
+						'required'    => true,
+						'class'       => apply_filters( 'shop_as_client_create_user_field_class', array( 'form-row-wide' ) ),
+						'input_class' => apply_filters( 'shop_as_client_create_user_field_input_class', array() ),
+						'label_class' => apply_filters( 'shop_as_client_create_user_field_label_class', array() ),
+						'clear'       => true,
+						'priority'    => $priority,
+						'type'        => 'select',
+						'options'     => array(
 							'yes' => __( 'Yes', 'shop-as-client' ),
 							'no'  => __( 'No (leave as guest)', 'shop-as-client' ),
 						),
-						'default'  => apply_filters( 'shop_as_client_default_create_user', 'no' ),
+						'default'     => apply_filters( 'shop_as_client_default_create_user', 'no' ),
 					);
 				}
 				return $fields;
