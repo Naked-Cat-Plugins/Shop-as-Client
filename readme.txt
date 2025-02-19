@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 5.0
+Stable tag: 5.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,7 +39,7 @@ In addition to all you can do with the free plugin, the [paid add-on](https://pt
 * Set default values for the “Shop as client” and “Create user” fields;
 * Option to update the customer details on his profile;
 * Get custom fields from:
-	* [Simple Custom Fields for WooCommerce Blocks Checkout](https://ptwooplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/)
+	* [Simple Checkout Fields Manager for WooCommerce](https://ptwooplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/)
 	* [WooCommerce EU VAT Assistant](https://wordpress.org/plugins/woocommerce-eu-vat-assistant/)
 	* [WooCommerce EU VAT Number](https://woocommerce.com/products/eu-vat-number/)
 	* [Invoicing with InvoiceXpress for WooCommerce](https://invoicewoo.com/)
@@ -56,7 +56,7 @@ Try the PRO add-on for free [here](https://ptwooplugins.com/product/shop-as-clie
 Already know our other WooCommerce (premium) plugins?
 
 * [Advanced Coupon Restrictions for WooCommerce](https://ptwooplugins.com/product/advanced-coupon-restrictions-for-woocommerce/) - Create coupons for any Product Taxonomy, User details, and Order destination.
-* [Simple Custom Fields for WooCommerce Blocks Checkout](https://ptwooplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/) - Add custom fields to the new WooCommerce Block-based Checkout
+* [Simple Checkout Fields Manager for WooCommerce](https://ptwooplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/) - Add custom fields and manage (remove, make required or optional) core fields on the new WooCommerce Block-based Checkout
 * [Simple WooCommerce Order Approval](https://ptwooplugins.com/product/simple-woocommerce-order-approval/) - The hassle-free solution for WooCommerce order approval before payment
 * [Taxonomy/Term and Role based Discounts for WooCommerce](https://ptwooplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/) - Easily create bulk discount rules for products based on any taxonomy terms (built-in or custom)
 * [DPD / SEUR / Geopost Pickup and Lockers network for WooCommerce](https://ptwooplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/) - Deliver your WooCommerce orders on the DPD and SEUR Pickup network of Parcelshops and Lockers in 21 European countries
@@ -118,7 +118,18 @@ Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for
 
 == Changelog ==
 
-= 5.0 - 2025-12-17 =
+= 5.1 - 2025-02-19 =
+* [NEW] Add developer filters to the Shop as Client fields classes
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better Simple Checkout Fields Manager for WooCommerce integration
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater: avoid duplicate translation notices and remove from .org updater calls
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove a link from the "Request payment by email" payment gateway description
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): License validation on websites with WPML set to have different domains per language
+* [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Only search on orders address index meta field for better performance
+* [DEV] Simplify 3rd-party plugin checks
+* [DEV] Remove WooCommerce 7.1 or above tests as we're not supporting lower versions anyway
+* [DEV] Tested with WordPress 6.8-alpha-59837 and WooCommerce 9.7.0-rc.1
+
+= 5.0 - 2024-12-17 =
 * [NEW] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Integration with [Simple Custom Fields for WooCommerce Blocks Checkout](https://ptwooplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/): autocomplete fields set by that plugin
 * [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Improve integration with [Invoicing with InvoiceXpress for WooCommerce](https://invoicewoo.com/)
 * [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Use the customer billing name by default for the user switching link
