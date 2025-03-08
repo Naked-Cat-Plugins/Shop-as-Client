@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 5.1
+Stable tag: 6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,11 +118,17 @@ Check out the [PRO add-on FAQs](https://ptwooplugins.com/faqs/shop-as-client-for
 
 == Changelog ==
 
+= 6.0 - 2025-03-08 =
+* [NEW] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Build user meta index for better autocomplete search results (automatically updated when user is created or changed, but can also be triggered for all users on the settings or via WP-CLI with `wp shop-as-client-pro rebuild-users-index`)
+* [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Set default number of the autocomplete returned results to 10 instead of 5
+* [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove the “Search on users without WC meta” option and make it the default behaviour
+* [DEV] Tested with WordPress 6.8-beta1-59952 and WooCommerce 9.8.0-beta.1
+
 = 5.1 - 2025-02-19 =
 * [NEW] Add developer filters to the Shop as Client fields classes
 * [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better Simple Checkout Fields Manager for WooCommerce integration
 * [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater: avoid duplicate translation notices and remove from .org updater calls
-* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove a link from the "Request payment by email" payment gateway description
+* [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove a link from the “Request payment by email” payment gateway description
 * [FIX] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): License validation on websites with WPML set to have different domains per language
 * [TWEAK] [PRO add-on](https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Only search on orders address index meta field for better performance
 * [DEV] Simplify 3rd-party plugin checks
