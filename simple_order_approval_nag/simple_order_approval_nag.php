@@ -34,7 +34,7 @@ function ptwoo_simple_order_approval_nag() {
 				__( 'Check out our new plugin "%1$sSimple Order Approval for WooCommerce%2$s", the hassle-free solution for WooCommerce orders approval before payment.', 'shop-as-client' ),
 				sprintf(
 					'<a href="%s" target="_blank">',
-					esc_url( 'https://ptwooplugins.com/product/simple-woocommerce-order-approval/?utm_source=wp-admin&utm_medium=banner&utm_campaign=shop-as-client-simple-order-approval' )
+					esc_url( 'https://nakedcatplugins.com/product/simple-woocommerce-order-approval/?utm_source=wp-admin&utm_medium=banner&utm_campaign=shop-as-client-simple-order-approval' )
 				),
 				'</a>'
 			)

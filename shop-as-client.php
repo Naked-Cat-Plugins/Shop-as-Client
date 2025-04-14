@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:          Shop as Client for WooCommerce
- * Plugin URI:           https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
+ * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Allows a WooCommerce Store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer. Useful for phone or email orders.
- * Version:              6.0
- * Author:               PT Woo Plugins (by Webdados)
- * Author URI:           https://ptwooplugins.com/
+ * Version:              6.1
+ * Author:               Naked Cat Plugins (by Webdados)
+ * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
  * Domain Path:          /languages
  * Requires at least:    5.8
@@ -14,6 +14,7 @@
  * WC requires at least: 7.1
  * WC tested up to:      9.8
  * Requires Plugins:     woocommerce
+ * License:              GPLv3
  **/
 
 /* WooCommerce CRUD ready */
@@ -25,10 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SHOPASCLIENT_REQUIRED_WC', '7.1' );
 define( 'SHOPASCLIENT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SHOPASCLIENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'SHOPASCLIENT_PRO_OUT_LINK', 'https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=' . rawurlencode( esc_url( home_url( '/' ) ) ) . '&amp;utm_medium=link&amp;utm_campaign=shop_as_client_plugin' );
+define( 'SHOPASCLIENT_PRO_OUT_LINK', 'https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=' . rawurlencode( esc_url( home_url( '/' ) ) ) . '&amp;utm_medium=link&amp;utm_campaign=shop_as_client_plugin' );
 
 /**
  * Check if WooCommerce is active
+ * plugins_loaded is too soon for code in functions.php to run - This needs to be addressed, but it probably won't work because on the initialization of blocks
  */
 add_action(
 	'plugins_loaded',
@@ -586,7 +588,7 @@ add_action(
 			}
 
 			/**
-			 * Fix PRO updates to 2.3 - https://ptwooplugins.com/shop-as-client-pro-add-on-not-working-after-updating-the-free-version-to-1-9-or-above-the-solution-is-here/
+			 * Fix PRO updates to 2.3 - https://nakedcatplugins.com/shop-as-client-pro-add-on-not-working-after-updating-the-free-version-to-1-9-or-above-the-solution-is-here/
 			*/
 			add_action(
 				'plugins_loaded',

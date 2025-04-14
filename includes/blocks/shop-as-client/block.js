@@ -127,7 +127,7 @@ const Block = (props) => {
 						),
 						{
 							a: (
-								<ExternalLink href="https://ptwooplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/" />
+								<ExternalLink href="https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/" />
 							),
 							br: <br />,
 						}
