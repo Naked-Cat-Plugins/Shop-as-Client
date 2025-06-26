@@ -222,11 +222,11 @@ add_action(
 			 *
 			 * @param array $fields The fields.
 			 */
-			function shop_as_client_init_woocommerce_billing_fields( $fields ) {
-				if ( shop_as_client_can_checkout() && is_checkout() ) {
+			function shop_as_client_init_woocommerce_checkout_fields( $fields ) {
+				if ( shop_as_client_can_checkout() ) {
 					$priority = apply_filters( 'shop_as_client_field_priority', 990 );
 					// Shop as client?
-					$fields['billing_shop_as_client'] = array(
+					$fields['billing']['billing_shop_as_client'] = array(
 						'label'       => __( 'Shop as client', 'shop-as-client' ),
 						'required'    => true,
 						'class'       => apply_filters( 'shop_as_client_field_class', array( 'form-row-wide' ) ),
@@ -243,7 +243,7 @@ add_action(
 					);
 					$priority++;
 					// Create user if it doesn't exist?
-					$fields['billing_shop_as_client_create_user'] = array(
+					$fields['billing']['billing_shop_as_client_create_user'] = array(
 						'label'       => __( 'Create user (if not found by email)?', 'shop-as-client' ),
 						'required'    => true,
 						'class'       => apply_filters( 'shop_as_client_create_user_field_class', array( 'form-row-wide' ) ),
@@ -261,7 +261,7 @@ add_action(
 				}
 				return $fields;
 			}
-			add_filter( 'woocommerce_billing_fields', 'shop_as_client_init_woocommerce_billing_fields', PHP_INT_MAX );
+			add_filter( 'woocommerce_checkout_fields', 'shop_as_client_init_woocommerce_checkout_fields', PHP_INT_MAX );
 
 			/**
 			 * Enqueue scripts - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
