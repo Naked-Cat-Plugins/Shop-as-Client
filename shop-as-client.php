@@ -3,7 +3,7 @@
  * Plugin Name:          Shop as Client for WooCommerce
  * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Allows a WooCommerce Store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer. Useful for phone or email orders.
- * Version:              6.2
+ * Version:              6.3
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
@@ -12,7 +12,7 @@
  * Tested up to:         6.9
  * Requires PHP:         7.4
  * WC requires at least: 7.1
- * WC tested up to:      9.9
+ * WC tested up to:      10.0
  * Requires Plugins:     woocommerce
  * License:              GPLv3
  **/
