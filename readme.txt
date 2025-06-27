@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 6.2
+Stable tag: 6.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/)
 
 == Changelog ==
+
+= 6.3 - 2025-06-27 =
+
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Warn Administrators and Shop Managers, on the checkout, about the “Request payment by email” gateway, and that it should be used whenever the customer wants to pay by Credit Card, PayPal, or any other method that requires access to sensible information
+* [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better “Request payment by email” default description
+* [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Account for situations where the checkout nonce is not called `woocommerce-process-checkout-nonce` but `_wpnonce`
+* [FIX] Use `woocommerce_checkout_fields` instead of `woocommerce_billing_fields` to add our fields, because in some edge cases `is_checkout()` would not work and the Shop as Client fields stopped showing on the checkout (free version)
+* [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Minor coding standards fixes on the functions.js file
+* [DEV] Tested with WordPress 6.9-alpha-60355 and WooCommerce 10.0.0-rc.1
 
 = 6.2 - 2025-06-22 =
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Optimization - set several options to not be autoloaded
