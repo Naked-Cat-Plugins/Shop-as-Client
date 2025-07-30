@@ -12,7 +12,7 @@
  * Tested up to:         6.9
  * Requires PHP:         7.4
  * WC requires at least: 7.1
- * WC tested up to:      10.0
+ * WC tested up to:      10.1
  * Requires Plugins:     woocommerce
  * License:              GPLv3
  **/
