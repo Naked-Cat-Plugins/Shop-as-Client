@@ -514,6 +514,7 @@ add_action(
 									)
 								);
 							}
+							do_action( 'shop_as_client_after_order_handler', $order, $user_id );
 							?>
 						</p>
 						<?php
@@ -521,10 +522,10 @@ add_action(
 					$checkout = $order->get_meta( '_billing_shop_as_client_checkout' );
 					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 						?>
-					<p class="form-field form-field-wide">
-						<label><?php esc_html_e( 'Checkout', 'shop-as-client' ); ?>:</label>
-						<?php echo esc_html( $checkout ); ?>
-					</p>
+						<p class="form-field form-field-wide">
+							<label><?php esc_html_e( 'Checkout', 'shop-as-client' ); ?>:</label>
+							<?php echo esc_html( $checkout ); ?>
+						</p>
 						<?php
 					}
 					do_action( 'shop_as_client_after_order_details', $order );
