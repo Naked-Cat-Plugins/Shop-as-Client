@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 6.4
+Stable tag: 6.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/)
 
 == Changelog ==
+
+= 6.5 - 2025-08-04 =
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Allow administrators to edit the handler on the order edit screen
+* [DEV] New action `shop_as_client_after_order_handler` after the handler name on the order edit screen
+* [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop as Client 6.5
+* [DEV] Tested with WordPress 6.9-alpha-60536 and WooCommerce 10.1.0-rc.2
 
 = 6.4 - 2025-07-21 =
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater improvements (v11.0) to check for expired licenses
