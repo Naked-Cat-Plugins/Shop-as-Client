@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 6.7
+Stable tag: 6.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/)
 
 == Changelog ==
+
+= 6.8 - 2025-12-10 =
+* [FIX] Checkbox margins on the blocks checkout
+* [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New updater v12
+* [DEV] Tested with WordPress 7.0-alpha-61365 and WooCommerce 10.4.0
 
 = 6.7 - 2025-11-21 =
 * [FIX] PHP error in the rare eventuality of the Free plugin being deactivated, with the PRO add-on still active

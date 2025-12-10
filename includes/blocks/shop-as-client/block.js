@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	useEffect,
 	useState,

@@ -203,7 +203,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return new \WP_Error(
 				'shop_as_client_checkout_order_process_error',
 				sprintf(
-					/* translators: %s error message. */
+					/* translators: %s: error message */
 					__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
 					$user_id->get_error_message()
 				)

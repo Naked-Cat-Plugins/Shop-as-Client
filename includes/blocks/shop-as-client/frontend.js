@@ -8,6 +8,7 @@ import { registerCheckoutBlock } from '@woocommerce/blocks-checkout';
  */
 import Block from './block';
 import metadata from './block.json';
+import './style.scss';
 
 registerCheckoutBlock({
 	metadata,
