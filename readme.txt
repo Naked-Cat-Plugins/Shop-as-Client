@@ -12,30 +12,30 @@ Allows WooCommerce store Administrators and Shop Managers to use the frontend an
 
 == Description ==
 
-Allows a WooCommerce store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer, taking advantage of all the frontend functionalities that might not exist on the backend, which can be very useful for phone or email orders.
+Allows a WooCommerce store Administrator or Shop Manager to use the frontend and assign a new order to a registered or new customer, taking advantage of all the frontend functionalities that may not be available on the backend, which can be very useful for phone or email orders.
 
-The order will automatically be assigned to a registered customer if the billing email matches. If no registered user is found, the shop manager can decide to either create a new user or leave the order as if it was inserted by a guest.
+The order will automatically be assigned to a registered customer if the billing email matches. If no registered user is found, the shop manager can either create a new user or leave the order as if a guest inserted it.
 
-Two new fields are added to the billing checkout section, for logged in administrators and shop managers.
+Two new fields have been added to the billing checkout section for logged-in administrators and shop managers.
 
 == Features ==
 
 * Enter email and phone orders directly on the frontend;
 * Create orders for existing users if the email address exists on the customer database;
-* Choose either to create a new user or leave the order as if it was inserted by a guest if the email address does not exist on the customer database;
+* Choose either to create a new user or leave the order as if a guest inserted it if the email address does not exist in the customer database;
 * Compatibility for the WooCommerce block-based Checkout
 
 == PRO add-on features ==
 
-In addition to all you can do with the free plugin, the [paid add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) offers you a number of additional features:
+In addition to all you can do with the free plugin, the [paid add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) offers you several additional features:
 
 * Search customer by email address (on the users’ table and optionally also previous orders) and automatically fill in the checkout details;
 * Fake payment gateway that allows administrators and shop managers to finalize the order and ask for the order payment by sending the customer a payment link via email;
 * Autocomplete feature while typing the customer email, first name, last name, company, or phone number
-* Allow changing product price on the cart, for example, to offer a special deal on the current order
+* Allow changing product price on the cart, for example, to offer a special deal on the current order (only on classic checkout for now), with compatibility with WooPayments’ multi-currency feature
 * Show handler and allow filtering by handler on the admin orders list
 * [Developer filter](https://gist.github.com/webdados/de05d48a99063ac25f6462b1dedba2ee) to add custom fields to the automatically filled checkout details;
-* [User Switching](https://wordpress.org/plugins/user-switching/) integration to benefit the fact the customer is logged in and still use our plugin functionalities, like the payment request gateway and seller tracking.
+* [User Switching](https://wordpress.org/plugins/user-switching/) integration to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway and seller tracking.
 * Possibility to start the order with a blank checkout form;
 * Set default values for the “Shop as client” and “Create user” fields;
 * Option to update the customer details on his profile;
@@ -86,9 +86,9 @@ Add [this](https://gist.github.com/webdados/0f1a8e5ca2cd98276a9ae73918e9b842) to
 
 No. Yes. It’s complicated...
 
-The logged in user is the Administrator or Shop Manager. It’s not possible to integrate with the vast amount of user or user role-based discount plugins when the logged in user is not the customer himself, so any customer roled-based discounts will not be applied.
+The logged-in user is the Administrator or Shop Manager. It’s not possible to integrate with the vast amount of user or user role-based discount plugins when the logged-in user is not the customer himself, so any customer roled-based discounts will not be applied.
 
-However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager that switched to the customer account as the order handler upon checkout, thus allowing to benefit from the fact the customer is logged in and still use our plugin functionalities, like the payment request gateway and seller tracking.
+However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager who switched to the customer account as the order handler upon checkout, thus allowing them to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway and seller tracking.
 
 = Is this plugin compatible with the new WooCommerce High-Performance Order Storage? =
 
@@ -120,7 +120,8 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 == Changelog ==
 
 = 7.0 - 2025-12-30 =
-* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): 
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Allow changing product price on the cart, for example, to offer a special deal on the current order
+* [DEV] Removed `load_plugin_textdomain` call as WordPress handles it
 * [DEV] Tested with WordPress 7.0-alpha-61413 and WooCommerce 10.4.0
 
 = 6.8.2 - 2025-12-10 =

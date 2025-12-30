@@ -52,13 +52,6 @@ add_action(
 			 * Languages and scripts
 			 */
 			function shop_as_client_init() {
-				// Load translations - On init (after after_setup_theme) since WordPress 6.7 to avoid load_plugin_textdomain notices
-				add_action(
-					'init',
-					function () {
-						load_plugin_textdomain( 'shop-as-client' );
-					}
-				);
 				// Load scripts
 				add_action( 'wp_enqueue_scripts', 'shop_as_client_enqueue_scripts' );
 			}
