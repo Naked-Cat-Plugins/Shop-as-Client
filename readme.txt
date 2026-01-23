@@ -2,9 +2,9 @@
 Contributors: nakedcatplugins, webdados 
 Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 7.0
+Stable tag: 7.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,7 +40,7 @@ In addition to all you can do with the free plugin, the [paid add-on](https://na
 * Set default values for the “Shop as client” and “Create user” fields;
 * Option to update the customer details on his profile;
 * Get custom fields from:
-	* [Simple Checkout Fields Manager for WooCommerce](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/)
+	* [Simple Checkout Fields Manager for WooCommerce](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
 	* [WooCommerce EU VAT Assistant](https://wordpress.org/plugins/woocommerce-eu-vat-assistant/)
 	* [WooCommerce EU VAT Number](https://woocommerce.com/products/eu-vat-number/)
 	* [Invoicing with InvoiceXpress for WooCommerce](https://invoicewoo.com/)
@@ -56,12 +56,12 @@ Try the PRO add-on for free [here](https://nakedcatplugins.com/product/shop-as-c
 
 Already know our other WooCommerce (premium) plugins?
 
-* [Advanced Coupon Restrictions for WooCommerce](https://nakedcatplugins.com/product/advanced-coupon-restrictions-for-woocommerce/) - Create coupons for any Product Taxonomy, User details, and Order destination.
-* [Simple Checkout Fields Manager for WooCommerce](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/) - Add custom fields and manage (remove, make required or optional) core fields on the new WooCommerce Block-based Checkout
-* [Simple WooCommerce Order Approval](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/) - The hassle-free solution for WooCommerce order approval before payment
-* [Taxonomy/Term and Role based Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/) - Easily create bulk discount rules for products based on any taxonomy terms (built-in or custom)
-* [DPD / SEUR / Geopost Pickup and Lockers network for WooCommerce](https://nakedcatplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/) - Deliver your WooCommerce orders on the DPD and SEUR Pickup network of Parcelshops and Lockers in 21 European countries
-* [Auto Cancel WooCommerce On-hold Orders](https://nakedcatplugins.com/product/auto-cancel-woocommerce-on-hold-orders/) - Automatically cancel WooCommerce “On-hold” orders after a determined period of time.
+* [Advanced Coupon Restrictions for WooCommerce](https://nakedcatplugins.com/product/advanced-coupon-restrictions-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Create coupons for any Product Taxonomy, User details, and Order destination.
+* [Simple Checkout Fields Manager for WooCommerce](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Add custom fields and manage (remove, make required or optional) core fields on the new WooCommerce Block-based Checkout
+* [Simple WooCommerce Order Approval](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - The hassle-free solution for WooCommerce order approval before payment
+* [Taxonomy/Term and Role based Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Easily create bulk discount rules for products based on any taxonomy terms (built-in or custom)
+* [DPD / SEUR / Geopost Pickup and Lockers network for WooCommerce](https://nakedcatplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Deliver your WooCommerce orders on the DPD and SEUR Pickup network of Parcelshops and Lockers in 21 European countries
+* [Auto Cancel WooCommerce On-hold Orders](https://nakedcatplugins.com/product/auto-cancel-woocommerce-on-hold-orders/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Automatically cancel WooCommerce "On-hold" orders after a determined period of time.
 
 == Installation ==
 
@@ -115,9 +115,18 @@ You can report any security bugs found in the source code of this plugin through
 
 = More FAQs =
 
-Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/)
+Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
 
 == Changelog ==
+
+= 7.2 - 2026-01-23 =
+- [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Improve compatibility with [Taxonomy Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): allow changing the cart item price even if a taxonomy discount is applied to it
+- [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New updater v13 with better license status information on the plugin settings screen and plugins list
+- [DEV] Implement release automations via GitHub Actions
+- [DEV] Tested with WordPress 7.0-alpha-61496 and WooCommerce 10.5.0-beta.1
+
+= 7.1 - 2026-01-01 =
+- Free version not released
 
 = 7.0 - 2025-12-30 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Allow changing product price on the cart, for example, to offer a special deal on the current order
@@ -186,7 +195,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [DEV] Tested with WordPress 6.8-alpha-59837 and WooCommerce 9.7.0-rc.1
 
 = 5.0 - 2024-12-17 =
-* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Integration with [Simple Custom Fields for WooCommerce Blocks Checkout](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/): autocomplete fields set by that plugin
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Integration with [Simple Custom Fields for WooCommerce Blocks Checkout](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): autocomplete fields set by that plugin
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Improve integration with [Invoicing with InvoiceXpress for WooCommerce](https://invoicewoo.com/)
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Use the customer billing name by default for the user switching link
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Removed the non-autocomplete search on the classic checkout (deprecated on 3.3)
@@ -279,7 +288,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 2.3 - 2023-07-14 =
 * Warning about the lack of information on the “Order Received” / “Thank You” page on WooCommerce 7.8.1 and above
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Show the “Order Received” / “Thank You” page on WooCommerce 7.8.1 and above
-* Remove the InvoiceXpress banner and add the [Simple Order Approval for WooCommerce](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/) one
+* Remove the InvoiceXpress banner and add the [Simple Order Approval for WooCommerce](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) one
 * Fix jQuery deprecation notice
 
 = 2.2 - 2023-07-07 =
