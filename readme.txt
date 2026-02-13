@@ -164,7 +164,6 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Disable “Request payment by email” gateway, and add alert warnings, if the license is expired
 
 = 6.3 - 2025-06-27 =
-
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Warn Administrators and Shop Managers, on the checkout, about the “Request payment by email” gateway, and that it should be used whenever the customer wants to pay by Credit Card, PayPal, or any other method that requires access to sensible information
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better “Request payment by email” default description
 * [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Account for situations where the checkout nonce is not called `woocommerce-process-checkout-nonce` but `_wpnonce`
