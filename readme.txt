@@ -119,6 +119,11 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
+= 7.4 - 2025-03-25 =
+- [NEW] Ownership transfered from [Marco Almeida | Webdados](https://profiles.wordpress.org/webdados/) to [Naked Cat Plugins](https://profiles.wordpress.org/nakedcatplugins/) on WordPress.org
+- [TWEAK] Settings moved to a new section called “Shop as client” under “Accounts & Privacy”
+- [DEV] Tested with 7.0-RC1-62112 and WooCommerce 10.6.1
+
 = 7.3 - 2025-02-13 =
 - [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Build release ZIP GitHub action to make sure WordPress detects a direct upload as the same plugin instead of creating a new folder
 - [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater v13.1
