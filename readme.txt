@@ -120,7 +120,7 @@ Unlike backend order creation, Shop as Client keeps your existing checkout logic
 
 Mostly everything works exactly as if the customer placed the order themselves.
 
-=== 👉 [Upgrade to PRO](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) ===
+=== 🚀 Upgrade to PRO ===
 
 Need faster order entry or payment request workflows?
 
