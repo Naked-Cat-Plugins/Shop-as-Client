@@ -72,7 +72,7 @@ The result is a clean, correct WooCommerce order created on behalf of the custom
 
 === PRO add-on features ===
 
-The PRO add-on expands staff ordering workflows with powerful tools:
+The [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) expands staff ordering workflows with powerful tools:
 
 * Live customer search with autocomplete results while typing
 * Fake “Request payment by email” gateway to finalize orders and send payment links to customers
@@ -95,10 +95,6 @@ The PRO add-on expands staff ordering workflows with powerful tools:
 	* [NIF (Num. de Contribuinte Português) for WooCommerce](https://wordpress.org/plugins/nif-num-de-contribuinte-portugues-for-woocommerce/)
 * Technical support
 * Continued development
-
-**Now available in lifetime licensing**
-
-Try the PRO add-on for free [here](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin#testimonials)!
 
 === Ideal use cases ===
 
@@ -124,11 +120,11 @@ Unlike backend order creation, Shop as Client keeps your existing checkout logic
 
 Mostly everything works exactly as if the customer placed the order themselves.
 
-=== Upgrade to PRO ===
+=== 👉 [Upgrade to PRO](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) ===
 
 Need faster order entry or payment request workflows?
 
-The PRO add-on turns WooCommerce into a powerful assisted-sales system for phone, email, and in-store orders.
+The [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) turns WooCommerce into a powerful assisted-sales system for phone, email, and in-store orders.
 Ideal for teams handling high volumes of phone, email, or assisted orders.
 
 **Now available in lifetime licensing**
