@@ -70,6 +70,8 @@ class ShopAsClient_Extend_Store_Endpoint {
 		);
 
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_order' ), 100 );
+		add_filter( 'update_user_metadata', array( __CLASS__, 'prevent_manager_address_meta_overwrite' ), 10, 5 );
+		add_filter( 'add_user_metadata', array( __CLASS__, 'prevent_manager_address_meta_overwrite' ), 10, 5 );
 	}
 
 	/**
@@ -102,32 +104,66 @@ class ShopAsClient_Extend_Store_Endpoint {
 			wc()->session->set_customer_session_cookie( true );
 		}
 
+		$user_id = get_current_user_id();
+
 		if ( ! empty( $data['resetCustomerData'] ) ) {
-			$this->reset_session();
+			static::restore_customer_data();
 		}
 
-		// Persist "Shop As Client" option.
-		$shop_as_client = isset( $data['shopAsClient'] ) ? $data['shopAsClient'] : null;
-		wc()->session->set( $this->get_name() . '_shop_as_client', $shop_as_client );
-
-		// Persist "Create User" option.
-		$create_user = isset( $data['createUser'] ) ? $data['createUser'] : null;
-		wc()->session->set( $this->get_name() . '_create_user', $create_user );
-
-		/**
-		 * Persist current customer data.
-		 *
-		 * This is needed to switch customer data back to its state after the purchase.
-		 */
-		if ( ! class_exists( 'ShopAsClientPro_Extend_Store_Endpoint' ) ) {
-			$customer_data = wc()->session->get( $this->get_name() . '_current_customer_data' );
-
-			if ( $customer_data === null ) {
-				$user_id       = get_current_user_id();
-				$customer_data = static::get_customer_data_by_user_id( $user_id );
-				wc()->session->set( $this->get_name() . '_current_customer_data', $customer_data );
+		// Persist "Shop As Client" option in user_meta to avoid WC session whole-blob write races.
+		if ( $user_id && array_key_exists( 'shopAsClient', $data ) ) {
+			if ( $data['shopAsClient'] ) {
+				update_user_meta( $user_id, static::$name . '_shop_as_client', '1' );
+			} else {
+				delete_user_meta( $user_id, static::$name . '_shop_as_client' );
 			}
 		}
+
+		// Persist "Create User" option.
+		if ( $user_id && array_key_exists( 'createUser', $data ) ) {
+			if ( $data['createUser'] ) {
+				update_user_meta( $user_id, static::$name . '_create_user', '1' );
+			} else {
+				delete_user_meta( $user_id, static::$name . '_create_user' );
+			}
+		}
+
+		/**
+		 * Persist current customer data so it can be restored after the purchase.
+		 */
+		if ( $user_id && ! class_exists( 'ShopAsClientPro_Extend_Store_Endpoint' ) ) {
+			$customer_data = get_user_meta( $user_id, static::$name . '_current_customer_data', true );
+			if ( empty( $customer_data ) ) {
+				$customer_data = static::get_customer_data_by_user_id( $user_id );
+				update_user_meta( $user_id, static::$name . '_current_customer_data', $customer_data );
+			}
+		}
+	}
+
+	/**
+	 * Check if the current request is acting as SAC for the logged-in user.
+	 *
+	 * @return bool
+	 */
+	public static function is_active() {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return false;
+		}
+		return (bool) get_user_meta( $user_id, static::$name . '_shop_as_client', true );
+	}
+
+	/**
+	 * Check if "create user" is enabled in the current SAC request.
+	 *
+	 * @return bool
+	 */
+	public static function is_create_user() {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return false;
+		}
+		return (bool) get_user_meta( $user_id, static::$name . '_create_user', true );
 	}
 
 	/**
@@ -146,8 +182,13 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return;
 		}
 
-		$shop_as_client = wc()->session->get( $this->get_name() . '_shop_as_client', false );
-		$create_user    = wc()->session->get( $this->get_name() . '_create_user', false );
+		// If Pro already processed this order, skip Free's processing.
+		if ( $order->get_meta( '_billing_shop_as_client' ) === 'yes' ) {
+			return;
+		}
+
+		$shop_as_client = static::is_active();
+		$create_user    = static::is_create_user();
 
 		if ( ! $shop_as_client ) {
 			return;
@@ -200,13 +241,14 @@ class ShopAsClient_Extend_Store_Endpoint {
 		if ( is_wp_error( $user_id ) ) {
 			static::restore_customer_data();
 
-			return new \WP_Error(
+			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
 				'shop_as_client_checkout_order_process_error',
 				sprintf(
 					/* translators: %s: error message */
-					__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
-					$user_id->get_error_message()
-				)
+					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
+					esc_html( $user_id->get_error_message() )
+				),
+				400
 			);
 		}
 
@@ -238,9 +280,43 @@ class ShopAsClient_Extend_Store_Endpoint {
 	public function reset_session() {
 		static::restore_customer_data();
 
-		wc()->session->__unset( $this->get_name() . '_shop_as_client' );
-		wc()->session->__unset( $this->get_name() . '_create_user' );
-		wc()->session->__unset( $this->get_name() . '_current_customer_data' );
+		$user_id = get_current_user_id();
+		if ( $user_id ) {
+			delete_user_meta( $user_id, static::$name . '_shop_as_client' );
+			delete_user_meta( $user_id, static::$name . '_create_user' );
+			delete_user_meta( $user_id, static::$name . '_current_customer_data' );
+		}
+	}
+
+	/**
+	 * Prevent manager's WC_Customer profile from being overwritten during blocks checkout.
+	 *
+	 * Hooks into woocommerce_before_customer_object_save to catch both:
+	 * - update_customer_from_request() save
+	 * - sync_customer_data_with_order() save
+	 *
+	 * @param  \WC_Customer         $customer   Customer object about to be saved.
+	 * @param  \WC_Customer_Data_Store $data_store Data store instance.
+	 * @return void
+	 */
+	public static function prevent_manager_address_meta_overwrite( $check, $object_id, $meta_key, $meta_value, $prev_value ) {
+		if ( null !== $check ) {
+			return $check;
+		}
+		if ( ! static::is_active() ) {
+			return $check;
+		}
+		if ( (int) $object_id !== (int) get_current_user_id() ) {
+			return $check;
+		}
+		if ( ! is_string( $meta_key ) ) {
+			return $check;
+		}
+		if ( preg_match( '/^(billing|shipping)_/', $meta_key ) ) {
+			// Short-circuit: pretend the meta write succeeded but do not persist.
+			return true;
+		}
+		return $check;
 	}
 
 	/**
@@ -252,7 +328,10 @@ class ShopAsClient_Extend_Store_Endpoint {
 		$user_id  = get_current_user_id();
 		$customer = new \WC_Customer( $user_id );
 
-		$customer_data = wc()->session->get( static::$name . '_current_customer_data' );
+		$customer_data = get_user_meta( $user_id, static::$name . '_current_customer_data', true );
+		if ( empty( $customer_data ) ) {
+			$customer_data = null;
+		}
 
 		static::switch_customer_data( $customer, $customer_data );
 
