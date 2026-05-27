@@ -53,3 +53,6 @@ createzip.command
 
 # Code Workspace
 shop-as-client.code-workspace
+.editorconfig
+readme.before20260329.txt
+_todo.txt

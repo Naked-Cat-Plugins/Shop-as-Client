@@ -1,6 +1,10 @@
 <?php
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 /**
  * Class for integrating with WooCommerce Blocks
  */

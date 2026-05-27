@@ -55,9 +55,15 @@ add_action( 'admin_notices', 'ptwoo_simple_order_approval_nag' );
  * Dismiss Simple Order Approval for WooCommerce nag
  */
 function dismiss_ptwoo_simple_order_approval_nag() {
+	// Transient for everyone
 	$days       = 90;
 	$expiration = $days * DAY_IN_SECONDS;
 	set_transient( 'ptwoo_simple_order_approval_nag', 1, $expiration );
+	// Per user
+	$days       = 180;
+	$expiration = $days * DAY_IN_SECONDS;
+	update_user_meta( get_current_user_id(), 'ptwoo_simple_order_approval_nag_dismiss_until', time() + $expiration );
+	// Exit
 	wp_die();
 }
 add_action( 'wp_ajax_dismiss_ptwoo_simple_order_approval_nag', 'dismiss_ptwoo_simple_order_approval_nag' );
