@@ -23,37 +23,51 @@ document.addEventListener('DOMContentLoaded', () => {
 		return;
 	}
 
+	let moved = false;
+
 	const moveBlock = () => {
+		if (moved) {
+			return;
+		}
+
 		const block = document.querySelector(
 			'.wp-block-woocommerce-ptwoo-shop-as-client-block'
 		);
-		if (block) {
-			const actionsBlock = document.querySelector(
-				'.wp-block-woocommerce-checkout-actions-block'
-			);
-			const targetBlock = document.querySelector(block.dataset.position);
+		if (!block) {
+			return;
+		}
 
-			if (block && actionsBlock && targetBlock) {
-				const isAfterActionsBlock =
-					actionsBlock.compareDocumentPosition(block) &
-					Node.DOCUMENT_POSITION_FOLLOWING;
+		const actionsBlock = document.querySelector(
+			'.wp-block-woocommerce-checkout-actions-block'
+		);
+		const targetBlock = document.querySelector(block.dataset.position);
 
-				if (isAfterActionsBlock) {
-					targetBlock.parentNode.insertBefore(block, targetBlock);
-					observer.disconnect();
-				}
-			}
+		if (!actionsBlock || !targetBlock) {
+			return;
+		}
+
+		const isAfterActionsBlock =
+			actionsBlock.compareDocumentPosition(block) &
+			Node.DOCUMENT_POSITION_FOLLOWING;
+
+		if (isAfterActionsBlock) {
+			requestAnimationFrame(() => {
+				targetBlock.parentNode.insertBefore(block, targetBlock);
+				moved = true;
+				observer.disconnect();
+			});
 		}
 	};
 
-	const observer = new MutationObserver((mutationList, observer) => {
-		for (const mutation of mutationList) {
-			if (mutation.type === 'childList') {
-				moveBlock();
-			}
-		}
+	const observer = new MutationObserver(() => {
+		moveBlock();
 	});
 
 	const config = { childList: true, subtree: true };
 	observer.observe(checkoutBlock, config);
+
+	// Safety timeout: disconnect observer after 10 seconds to prevent indefinite observation.
+	setTimeout(() => {
+		observer.disconnect();
+	}, 10000);
 });

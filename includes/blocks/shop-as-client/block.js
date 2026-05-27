@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { __, sprintf } from '@wordpress/i18n';
 import {
 	useEffect,
+	useRef,
 	useState,
 	createInterpolateElement,
 } from '@wordpress/element';
@@ -45,40 +46,32 @@ const Block = (props) => {
 		__internalDecrementCalculating: enablePlaceOrderButton,
 	} = useDispatch(CHECKOUT_STORE_KEY);
 
-	useEffect(() => {
-		if (canCheckout) {
-			extensionCartUpdate({
-				namespace: EXTENSION_NAMESPACE,
-				data: {
-					resetCustomerData: true,
-				},
-			});
-		}
-		return () => {};
-	}, [canCheckout]);
+	const isMountRef = useRef(true);
 
 	useEffect(() => {
-		if (canCheckout) {
-			disablePlaceOrderButton();
-			extensionCartUpdate({
-				namespace: EXTENSION_NAMESPACE,
-				data: {
-					shopAsClient,
-					createUser,
-				},
-				cartPropsToReceive: ['extensions'],
-			}).then(() => {
+		if (!canCheckout) {
+			return;
+		}
+		disablePlaceOrderButton();
+		const data = { shopAsClient, createUser };
+		if (isMountRef.current) {
+			data.resetCustomerData = true;
+			isMountRef.current = false;
+		}
+		extensionCartUpdate({
+			namespace: EXTENSION_NAMESPACE,
+			data,
+			cartPropsToReceive: ['extensions'],
+		})
+			.then(() => {
+				enablePlaceOrderButton();
+			})
+			.catch((error) => {
+				console.error('Shop as Client: failed to update cart', error);
 				enablePlaceOrderButton();
 			});
-		}
-	}, [
-		canCheckout,
-		extensionCartUpdate,
-		shopAsClient,
-		createUser,
-		disablePlaceOrderButton,
-		enablePlaceOrderButton,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [shopAsClient, createUser]);
 
 	if (!canCheckout) {
 		return null;
