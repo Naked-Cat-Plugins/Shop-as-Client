@@ -3,10 +3,10 @@
  *
  * @param {Object} blockAttributes Object containing block attributes.
  * @param {Array}  rawAttributes   Dataset from DOM.
- * @return {Array} Array of parsed attributes.
+ * @return {Object} Object of parsed attributes.
  */
 export const getValidBlockAttributes = (blockAttributes, rawAttributes) => {
-	const attributes = [];
+	const attributes = {};
 
 	Object.keys(blockAttributes).forEach((key) => {
 		if (typeof rawAttributes[key] !== 'undefined') {

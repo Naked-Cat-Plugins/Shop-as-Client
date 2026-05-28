@@ -52,7 +52,9 @@ const Block = (props) => {
 		if (!canCheckout) {
 			return;
 		}
-		disablePlaceOrderButton();
+		// `__internal*` calls are guarded: these WC checkout-store actions are
+		// internal/undocumented and may be removed in a future release.
+		disablePlaceOrderButton?.();
 		const data = { shopAsClient, createUser };
 		if (isMountRef.current) {
 			data.resetCustomerData = true;
@@ -64,11 +66,11 @@ const Block = (props) => {
 			cartPropsToReceive: ['extensions'],
 		})
 			.then(() => {
-				enablePlaceOrderButton();
+				enablePlaceOrderButton?.();
 			})
 			.catch((error) => {
 				console.error('Shop as Client: failed to update cart', error);
-				enablePlaceOrderButton();
+				enablePlaceOrderButton?.();
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [shopAsClient, createUser]);

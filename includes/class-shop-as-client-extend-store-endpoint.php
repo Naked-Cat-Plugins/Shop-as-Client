@@ -75,24 +75,6 @@ class ShopAsClient_Extend_Store_Endpoint {
 	}
 
 	/**
-	 * Add Store API schema data.
-	 *
-	 * @return array
-	 */
-	public function store_api_schema_callback() {
-		return array();
-	}
-
-	/**
-	 * Add Store API endpoint data.
-	 *
-	 * @return array
-	 */
-	public function store_api_data_callback() {
-		return array();
-	}
-
-	/**
 	 * Update callback to be executed by the Store API.
 	 *
 	 * @param  array $data Extension data.
@@ -100,7 +82,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 */
 	public function store_api_update_callback( $data ) {
 
-		if ( ! ( isset( wc()->session ) && wc()->session->has_session() ) ) {
+		if ( isset( wc()->session ) && ! wc()->session->has_session() ) {
 			wc()->session->set_customer_session_cookie( true );
 		}
 
