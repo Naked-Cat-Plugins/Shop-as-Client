@@ -289,15 +289,19 @@ class ShopAsClient_Extend_Store_Endpoint {
 	}
 
 	/**
-	 * Prevent manager's WC_Customer profile from being overwritten during blocks checkout.
+	 * Prevent the manager's own billing/shipping user meta from being
+	 * overwritten while they are shopping as a client on the block checkout.
 	 *
-	 * Hooks into woocommerce_before_customer_object_save to catch both:
-	 * - update_customer_from_request() save
-	 * - sync_customer_data_with_order() save
+	 * Short-circuits the {add,update}_user_metadata filters for the current
+	 * user's billing_ and shipping_ keys when SAC is active, so WooCommerce's
+	 * block-checkout customer sync can't clobber the manager's saved address.
 	 *
-	 * @param  \WC_Customer         $customer   Customer object about to be saved.
-	 * @param  \WC_Customer_Data_Store $data_store Data store instance.
-	 * @return void
+	 * @param  null|bool $check      The short-circuit value (null to proceed).
+	 * @param  int       $object_id  User ID the meta write targets.
+	 * @param  string    $meta_key   Meta key being written.
+	 * @param  mixed     $meta_value Meta value being written (unused).
+	 * @param  mixed     $prev_value Previous value (unused).
+	 * @return null|bool `true` to silently skip the write, else $check.
 	 */
 	public static function prevent_manager_address_meta_overwrite( $check, $object_id, $meta_key, $meta_value, $prev_value ) {
 		if ( null !== $check ) {
