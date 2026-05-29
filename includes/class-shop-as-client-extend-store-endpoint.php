@@ -96,6 +96,14 @@ class ShopAsClient_Extend_Store_Endpoint {
 		if ( $user_id && array_key_exists( 'shopAsClient', $data ) ) {
 			if ( $data['shopAsClient'] ) {
 				update_user_meta( $user_id, static::$name . '_shop_as_client', '1' );
+				// Snapshot the manager's WC Blocks additional-field meta (_wc_*,
+				// e.g. SWCBCF) once on activation, so restore_customer_data can put
+				// it back after the purchase: WooCommerce persists the client's
+				// values onto the manager's profile during checkout, after the
+				// prevent_manager_address_meta_overwrite guard is disarmed.
+				if ( ! metadata_exists( 'user', $user_id, static::$name . '_additional_fields_backup' ) ) {
+					update_user_meta( $user_id, static::$name . '_additional_fields_backup', static::get_manager_additional_fields( $user_id ) );
+				}
 			} else {
 				delete_user_meta( $user_id, static::$name . '_shop_as_client' );
 			}
@@ -267,6 +275,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 			delete_user_meta( $user_id, static::$name . '_shop_as_client' );
 			delete_user_meta( $user_id, static::$name . '_create_user' );
 			delete_user_meta( $user_id, static::$name . '_current_customer_data' );
+			delete_user_meta( $user_id, static::$name . '_additional_fields_backup' );
 		}
 	}
 
@@ -277,6 +286,8 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * Short-circuits the {add,update}_user_metadata filters for the current
 	 * user's billing_ and shipping_ keys when SAC is active, so WooCommerce's
 	 * block-checkout customer sync can't clobber the manager's saved address.
+	 * (WC Blocks additional-field meta, _wc_*, is preserved via the snapshot in
+	 * restore_customer_data instead — WC writes it after this guard is disarmed.)
 	 *
 	 * @param  null|bool $check      The short-circuit value (null to proceed).
 	 * @param  int       $object_id  User ID the meta write targets.
@@ -300,6 +311,9 @@ class ShopAsClient_Extend_Store_Endpoint {
 		}
 		if ( preg_match( '/^(billing|shipping)_/', $meta_key ) ) {
 			// Short-circuit: pretend the meta write succeeded but do not persist.
+			// (WC Blocks additional-field meta — _wc_*, e.g. SWCBCF — is preserved
+			// separately via the snapshot/restore in restore_customer_data, because
+			// WooCommerce writes it after SAC has already disarmed this guard.)
 			return true;
 		}
 		return $check;
@@ -323,7 +337,57 @@ class ShopAsClient_Extend_Store_Endpoint {
 
 		$customer->save();
 
+		// Restore the manager's WC Blocks additional-field meta (_wc_*, e.g.
+		// SWCBCF) that WooCommerce overwrote with the client's checkout values.
+		static::restore_manager_additional_fields( $user_id );
+
 		wc()->customer = $customer; // This is required to trigger the fields update on the checkout when the current customer data is restored ¯\_(ツ)_/¯.
+	}
+
+	/**
+	 * Read the manager's WC Blocks additional-field user meta (every '_wc_*' key,
+	 * e.g. SWCBCF and other third-party checkout fields). Used to snapshot the
+	 * manager's own third-party profile before a shop-as-client purchase.
+	 *
+	 * @param  int $user_id User ID.
+	 * @return array<string,mixed> Map of meta key => value.
+	 */
+	protected static function get_manager_additional_fields( $user_id ) {
+		$out = array();
+		foreach ( get_user_meta( $user_id ) as $key => $values ) {
+			if ( is_string( $key ) && 0 === strpos( $key, '_wc_' ) ) {
+				$out[ $key ] = maybe_unserialize( $values[0] );
+			}
+		}
+		return $out;
+	}
+
+	/**
+	 * Restore the manager's WC Blocks additional-field user meta from the snapshot
+	 * taken on shop-as-client activation, discarding whatever the checkout wrote.
+	 * No-op when no snapshot exists.
+	 *
+	 * @param  int $user_id User ID.
+	 * @return void
+	 */
+	protected static function restore_manager_additional_fields( $user_id ) {
+		if ( ! metadata_exists( 'user', $user_id, static::$name . '_additional_fields_backup' ) ) {
+			return;
+		}
+		$backup = get_user_meta( $user_id, static::$name . '_additional_fields_backup', true );
+		if ( ! is_array( $backup ) ) {
+			$backup = array();
+		}
+
+		// Drop whatever the checkout wrote, then re-apply the manager's snapshot.
+		foreach ( get_user_meta( $user_id ) as $key => $values ) {
+			if ( is_string( $key ) && 0 === strpos( $key, '_wc_' ) ) {
+				delete_user_meta( $user_id, $key );
+			}
+		}
+		foreach ( $backup as $key => $value ) {
+			update_user_meta( $user_id, $key, $value );
+		}
 	}
 
 	/**
