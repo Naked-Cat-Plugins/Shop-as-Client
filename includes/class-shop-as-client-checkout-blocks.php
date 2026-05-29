@@ -27,6 +27,7 @@ class ShopAsClient_Checkout_Blocks implements IntegrationInterface {
 		$this->register_block_editor_scripts();
 		$this->register_block_editor_styles();
 		$this->register_block_frontend_styles();
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_block_frontend_styles' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_styles' ) );
 	}

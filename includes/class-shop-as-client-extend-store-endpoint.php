@@ -70,8 +70,8 @@ class ShopAsClient_Extend_Store_Endpoint {
 		);
 
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_order' ), 100 );
-		add_filter( 'update_user_metadata', array( __CLASS__, 'prevent_manager_address_meta_overwrite' ), 10, 5 );
-		add_filter( 'add_user_metadata', array( __CLASS__, 'prevent_manager_address_meta_overwrite' ), 10, 5 );
+		add_filter( 'update_user_metadata', array( $this, 'prevent_manager_address_meta_overwrite' ), 10, 3 );
+		add_filter( 'add_user_metadata', array( $this, 'prevent_manager_address_meta_overwrite' ), 10, 3 );
 	}
 
 	/**
@@ -96,14 +96,6 @@ class ShopAsClient_Extend_Store_Endpoint {
 		if ( $user_id && array_key_exists( 'shopAsClient', $data ) ) {
 			if ( $data['shopAsClient'] ) {
 				update_user_meta( $user_id, static::$name . '_shop_as_client', '1' );
-				// Snapshot the manager's WC Blocks additional-field meta (_wc_*,
-				// e.g. SWCBCF) once on activation, so restore_customer_data can put
-				// it back after the purchase: WooCommerce persists the client's
-				// values onto the manager's profile during checkout, after the
-				// prevent_manager_address_meta_overwrite guard is disarmed.
-				if ( ! metadata_exists( 'user', $user_id, static::$name . '_additional_fields_backup' ) ) {
-					update_user_meta( $user_id, static::$name . '_additional_fields_backup', static::get_manager_additional_fields( $user_id ) );
-				}
 			} else {
 				delete_user_meta( $user_id, static::$name . '_shop_as_client' );
 			}
@@ -122,8 +114,10 @@ class ShopAsClient_Extend_Store_Endpoint {
 		 * Persist current customer data so it can be restored after the purchase.
 		 */
 		if ( $user_id && ! class_exists( 'ShopAsClientPro_Extend_Store_Endpoint' ) ) {
+
 			$customer_data = get_user_meta( $user_id, static::$name . '_current_customer_data', true );
 			if ( empty( $customer_data ) ) {
+
 				$customer_data = static::get_customer_data_by_user_id( $user_id );
 				update_user_meta( $user_id, static::$name . '_current_customer_data', $customer_data );
 			}
@@ -136,10 +130,12 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * @return bool
 	 */
 	public static function is_active() {
+
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
 		}
+
 		return (bool) get_user_meta( $user_id, static::$name . '_shop_as_client', true );
 	}
 
@@ -149,10 +145,12 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * @return bool
 	 */
 	public static function is_create_user() {
+
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
 		}
+
 		return (bool) get_user_meta( $user_id, static::$name . '_create_user', true );
 	}
 
@@ -275,7 +273,6 @@ class ShopAsClient_Extend_Store_Endpoint {
 			delete_user_meta( $user_id, static::$name . '_shop_as_client' );
 			delete_user_meta( $user_id, static::$name . '_create_user' );
 			delete_user_meta( $user_id, static::$name . '_current_customer_data' );
-			delete_user_meta( $user_id, static::$name . '_additional_fields_backup' );
 		}
 	}
 
@@ -286,36 +283,35 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * Short-circuits the {add,update}_user_metadata filters for the current
 	 * user's billing_ and shipping_ keys when SAC is active, so WooCommerce's
 	 * block-checkout customer sync can't clobber the manager's saved address.
-	 * (WC Blocks additional-field meta, _wc_*, is preserved via the snapshot in
-	 * restore_customer_data instead — WC writes it after this guard is disarmed.)
 	 *
-	 * @param  null|bool $check      The short-circuit value (null to proceed).
-	 * @param  int       $object_id  User ID the meta write targets.
-	 * @param  string    $meta_key   Meta key being written.
-	 * @param  mixed     $meta_value Meta value being written (unused).
-	 * @param  mixed     $prev_value Previous value (unused).
+	 * @param  null|bool $check     The short-circuit value (null to proceed).
+	 * @param  int       $object_id User ID the meta write targets.
+	 * @param  string    $meta_key  Meta key being written.
 	 * @return null|bool `true` to silently skip the write, else $check.
 	 */
-	public static function prevent_manager_address_meta_overwrite( $check, $object_id, $meta_key, $meta_value, $prev_value ) {
+	public static function prevent_manager_address_meta_overwrite( $check, $object_id, $meta_key ) {
+
 		if ( null !== $check ) {
 			return $check;
 		}
+
 		if ( ! static::is_active() ) {
 			return $check;
 		}
+
 		if ( (int) $object_id !== (int) get_current_user_id() ) {
 			return $check;
 		}
+
 		if ( ! is_string( $meta_key ) ) {
 			return $check;
 		}
+
 		if ( preg_match( '/^(billing|shipping)_/', $meta_key ) ) {
 			// Short-circuit: pretend the meta write succeeded but do not persist.
-			// (WC Blocks additional-field meta — _wc_*, e.g. SWCBCF — is preserved
-			// separately via the snapshot/restore in restore_customer_data, because
-			// WooCommerce writes it after SAC has already disarmed this guard.)
 			return true;
 		}
+
 		return $check;
 	}
 
@@ -337,57 +333,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 
 		$customer->save();
 
-		// Restore the manager's WC Blocks additional-field meta (_wc_*, e.g.
-		// SWCBCF) that WooCommerce overwrote with the client's checkout values.
-		static::restore_manager_additional_fields( $user_id );
-
 		wc()->customer = $customer; // This is required to trigger the fields update on the checkout when the current customer data is restored ¯\_(ツ)_/¯.
-	}
-
-	/**
-	 * Read the manager's WC Blocks additional-field user meta (every '_wc_*' key,
-	 * e.g. SWCBCF and other third-party checkout fields). Used to snapshot the
-	 * manager's own third-party profile before a shop-as-client purchase.
-	 *
-	 * @param  int $user_id User ID.
-	 * @return array<string,mixed> Map of meta key => value.
-	 */
-	protected static function get_manager_additional_fields( $user_id ) {
-		$out = array();
-		foreach ( get_user_meta( $user_id ) as $key => $values ) {
-			if ( is_string( $key ) && 0 === strpos( $key, '_wc_' ) ) {
-				$out[ $key ] = maybe_unserialize( $values[0] );
-			}
-		}
-		return $out;
-	}
-
-	/**
-	 * Restore the manager's WC Blocks additional-field user meta from the snapshot
-	 * taken on shop-as-client activation, discarding whatever the checkout wrote.
-	 * No-op when no snapshot exists.
-	 *
-	 * @param  int $user_id User ID.
-	 * @return void
-	 */
-	protected static function restore_manager_additional_fields( $user_id ) {
-		if ( ! metadata_exists( 'user', $user_id, static::$name . '_additional_fields_backup' ) ) {
-			return;
-		}
-		$backup = get_user_meta( $user_id, static::$name . '_additional_fields_backup', true );
-		if ( ! is_array( $backup ) ) {
-			$backup = array();
-		}
-
-		// Drop whatever the checkout wrote, then re-apply the manager's snapshot.
-		foreach ( get_user_meta( $user_id ) as $key => $values ) {
-			if ( is_string( $key ) && 0 === strpos( $key, '_wc_' ) ) {
-				delete_user_meta( $user_id, $key );
-			}
-		}
-		foreach ( $backup as $key => $value ) {
-			update_user_meta( $user_id, $key, $value );
-		}
 	}
 
 	/**
@@ -397,6 +343,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * @return array
 	 */
 	public static function get_customer_data_by_user_id( $user_id ) {
+
 		$customer = new \WC_Customer( $user_id );
 
 		$customer_data = array(
@@ -419,6 +366,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * @return array
 	 */
 	public static function get_customer_data_by_order_id( $order_id ) {
+
 		$order = new \WC_Order( $order_id );
 
 		$customer_data = array(
