@@ -1,6 +1,21 @@
 <?php
 /**
- * Class for extending the WooCommerce Store API
+ * Class for extending the WooCommerce Store API (stateless block checkout).
+ *
+ * Shop as Client keeps NO transient state on the server. The state rides each
+ * request instead:
+ *
+ *  - Cart phase: the block sends an `X-SAC-Active` HTTP header (via an
+ *    api-fetch middleware) while the toggle is on. The core
+ *    /cart/update-customer route is sealed (no extension payload), so the
+ *    header is the only way to know SAC is active on those requests. It drives
+ *    suppression of the manager's own billing/shipping profile writes.
+ *
+ *  - Checkout phase: the checkout request carries an `extensions` payload
+ *    `{ shopAsClient, createUser }`, captured from the
+ *    `woocommerce_store_api_checkout_update_customer_from_request` action and
+ *    consumed when the order is processed. The client is resolved by the
+ *    submitted billing email.
  */
 
 // Exit if accessed directly.
@@ -9,19 +24,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class for extending the WooCommerce Store API
+ * Class for extending the WooCommerce Store API.
  */
 class ShopAsClient_Extend_Store_Endpoint {
 
 	/**
-	 * Extension name.
+	 * Extension name (Store API namespace).
 	 *
 	 * @var string
 	 */
 	public static $name = 'ptwoo-shop-as-client';
 
 	/**
-	 * List of default checkout keys.
+	 * Default (standard) checkout address keys, used to classify fields.
 	 *
 	 * @var array
 	 */
@@ -50,6 +65,15 @@ class ShopAsClient_Extend_Store_Endpoint {
 	);
 
 	/**
+	 * Checkout-request extension payload captured for the current request.
+	 *
+	 * Request-scoped only; never persisted.
+	 *
+	 * @var array
+	 */
+	public $checkout_state = array();
+
+	/**
 	 * The name of the extension.
 	 *
 	 * @return string
@@ -59,243 +83,111 @@ class ShopAsClient_Extend_Store_Endpoint {
 	}
 
 	/**
-	 * When called invokes any initialization/setup for the extension.
+	 * Initialise the extension.
+	 *
+	 * @return void
 	 */
 	public function initialize() {
-		woocommerce_store_api_register_update_callback(
-			array(
-				'namespace' => $this->get_name(),
-				'callback'  => array( $this, 'store_api_update_callback' ),
-			)
-		);
 
+		// Accept our `{ shopAsClient, createUser }` payload on the checkout
+		// endpoint's `extensions` field.
+		if ( function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
+			woocommerce_store_api_register_endpoint_data(
+				array(
+					'endpoint'        => 'checkout',
+					'namespace'       => $this->get_name(),
+					'schema_callback' => array( $this, 'checkout_schema' ),
+					'data_callback'   => '__return_empty_array',
+					'schema_type'     => ARRAY_A,
+				)
+			);
+		}
+
+		add_action( 'woocommerce_store_api_checkout_update_customer_from_request', array( $this, 'capture_checkout_state' ), 10, 2 );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_order' ), 100 );
-		add_filter( 'update_user_metadata', array( $this, 'prevent_manager_address_meta_overwrite' ), 10, 3 );
-		add_filter( 'add_user_metadata', array( $this, 'prevent_manager_address_meta_overwrite' ), 10, 3 );
+
+		// Request-driven protection of the manager's own address profile.
+		add_filter( 'update_user_metadata', array( $this, 'suppress_address_meta' ), 10, 3 );
+		add_filter( 'add_user_metadata', array( $this, 'suppress_address_meta' ), 10, 3 );
 	}
 
 	/**
-	 * Update callback to be executed by the Store API.
+	 * Schema for the checkout `extensions` payload (inbound only).
 	 *
-	 * @param  array $data Extension data.
+	 * @return array
+	 */
+	public function checkout_schema() {
+		return array(
+			'shopAsClient'       => array(
+				'description' => __( 'Whether the order is being placed shopping as a client.', 'shop-as-client' ),
+				'type'        => 'boolean',
+				'context'     => array( 'view', 'edit' ),
+				'readonly'    => false,
+				'optional'    => true,
+			),
+			'createUser'   => array(
+				'description' => __( 'Whether to create a customer account when none matches.', 'shop-as-client' ),
+				'type'        => 'boolean',
+				'context'     => array( 'view', 'edit' ),
+				'readonly'    => false,
+				'optional'    => true,
+			),
+		);
+	}
+
+	/**
+	 * Capture the checkout-request SAC extension payload for this request.
+	 *
+	 * @param  \WC_Customer     $customer Customer (unused).
+	 * @param  \WP_REST_Request $request  Checkout request.
 	 * @return void
 	 */
-	public function store_api_update_callback( $data ) {
+	public function capture_checkout_state( $customer, $request ) {
 
-		if ( isset( wc()->session ) && ! wc()->session->has_session() ) {
-			wc()->session->set_customer_session_cookie( true );
-		}
+		$extensions = isset( $request['extensions'] ) ? $request['extensions'] : array();
 
-		$user_id = get_current_user_id();
-
-		if ( ! empty( $data['resetCustomerData'] ) ) {
-			static::restore_customer_data();
-		}
-
-		// Persist "Shop As Client" option in user_meta to avoid WC session whole-blob write races.
-		if ( $user_id && array_key_exists( 'shopAsClient', $data ) ) {
-			if ( $data['shopAsClient'] ) {
-				update_user_meta( $user_id, static::$name . '_shop_as_client', '1' );
-			} else {
-				delete_user_meta( $user_id, static::$name . '_shop_as_client' );
-			}
-		}
-
-		// Persist "Create User" option.
-		if ( $user_id && array_key_exists( 'createUser', $data ) ) {
-			if ( $data['createUser'] ) {
-				update_user_meta( $user_id, static::$name . '_create_user', '1' );
-			} else {
-				delete_user_meta( $user_id, static::$name . '_create_user' );
-			}
-		}
-
-		/**
-		 * Persist current customer data so it can be restored after the purchase.
-		 */
-		if ( $user_id && ! class_exists( 'ShopAsClientPro_Extend_Store_Endpoint' ) ) {
-
-			$customer_data = get_user_meta( $user_id, static::$name . '_current_customer_data', true );
-			if ( empty( $customer_data ) ) {
-
-				$customer_data = static::get_customer_data_by_user_id( $user_id );
-				update_user_meta( $user_id, static::$name . '_current_customer_data', $customer_data );
-			}
+		if ( isset( $extensions[ static::$name ] ) && is_array( $extensions[ static::$name ] ) ) {
+			$this->checkout_state = $extensions[ static::$name ];
 		}
 	}
 
 	/**
-	 * Check if the current request is acting as SAC for the logged-in user.
+	 * Whether the current request is flagged as an active SAC request.
+	 *
+	 * Driven by the `X-SAC-Active` header injected by the block's api-fetch
+	 * middleware while the toggle is on.
 	 *
 	 * @return bool
 	 */
-	public static function is_active() {
-
-		$user_id = get_current_user_id();
-		if ( ! $user_id ) {
-			return false;
-		}
-
-		return (bool) get_user_meta( $user_id, static::$name . '_shop_as_client', true );
+	public static function is_sac_request() {
+		return ! empty( $_SERVER['HTTP_X_SAC_ACTIVE'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- boolean presence check only.
 	}
 
 	/**
-	 * Check if "create user" is enabled in the current SAC request.
+	 * Suppress writes to the manager's own billing/shipping profile while
+	 * shopping as a client.
 	 *
-	 * @return bool
-	 */
-	public static function is_create_user() {
-
-		$user_id = get_current_user_id();
-		if ( ! $user_id ) {
-			return false;
-		}
-
-		return (bool) get_user_meta( $user_id, static::$name . '_create_user', true );
-	}
-
-	/**
-	 * Process order.
+	 * All WooCommerce block-checkout customer-profile writes (cart phase and
+	 * checkout phase) funnel through {add,update}_user_metadata for the current
+	 * user's address keys. When SAC is active for this request, short-circuit
+	 * the writes for the standard checkout address fields this plugin manages,
+	 * so the client's address never overwrites the manager's saved address. The
+	 * order address is unaffected (it comes from the in-memory customer +
+	 * request, not the user_meta row).
 	 *
-	 * @param  \WC_Order $order Order object.
-	 * @return void
-	 */
-	public function process_order( $order ) {
-
-		if ( ! $order instanceof \WC_Order ) {
-			return;
-		}
-
-		if ( ! shop_as_client_can_checkout() ) {
-			return;
-		}
-
-		// If Pro already processed this order, skip Free's processing.
-		if ( $order->get_meta( '_billing_shop_as_client' ) === 'yes' ) {
-			return;
-		}
-
-		$shop_as_client = static::is_active();
-		$create_user    = static::is_create_user();
-
-		if ( ! $shop_as_client ) {
-			return;
-		}
-
-		$user_id    = 0;
-		$user_email = $order->get_billing_email();
-
-		if ( empty( $user_email ) ) {
-			$user_email = apply_filters( 'shop_as_client_user_email_if_empty', $user_email, $order );
-		}
-
-		if ( empty( $user_email ) ) {
-			return;
-		}
-
-		$user = get_user_by( 'email', $user_email );
-
-		if ( $user instanceof \WP_User ) {
-			$user_id = $user->ID;
-		} else {
-
-			$query_args = array(
-				'fields'     => 'ID',
-				'exclude'    => array( get_current_user_id() ), // Exclude the current user.
-				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'     => 'billing_email',
-						'value'   => $user_email,
-						'compare' => '=',
-					),
-				),
-			);
-
-			$query    = new \WP_User_Query( $query_args );
-			$user_ids = $query->get_results();
-
-			if ( ! empty( $user_ids ) ) {
-				$user_id = reset( $user_ids );
-				$user_id = absint( $user_id );
-			} elseif ( $create_user ) {
-				$user_id = shop_as_client_create_customer(
-					$user_email,
-					$order->get_billing_first_name(),
-					$order->get_billing_last_name()
-				);
-			}
-		}
-
-		if ( is_wp_error( $user_id ) ) {
-			static::restore_customer_data();
-
-			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
-				'shop_as_client_checkout_order_process_error',
-				sprintf(
-					/* translators: %s: error message */
-					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
-					esc_html( $user_id->get_error_message() )
-				),
-				400
-			);
-		}
-
-		$order->update_meta_data( '_billing_shop_as_client', 'yes' );
-		$order->update_meta_data( '_billing_shop_as_client_handler_user_id', get_current_user_id() );
-		$order->update_meta_data( '_billing_shop_as_client_checkout', 'blocks' );
-
-		$order->set_customer_id( $user_id );
-		$order->save();
-
-		// Update customer data.
-		if ( ! empty( $user_id ) && apply_filters( 'shop_as_client_update_customer_data', false ) ) {
-			$customer      = new \WC_Customer( $user_id );
-			$customer_data = static::get_customer_data_by_order_id( $order->get_id() );
-			static::switch_customer_data( $customer, $customer_data );
-			$customer->save();
-		}
-
-		do_action( 'shop_as_client_checkout_order_processed', $order, $user_id );
-
-		$this->reset_session();
-	}
-
-	/**
-	 * Clear the extension's session data and restore customer data.
-	 *
-	 * @return void
-	 */
-	public function reset_session() {
-		static::restore_customer_data();
-
-		$user_id = get_current_user_id();
-		if ( $user_id ) {
-			delete_user_meta( $user_id, static::$name . '_shop_as_client' );
-			delete_user_meta( $user_id, static::$name . '_create_user' );
-			delete_user_meta( $user_id, static::$name . '_current_customer_data' );
-		}
-	}
-
-	/**
-	 * Prevent the manager's own billing/shipping user meta from being
-	 * overwritten while they are shopping as a client on the block checkout.
-	 *
-	 * Short-circuits the {add,update}_user_metadata filters for the current
-	 * user's billing_ and shipping_ keys when SAC is active, so WooCommerce's
-	 * block-checkout customer sync can't clobber the manager's saved address.
-	 *
-	 * @param  null|bool $check     The short-circuit value (null to proceed).
+	 * @param  null|bool $check     Short-circuit value (null to proceed).
 	 * @param  int       $object_id User ID the meta write targets.
 	 * @param  string    $meta_key  Meta key being written.
 	 * @return null|bool `true` to silently skip the write, else $check.
 	 */
-	public static function prevent_manager_address_meta_overwrite( $check, $object_id, $meta_key ) {
+	public function suppress_address_meta( $check, $object_id, $meta_key ) {
 
 		if ( null !== $check ) {
 			return $check;
 		}
 
-		if ( ! static::is_active() ) {
+		// Active either via the cart-phase header or the captured checkout state.
+		if ( ! static::is_sac_request() && empty( $this->checkout_state['shopAsClient'] ) ) {
 			return $check;
 		}
 
@@ -307,8 +199,8 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return $check;
 		}
 
-		if ( preg_match( '/^(billing|shipping)_/', $meta_key ) ) {
-			// Short-circuit: pretend the meta write succeeded but do not persist.
+		if ( in_array( $meta_key, static::$default_checkout_keys, true ) ) {
+			// Short-circuit: pretend the write succeeded but persist nothing.
 			return true;
 		}
 
@@ -316,58 +208,137 @@ class ShopAsClient_Extend_Store_Endpoint {
 	}
 
 	/**
-	 * Restore customer data to its state before the purchase.
+	 * Process a block-checkout order placed shopping as a client.
 	 *
+	 * @param  \WC_Order $order Order object.
 	 * @return void
+	 *
+	 * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When user creation fails.
 	 */
-	public static function restore_customer_data() {
-		$user_id  = get_current_user_id();
-		$customer = new \WC_Customer( $user_id );
+	public function process_order( $order ) {
 
-		$customer_data = get_user_meta( $user_id, static::$name . '_current_customer_data', true );
-		if ( empty( $customer_data ) ) {
-			$customer_data = null;
+		if ( ! $order instanceof \WC_Order ) {
+			return;
 		}
 
-		static::switch_customer_data( $customer, $customer_data );
+		if ( ! shop_as_client_can_checkout() ) {
+			return;
+		}
 
-		$customer->save();
+		// Idempotency: if this order was already processed, skip.
+		if ( $order->get_meta( '_billing_shop_as_client' ) === 'yes' ) {
+			return;
+		}
 
-		wc()->customer = $customer; // This is required to trigger the fields update on the checkout when the current customer data is restored ¯\_(ツ)_/¯.
+		$state = $this->checkout_state;
+
+		if ( empty( $state['shopAsClient'] ) ) {
+			return;
+		}
+
+		$create_user = ! empty( $state['createUser'] );
+
+		$user_id = $this->resolve_user( $order, $create_user );
+
+		if ( is_wp_error( $user_id ) ) {
+			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
+				'shop_as_client_checkout_order_process_error',
+				sprintf(
+					/* translators: %s: error message */
+					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
+					esc_html( $user_id->get_error_message() )
+				),
+				400
+			);
+		}
+
+		// Stamp the order as a shop-as-client order regardless of whether a
+		// customer was resolved: when no user matches and create-user is off the
+		// order is still placed on a client's behalf (as a guest), so the
+		// handler attribution and the order address must reflect that.
+		$order->update_meta_data( '_billing_shop_as_client', 'yes' );
+		$order->update_meta_data( '_billing_shop_as_client_handler_user_id', get_current_user_id() );
+		$order->update_meta_data( '_billing_shop_as_client_checkout', 'blocks' );
+
+		$order->set_customer_id( (int) $user_id );
+		$order->save();
+
+		// Optionally write the order's data back onto the (client) customer.
+		if ( ! empty( $user_id ) && apply_filters( 'shop_as_client_update_customer_data', false ) ) {
+			$customer = new \WC_Customer( $user_id );
+			static::switch_customer_data( $customer, static::get_customer_data_by_order_id( $order ) );
+			$customer->save();
+		}
+
+		do_action( 'shop_as_client_checkout_order_processed', $order, $user_id );
 	}
 
 	/**
-	 * Get customer data by user ID.
+	 * Resolve the target customer for the order by the order's billing email,
+	 * creating a user when enabled and no match is found.
 	 *
-	 * @param  int|\WC_Customer $user_id The user ID, or the WC_Customer object.
-	 * @return array
+	 * @param  \WC_Order $order       Order object.
+	 * @param  bool      $create_user Whether to create a user when no match.
+	 * @return int|\WP_Error Resolved user ID (0 if none), or WP_Error on creation failure.
 	 */
-	public static function get_customer_data_by_user_id( $user_id ) {
+	protected function resolve_user( $order, $create_user ) {
 
-		$customer = new \WC_Customer( $user_id );
+		$user_email = $order->get_billing_email();
 
-		$customer_data = array(
-			'customer_id' => $customer->get_id(),
+		if ( empty( $user_email ) ) {
+			$user_email = apply_filters( 'shop_as_client_user_email_if_empty', $user_email, $order );
+		}
+
+		if ( empty( $user_email ) ) {
+			return 0;
+		}
+
+		$user = get_user_by( 'email', $user_email );
+
+		if ( $user instanceof \WP_User ) {
+			return $user->ID;
+		}
+
+		$query = new \WP_User_Query(
+			array(
+				'fields'     => 'ID',
+				'exclude'    => array( get_current_user_id() ),
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => 'billing_email',
+						'value'   => $user_email,
+						'compare' => '=',
+					),
+				),
+			)
 		);
 
-		foreach ( static::$default_checkout_keys as $key ) {
-			if ( is_callable( array( $customer, "get_$key" ) ) ) {
-				$customer_data[ $key ] = $customer->{"get_$key"}();
-			}
+		$user_ids = $query->get_results();
+
+		if ( ! empty( $user_ids ) ) {
+			return absint( reset( $user_ids ) );
 		}
 
-		return $customer_data;
+		if ( $create_user ) {
+			return shop_as_client_create_customer(
+				$user_email,
+				$order->get_billing_first_name(),
+				$order->get_billing_last_name()
+			);
+		}
+
+		return 0;
 	}
 
 	/**
-	 * Get customer data by order ID.
+	 * Get customer data from an order.
 	 *
-	 * @param  int $order_id The order ID, or the WC_Order object.
+	 * @param  int|\WC_Order $order The order ID or order object.
 	 * @return array
 	 */
-	public static function get_customer_data_by_order_id( $order_id ) {
+	public static function get_customer_data_by_order_id( $order ) {
 
-		$order = new \WC_Order( $order_id );
+		$order = $order instanceof \WC_Order ? $order : new \WC_Order( $order );
 
 		$customer_data = array(
 			'customer_id' => $order->get_customer_id(),
@@ -383,7 +354,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	}
 
 	/**
-	 * Switch customer data.
+	 * Apply a keyed data array onto a customer via its setters.
 	 *
 	 * @param  \WC_Customer $customer Customer object.
 	 * @param  array        $data     Customer data.
@@ -395,7 +366,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return;
 		}
 
-		if ( ! isset( $data ) ) {
+		if ( ! is_array( $data ) ) {
 			return;
 		}
 
