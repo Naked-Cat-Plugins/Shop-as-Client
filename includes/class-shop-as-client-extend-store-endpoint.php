@@ -191,6 +191,12 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return $check;
 		}
 
+		// The header is attacker-controllable, so it is not an authorization
+		// boundary: only suppress for a user actually allowed to shop as a client.
+		if ( ! shop_as_client_can_checkout() ) {
+			return $check;
+		}
+
 		if ( (int) $object_id !== (int) get_current_user_id() ) {
 			return $check;
 		}
