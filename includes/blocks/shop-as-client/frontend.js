@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const checkoutBlock = document.querySelector(
 		'.wp-block-woocommerce-checkout'
 	);
+
 	if (!checkoutBlock) {
 		return;
 	}
@@ -40,8 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		const actionsBlock = document.querySelector(
 			'.wp-block-woocommerce-checkout-actions-block'
 		);
-		const targetBlock = document.querySelector(block.dataset.position);
 
+		const position = block.dataset.position;
+		if (!position) {
+			return;
+		}
+
+		const targetBlock = document.querySelector(position);
 		if (!actionsBlock || !targetBlock) {
 			return;
 		}
