@@ -586,12 +586,12 @@ add_action(
 				if ( $order ) {
 					ob_start();
 					?>
-				<div class="woocommerce-error">
-					<a href="<?php echo esc_url( SHOPASCLIENT_PRO_OUT_LINK ); ?>" class="button wc-forward" target="_blank">
-						<?php esc_html_e( 'Get the PRO add-on to fix this', 'shop-as-client' ); ?>
-					</a>
-					<?php echo wp_kses_post( __( '<strong>Shop as client</strong><br/>Since WooCommerce 7.8.1 only the order owner/customer is able to see the "Order received" details.', 'shop-as-client' ) ); ?>
-				</div>
+					<div class="woocommerce-error">
+						<a href="<?php echo esc_url( SHOPASCLIENT_PRO_OUT_LINK ); ?>" class="button wc-forward" target="_blank">
+							<?php esc_html_e( 'Get the PRO add-on to fix this', 'shop-as-client' ); ?>
+						</a>
+						<?php echo wp_kses_post( __( '<strong>Shop as client</strong><br/>Since WooCommerce 7.8.1 only the order owner/customer is able to see the "Order received" details.', 'shop-as-client' ) ); ?>
+					</div>
 					<?php
 					$output = ob_get_clean() . $output;
 				}
