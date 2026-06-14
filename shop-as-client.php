@@ -597,8 +597,14 @@ add_action(
 			}
 
 			/**
-			 * @param string $output Orginal HTML.
+			 * Filters the [woocommerce_checkout] shortcode output, on the
+			 * "Order received" page, to prepend the notice from
+			 * shop_as_client_checkout_order_received_notice_html() when the
+			 * current user is the order's handler but not its owner.
+			 *
+			 * @param string $output Shortcode output.
 			 * @param string $tag    Shortcode tag.
+			 * @return string Filtered shortcode output.
 			 */
 			function shop_as_client_checkout_order_received( $output, $tag ) {
 				$order = shop_as_client_is_our_checkout_order_received( $tag );
