@@ -9,7 +9,7 @@ import { applyFilters } from '@wordpress/hooks';
 import { CheckboxControl } from '@woocommerce/blocks-components';
 import { getSetting } from '@woocommerce/settings';
 import apiFetch from '@wordpress/api-fetch';
-import { dispatch } from '@wordpress/data';
+import { dispatch, subscribe } from '@wordpress/data';
 import { CHECKOUT_STORE_KEY } from '@woocommerce/block-data';
 
 /**
@@ -51,8 +51,21 @@ sac.sync = () => {
 		dispatch(CHECKOUT_STORE_KEY).setExtensionData(EXTENSION_NAMESPACE, {
 			...sac.state,
 		});
+		return true;
 	} catch (error) {
-		// Checkout store not ready yet; the next sync will carry the state.
+		// Checkout store not ready yet. A later toggle would re-sync, but the
+		// defaults may already be correct and the user may never toggle, so
+		// subscribe once and retry as soon as the store becomes available.
+		if (!sac.syncPending) {
+			sac.syncPending = true;
+			const unsubscribe = subscribe(() => {
+				if (sac.sync()) {
+					sac.syncPending = false;
+					unsubscribe();
+				}
+			});
+		}
+		return false;
 	}
 };
 

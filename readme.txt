@@ -198,7 +198,8 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= 7.6 - TBA =
+= 8.0 - TBA =
+* [TWEAK] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 
 = 7.5 - 2025-03-29 =

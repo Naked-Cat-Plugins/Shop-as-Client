@@ -206,8 +206,11 @@ class ShopAsClient_Extend_Store_Endpoint {
 		}
 
 		if ( in_array( $meta_key, static::$default_checkout_keys, true ) ) {
-			// Short-circuit: pretend the write succeeded but persist nothing.
-			return true;
+			// Short-circuit: pretend the write succeeded but persist nothing. The
+			// return value must match each filter's contract: `add_user_metadata`
+			// callers expect the integer meta_id that `add_user_meta()` returns,
+			// while `update_user_metadata` callers expect a boolean.
+			return 'add_user_metadata' === current_filter() ? 1 : true;
 		}
 
 		return $check;
@@ -251,8 +254,10 @@ class ShopAsClient_Extend_Store_Endpoint {
 				'shop_as_client_checkout_order_process_error',
 				sprintf(
 					/* translators: %s: error message */
-					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
-					esc_html( $user_id->get_error_message() )
+					__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
+					// Store API serializes this into a JSON response, so HTML-escaping
+					// is the wrong layer; sanitize the dynamic message instead.
+					sanitize_text_field( $user_id->get_error_message() )
 				),
 				400
 			);
