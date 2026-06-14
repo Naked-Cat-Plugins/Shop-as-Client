@@ -118,7 +118,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 */
 	public function checkout_schema() {
 		return array(
-			'shopAsClient'       => array(
+			'shopAsClient' => array(
 				'description' => __( 'Whether the order is being placed shopping as a client.', 'shop-as-client' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit' ),

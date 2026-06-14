@@ -545,12 +545,15 @@ add_action(
 
 			/**
 			 * Thank you page warning - https://github.com/woocommerce/woocommerce/pull/38983/
-			 * Still not working on the blocks checkout
 			 *
-			 * @param string $tag The shortcode tag.
+			 * @param string|null $tag                   The shortcode tag, used to detect the checkout shortcode. Ignored when $is_checkout_shortcode is set.
+			 * @param bool|null   $is_checkout_shortcode Pass true when the caller already knows this is the checkout (e.g. the woocommerce/classic-shortcode block).
 			 */
-			function shop_as_client_is_our_checkout_order_received( $tag ) {
-				if ( $tag === apply_filters( 'woocommerce_checkout_shortcode_tag', 'woocommerce_checkout' ) && is_order_received_page() && shop_as_client_can_checkout() ) {
+			function shop_as_client_is_our_checkout_order_received( $tag = null, $is_checkout_shortcode = null ) {
+				if ( is_null( $is_checkout_shortcode ) ) {
+					$is_checkout_shortcode = ( $tag === apply_filters( 'woocommerce_checkout_shortcode_tag', 'woocommerce_checkout' ) );
+				}
+				if ( $is_checkout_shortcode && is_order_received_page() && shop_as_client_can_checkout() ) {
 					global $wp;
 					if ( isset( $wp->query_vars['order-received'] ) && intval( $wp->query_vars['order-received'] ) > 0 ) {
 						$order = wc_get_order( $wp->query_vars['order-received'] );
@@ -573,29 +576,61 @@ add_action(
 			}
 			if ( version_compare( WC_VERSION, '7.8.1', '>=' ) ) {
 				add_filter( 'do_shortcode_tag', 'shop_as_client_checkout_order_received', 10, 2 );
+				add_filter( 'render_block_woocommerce/classic-shortcode', 'shop_as_client_checkout_order_received_block', 10, 2 );
 			}
 
 			/**
-			 * Undocumented function
-			 *
-			 * @param string $output Orginal HTML.
-			 * @param string $tag    Shortcode tag.
+			 * Markup for the "Order received" notice shown to the order handler
+			 * when WooCommerce 7.8.1+ hides the order details from non-owners.
 			 */
-			function shop_as_client_checkout_order_received( $output, $tag ) {
-				$order = shop_as_client_is_our_checkout_order_received( $tag );
-				if ( $order ) {
-					ob_start();
-					?>
+			function shop_as_client_checkout_order_received_notice_html() {
+				ob_start();
+				?>
 				<div class="woocommerce-error">
 					<a href="<?php echo esc_url( SHOPASCLIENT_PRO_OUT_LINK ); ?>" class="button wc-forward" target="_blank">
 						<?php esc_html_e( 'Get the PRO add-on to fix this', 'shop-as-client' ); ?>
 					</a>
 					<?php echo wp_kses_post( __( '<strong>Shop as client</strong><br/>Since WooCommerce 7.8.1 only the order owner/customer is able to see the "Order received" details.', 'shop-as-client' ) ); ?>
 				</div>
-					<?php
-					$output = ob_get_clean() . $output;
+				<?php
+				return ob_get_clean();
+			}
+
+			/**
+			 * Filters the [woocommerce_checkout] shortcode output, on the
+			 * "Order received" page, to prepend the notice from
+			 * shop_as_client_checkout_order_received_notice_html() when the
+			 * current user is the order's handler but not its owner.
+			 *
+			 * @param string $output Shortcode output.
+			 * @param string $tag    Shortcode tag.
+			 * @return string Filtered shortcode output.
+			 */
+			function shop_as_client_checkout_order_received( $output, $tag ) {
+				$order = shop_as_client_is_our_checkout_order_received( $tag );
+				if ( $order ) {
+					$output = shop_as_client_checkout_order_received_notice_html() . $output;
 				}
 				return $output;
+			}
+
+			/**
+			 * Same notice as shop_as_client_checkout_order_received(), but for
+			 * Checkout pages built with the woocommerce/classic-shortcode block,
+			 * which renders WC_Shortcode_Checkout::output() directly and never
+			 * fires do_shortcode_tag.
+			 *
+			 * @param string $block_content Rendered block HTML.
+			 * @param array  $block         Parsed block, including attrs.
+			 */
+			function shop_as_client_checkout_order_received_block( $block_content, $block ) {
+				if ( isset( $block['attrs']['shortcode'] ) && 'checkout' === $block['attrs']['shortcode'] ) {
+					$order = shop_as_client_is_our_checkout_order_received( null, true );
+					if ( $order ) {
+						$block_content = shop_as_client_checkout_order_received_notice_html() . $block_content;
+					}
+				}
+				return $block_content;
 			}
 
 			/**
