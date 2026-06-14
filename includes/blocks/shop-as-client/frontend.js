@@ -47,7 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 
-		const targetBlock = document.querySelector(position);
+		// `position` comes from the filterable data-position attribute, so it may
+		// not be a valid CSS selector. Guard against the SyntaxError that
+		// querySelector would otherwise throw and break the checkout script.
+		let targetBlock = null;
+		try {
+			targetBlock = document.querySelector(position);
+		} catch (e) {
+			return;
+		}
+
 		if (!actionsBlock || !targetBlock) {
 			return;
 		}

@@ -178,7 +178,9 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 * @param  null|bool $check     Short-circuit value (null to proceed).
 	 * @param  int       $object_id User ID the meta write targets.
 	 * @param  string    $meta_key  Meta key being written.
-	 * @return null|bool `true` to silently skip the write, else $check.
+	 * @return null|bool|int Short-circuit value to silently skip the write
+	 *                       (integer meta_id for `add_user_metadata`, `true`
+	 *                       for `update_user_metadata`), else $check.
 	 */
 	public function suppress_address_meta( $check, $object_id, $meta_key ) {
 

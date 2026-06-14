@@ -9,33 +9,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-12T16:14:21+00:00\n"
+"POT-Creation-Date: 2026-06-14T16:22:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.13.0-alpha-2616ff0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shop-as-client\n"
 
 #. Plugin Name of the plugin
-#: shop-as-client.php:3
+#: shop-as-client.php
 msgid "Shop as Client for WooCommerce - Manual, Phone & Email Orders"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: shop-as-client.php:4
+#: shop-as-client.php
 msgid "https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/"
 msgstr ""
 
 #. Description of the plugin
-#: shop-as-client.php:5
+#: shop-as-client.php
 msgid "Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout."
 msgstr ""
 
 #. Author of the plugin
-#: shop-as-client.php:7
+#: shop-as-client.php
 msgid "Naked Cat Plugins (by Webdados)"
 msgstr ""
 
 #. Author URI of the plugin
-#: shop-as-client.php:8
+#: shop-as-client.php
 msgid "https://nakedcatplugins.com/"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgid "Whether to create a customer account when none matches."
 msgstr ""
 
 #. translators: %s: error message
-#: includes/class-shop-as-client-extend-store-endpoint.php:254
+#: includes/class-shop-as-client-extend-store-endpoint.php:259
 #: shop-as-client.php:387
 #, php-format
 msgid "Shop as Client failed to create user: %s"
@@ -140,14 +140,14 @@ msgstr ""
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
 #: includes/blocks/shop-as-client/attributes.js:20
-#: includes/blocks/shop-as-client/block.js:116
+#: includes/blocks/shop-as-client/block.js:129
 msgid "Shop as client"
 msgstr ""
 
 #: shop-as-client.php:257
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
-#: includes/blocks/shop-as-client/block.js:128
+#: includes/blocks/shop-as-client/block.js:141
 msgid "Create user (if not found by email)?"
 msgstr ""
 
@@ -201,13 +201,13 @@ msgstr ""
 
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
-#: includes/blocks/shop-as-client/block.js:141
+#: includes/blocks/shop-as-client/block.js:154
 msgid "Do you want to load the customer details automatically?"
 msgstr ""
 
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
-#: includes/blocks/shop-as-client/block.js:145
+#: includes/blocks/shop-as-client/block.js:158
 msgid "Get the PRO add-on!"
 msgstr ""
 
