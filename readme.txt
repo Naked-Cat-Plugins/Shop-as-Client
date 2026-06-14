@@ -198,8 +198,9 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= 7.6 - TBA =
+= 8.0 - TBA =
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
+* [FIX] Show the "Order received" page notice for the order handler on Checkout pages built with the `woocommerce/classic-shortcode` block (previously only worked with the `[woocommerce_checkout]` shortcode)
 
 = 7.5 - 2025-03-29 =
 * [NEW] Renamed from “Shop as Client for WooCommerce” to “Shop as Client for WooCommerce - Manual, Phone & Email Orders”
