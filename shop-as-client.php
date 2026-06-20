@@ -28,7 +28,7 @@ if ( ! defined( 'SHOPASCLIENT_REQUIRED_WC' ) ) {
 }
 define( 'SHOPASCLIENT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SHOPASCLIENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'SHOPASCLIENT_PRO_OUT_LINK', 'https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=' . rawurlencode( esc_url( home_url( '/' ) ) ) . '&amp;utm_medium=link&amp;utm_campaign=shop_as_client_plugin' );
+define( 'SHOPASCLIENT_PRO_OUT_LINK', 'https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=' . rawurlencode( esc_url( home_url( '/' ) ) ) . '&utm_medium=link&utm_campaign=shop_as_client_plugin' );
 
 /**
  * Check if WooCommerce is active
@@ -91,7 +91,7 @@ add_action(
 				$description = sprintf(
 					/* translators: %1$s: link open, %2$s: link close */
 					__( 'Available on the %1$sPRO Add-on%2$s', 'shop-as-client' ),
-					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '">',
+					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '" target="_blank">',
 					'</a>'
 				);
 				return array(

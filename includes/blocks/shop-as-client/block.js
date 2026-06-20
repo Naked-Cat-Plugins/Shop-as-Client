@@ -26,6 +26,7 @@ const {
 	defaultShopAsClient,
 	defaultCreateUser,
 	showProAddOnNotice,
+	proOutLink,
 	blockPosition,
 } = getSetting('ptwoo_shop_as_client_data');
 
@@ -159,7 +160,7 @@ const Block = (props) => {
 						),
 						{
 							a: (
-								<ExternalLink href="https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/" />
+								<ExternalLink href={proOutLink} />
 							),
 							br: <br />,
 						}
