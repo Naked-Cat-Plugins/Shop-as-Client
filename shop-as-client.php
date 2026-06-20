@@ -3,7 +3,7 @@
  * Plugin Name:          Shop as Client for WooCommerce - Manual, Phone & Email Orders
  * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout.
- * Version:              7.5
+ * Version:              8.0
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
@@ -12,7 +12,7 @@
  * Tested up to:         7.0
  * Requires PHP:         7.4
  * WC requires at least: 7.1
- * WC tested up to:      10.6
+ * WC tested up to:      10.9
  * Requires Plugins:     woocommerce
  * License:              GPLv3
  **/
@@ -718,6 +718,38 @@ add_action(
 	function () {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+	}
+);
+
+/**
+ * On activation, set a transient so we can redirect to the settings page.
+ */
+register_activation_hook(
+	__FILE__,
+	function () {
+		set_transient( 'shop_as_client_activation_redirect_' . get_current_user_id(), true, 30 );
+	}
+);
+
+/**
+ * Redirect to the settings page after single (non-bulk) activation.
+ */
+add_action(
+	'admin_init',
+	function () {
+		// Do not redirect during AJAX requests.
+		if ( wp_doing_ajax() ) {
+			return;
+		}
+		$transient_key = 'shop_as_client_activation_redirect_' . get_current_user_id();
+		if ( get_transient( $transient_key ) ) {
+			delete_transient( $transient_key );
+			// Do not redirect on bulk activation.
+			if ( ! isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				wp_safe_redirect( admin_url( 'admin.php?page=wc-settings&tab=account&section=shop_as_client' ) );
+				exit;
+			}
+		}
 	}
 );
 

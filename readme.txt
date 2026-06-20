@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 7.5
+Stable tag: 8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -199,9 +199,12 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 == Changelog ==
 
 = 8.0 - TBA =
-* [TWEAK] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
+* [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
+* [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 * [FIX] Show the "Order received" page notice for the order handler on Checkout pages built with the `woocommerce/classic-shortcode` block (previously only worked with the `[woocommerce_checkout]` shortcode)
+* [DEV] Requires ...
+* [DEV] Tested up to WordPress 7.1-alpha-62536 and WooCommerce 10.9.0-beta.2
 
 = 7.5 - 2025-03-29 =
 * [NEW] Renamed from “Shop as Client for WooCommerce” to “Shop as Client for WooCommerce - Manual, Phone & Email Orders”
@@ -210,18 +213,18 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 7.4 - 2025-03-25 =
 * [NEW] Free plugin ownership transferred from [Marco Almeida | Webdados](https://profiles.wordpress.org/webdados/) to [Naked Cat Plugins](https://profiles.wordpress.org/nakedcatplugins/) on WordPress.org - No worries, we’re the same people :-)
 * [TWEAK] Settings moved to a new section called “Shop as client” under “Accounts & Privacy”
-* [DEV] Tested with 7.0-RC1-62112 and WooCommerce 10.6.1
+* [DEV] Tested up to 7.0-RC1-62112 and WooCommerce 10.6.1
 
 = 7.3 - 2025-02-13 =
 * [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Build release ZIP GitHub action to make sure WordPress detects a direct upload as the same plugin instead of creating a new folder
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater v13.1
-* [DEV] Tested with WordPress 7.0-alpha-61630 and WooCommerce 10.5.1
+* [DEV] Tested up to WordPress 7.0-alpha-61630 and WooCommerce 10.5.1
 
 = 7.2 - 2026-01-23 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Improve compatibility with [Taxonomy Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): allow changing the cart item price even if a taxonomy discount is applied to it
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New updater v13 with better license status information on the plugin settings screen and plugins list
 * [DEV] Implement release automations via GitHub Actions
-* [DEV] Tested with WordPress 7.0-alpha-61496 and WooCommerce 10.5.0-beta.1
+* [DEV] Tested up to WordPress 7.0-alpha-61496 and WooCommerce 10.5.0-beta.1
 
 = 7.1 - 2026-01-01 =
 * Free version not released
@@ -229,14 +232,14 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 7.0 - 2025-12-30 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Allow changing product price on the cart, for example, to offer a special deal on the current order
 * [DEV] Removed `load_plugin_textdomain` call as WordPress handles it
-* [DEV] Tested with WordPress 7.0-alpha-61413 and WooCommerce 10.4.0
+* [DEV] Tested up to WordPress 7.0-alpha-61413 and WooCommerce 10.4.0
 
 = 6.8.2 - 2025-12-10 =
 * [FIX] Checkbox margins on the blocks checkout
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New updater v12
 * [DEV] Remove unnecessary folders from automatic deployment from GitHub to WordPress.org
 * [DEV] Remove broken version 6.8 - Sorry for the mess
-* [DEV] Tested with WordPress 7.0-alpha-61365 and WooCommerce 10.4.3
+* [DEV] Tested up to WordPress 7.0-alpha-61365 and WooCommerce 10.4.3
 
 = 6.7 - 2025-11-21 =
 * [FIX] PHP error in the rare eventuality of the Free plugin being deactivated, with the PRO add-on still active
@@ -244,13 +247,13 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 6.6 - 2025-11-20 =
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New updater v11.1 with multisite support improvements
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Improve license activation error handling
-* [DEV] Tested with WordPress 6.9-RC2-61266 and WooCommerce 10.3.5
+* [DEV] Tested up to WordPress 6.9-RC2-61266 and WooCommerce 10.3.5
 
 = 6.5 - 2025-08-04 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Allow administrators to edit the handler on the order edit screen
 * [DEV] New action `shop_as_client_after_order_handler` after the handler name on the order edit screen
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop as Client 6.5
-* [DEV] Tested with WordPress 6.9-alpha-60536 and WooCommerce 10.1.0-rc.2
+* [DEV] Tested up to WordPress 6.9-alpha-60536 and WooCommerce 10.1.0-rc.2
 
 = 6.4 - 2025-07-21 =
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Updater improvements (v11.0) to check for expired licenses
@@ -262,14 +265,14 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Account for situations where the checkout nonce is not called `woocommerce-process-checkout-nonce` but `_wpnonce`
 * [FIX] Use `woocommerce_checkout_fields` instead of `woocommerce_billing_fields` to add our fields, because in some edge cases `is_checkout()` would not work and the Shop as Client fields stopped showing on the checkout (free version)
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Minor coding standards fixes on the functions.js file
-* [DEV] Tested with WordPress 6.9-alpha-60355 and WooCommerce 10.0.0-rc.1
+* [DEV] Tested up to WordPress 6.9-alpha-60355 and WooCommerce 10.0.0-rc.1
 
 = 6.2 - 2025-06-22 =
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Optimization - set several options to not be autoloaded
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Create update routines mechanism
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove `SHOPASCLIENT_PRO_REQUIRED_WC` constant and use the free plugin `SHOPASCLIENT_REQUIRED_WC`
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop as Client 6.0
-* [DEV] Tested with WordPress 6.9-alpha-60331 and WooCommerce 9.9.4
+* [DEV] Tested up to WordPress 6.9-alpha-60331 and WooCommerce 9.9.4
 
 = 6.1 - 2025-04-14 =
 * [NEW] We are now called Naked Cat Plugins 😻
@@ -278,7 +281,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Build user meta index for better autocomplete search results (automatically updated when user is created or changed, but can also be triggered for all users on the settings or via WP-CLI with `wp shop-as-client-pro rebuild-users-index`)
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Set default number of the autocomplete returned results to 10 instead of 5
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Remove the “Search on users without WC meta” option and make it the default behaviour
-* [DEV] Tested with WordPress 6.8-beta1-59952 and WooCommerce 9.8.0-beta.1
+* [DEV] Tested up to WordPress 6.8-beta1-59952 and WooCommerce 9.8.0-beta.1
 
 = 5.1 - 2025-02-19 =
 * [NEW] Add developer filters to the Shop as Client fields classes
@@ -289,7 +292,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Only search on orders address index meta field for better performance
 * [DEV] Simplify 3rd-party plugin checks
 * [DEV] Remove WooCommerce 7.1 or above tests as we’re not supporting lower versions anyway
-* [DEV] Tested with WordPress 6.8-alpha-59837 and WooCommerce 9.7.0-rc.1
+* [DEV] Tested up to WordPress 6.8-alpha-59837 and WooCommerce 9.7.0-rc.1
 
 = 5.0 - 2024-12-17 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Integration with [Simple Custom Fields for WooCommerce Blocks Checkout](https://nakedcatplugins.com/product/simple-custom-fields-for-woocommerce-blocks-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): autocomplete fields set by that plugin
@@ -297,7 +300,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [TWEAK] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Use the customer billing name by default for the user switching link
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Removed the non-autocomplete search on the classic checkout (deprecated on 3.3)
 * [DEV] Apply WordPress Coding Standards
-* [DEV] Tested with WordPress 6.8-alpha-59521, WooCommerce 9.5.0, and User Switching 1.9.1
+* [DEV] Tested up to WordPress 6.8-alpha-59521, WooCommerce 9.5.0, and User Switching 1.9.1
 
 = 4.0 - 2024-11-22 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better User Switching integration: Allows switching after searching and finding a customer on the checkout, and transferring the current cart to the customer user, thus allowing the use of specific customer account functionalities, for example, use points from the “Points and Rewards” plugin, and then switch back to the original Administrator or Shop Manager user on the order received (thank you) page
@@ -306,11 +309,11 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [FIX] Several minor fixes, including PHP notices and translation strings
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): License validation on websites with WPML set to have different domains per language
 * [DEV] Requires PHP 7.4, WordPress 5.8, and WooCommerce 7.1
-* [DEV] Tested with WordPress 6.8-alpha-59448, WooCommerce 9.5.0-beta.1, and User Switching 1.9.0
+* [DEV] Tested up to WordPress 6.8-alpha-59448, WooCommerce 9.5.0-beta.1, and User Switching 1.9.0
 
 = 3.7 - 2024-09-27 =
 * [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Make sure OrderUtil is only performed if WooCommerce 7.1 or above is being used
-* [DEV] Tested with WordPress 6.7-alpha-59098 and WooCommerce 9.3.3
+* [DEV] Tested up to WordPress 6.7-alpha-59098 and WooCommerce 9.3.3
 * WARNING: We will soon drop support for WooCommerce below 7.1
 
 = 3.6.1 - 2024-04-17 =
@@ -319,22 +322,22 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 3.6 - 2024-04-17 =
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Compatibility for the WooCommerce block-based Checkout
 * [DEV] Several fixes on the blocks integration for compatibility with the PRO add-on
-* [DEV] Tested with WordPress 6.6-alpha-58011 and WooCommerce 8.8.1
+* [DEV] Tested up to WordPress 6.6-alpha-58011 and WooCommerce 8.8.1
 
 = 3.5.1 - 2024-04-05 =
 * [FIX] Avoid fatal error when trying to load the blocks integration on older WooCommerce versions
 * [DEV] Add “Requires Plugins” header
-* [DEV] Tested with WordPress 6.6-alpha-57928 and WooCommerce 8.8.0-rc.1
+* [DEV] Tested up to WordPress 6.6-alpha-57928 and WooCommerce 8.8.0-rc.1
 
 = 3.5 - 2024-03-04 =
 * [NEW] BETA compatibility for the WooCommerce block-based Checkout (only on the Free version for now)
-* [DEV] Tested with WordPress 6.5-beta3-57738 and WooCommerce 8.7.0-beta.2
+* [DEV] Tested up to WordPress 6.5-beta3-57738 and WooCommerce 8.7.0-beta.2
 
 = 3.4 - 2024-02-20 =
 * [DEV] Change plugin loading priority
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Requires Shop As Client (free) 3.4
 * [DEV] Requires WooCommerce 5.4 or above
-* [DEV] Tested with WordPress 6.5-beta1-57656 and WooCommerce 8.6.0
+* [DEV] Tested up to WordPress 6.5-beta1-57656 and WooCommerce 8.6.0
 
 = 3.3 - 2024-01-29 =
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Deprecate non-autocomplete search method on the checkout
@@ -342,7 +345,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 = 3.2 - 2024-01-23 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better feedback when the license is expired
-* Tested with WordPress 6.5-alpha-57299 and WooCommerce 8.5.1
+* Tested up to WordPress 6.5-alpha-57299 and WooCommerce 8.5.1
 
 = 3.1 - 2023-12-19 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Better User Switching integration: Blocks Checkout compatibility and “switch back to admin” links on the order received (thank you) page
@@ -359,17 +362,17 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Show handler and allow filtering by handler on the admin orders list, now compatible with HPOS
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Hide license key from shop managers (only available for users with “manage_options” capabilities, normally Administrators)
 * Small internal changes to better integrate with the PRO add-on and a future Funnelkit integration
-* Tested with WordPress 6.5-alpha-57189 and WooCommerce 8.4
+* Tested up to WordPress 6.5-alpha-57189 and WooCommerce 8.4
 
 = 2.7 - 2023-11-27 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Update plugin translations online instead of shipping them with the main plugin
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): HTML tag closing fix on the settings page
 * Requires WordPress 5.4
-* Tested with WordPress 6.5-alpha-57137 and WooCommerce 8.3.1
+* Tested up to WordPress 6.5-alpha-57137 and WooCommerce 8.3.1
 
 = 2.6 - 2023-10-12 =
 * Do not show other plugins promotion banner if the [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) is active
-* Tested with WordPress 6.4-beta2-56809 and WooCommerce 8.2.0
+* Tested up to WordPress 6.4-beta2-56809 and WooCommerce 8.2.0
 
 = 2.5 - 2023-08-01 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Fix two fatal errors (`print_f` and `sprint_f` instead of `printf` and `sprintf`)
@@ -377,7 +380,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 2.4 - 2023-07-25 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New autocomplete option to try to find users by registration first name, last name, and email if not found by WooCommerce meta.
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Fix a bug where the autocomplete would not be activated if the “Shop as client field default” option is set no “No”
-* Tested with WordPress 6.3-RC1-56289 and WooCommerce 8.0.0-beta.1
+* Tested up to WordPress 6.3-RC1-56289 and WooCommerce 8.0.0-beta.1
 
 = 2.3.1 - 2023-07-14 =
 * Fix updater for PRO add-on users
@@ -390,17 +393,17 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 = 2.2 - 2023-07-07 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Exclude some 3rd party plugin fields from being cleared from the checkout when the “Clear checkout fields” option is set to “Yes”, and a new `shop_as_client_empty_checkout_field_exclusions` filter to allow developers to add more fields to the exclusions
-* Tested with WooCommerce 7.9.0-rc.3
+* Tested up to WooCommerce 7.9.0-rc.3
 
 = 2.1 - 2023-05-13 =
 * High-Performance Order Storage compatible (in beta and only on WooCommerce 7.1 and above)
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Add payment gateway support for [Subscriptions for WooCommerce](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and confirmed support for [WooCommerce Subscriptions](https://woocommerce.com/products/woocommerce-subscriptions/)
 * Requires WooCommerce 5.0 or above
-* Tested with WordPress 6.3-alpha-55693 and WooCommerce 7.7
+* Tested up to WordPress 6.3-alpha-55693 and WooCommerce 7.7
 
 = 2.0 - 2022-10-13 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Show handler and allow filtering by handler on the admin orders list
-* Tested with WordPress 6.1-RC1-54506 and WooCommerce 7.0
+* Tested up to WordPress 6.1-RC1-54506 and WooCommerce 7.0
 
 = 1.9.2 - 2022-07-28 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Fix a bug on the updater class
@@ -412,14 +415,14 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * New filter `shop_as_client_user_email_if_empty` to allow developers to provide an email address programmatically when none is provided by the user
 * Only show the InvoiceXpress nag for portuguese stores
 * Requires WordPress 5.0 and WooCommerce 4.0 or above
-* Tested with WordPress 6.1-alpha-53789 and WooCommerce 6.8.0-beta.2
+* Tested up to WordPress 6.1-alpha-53789 and WooCommerce 6.8.0-beta.2
 
 = 1.9.0 - 2022-07-28 =
 * Unreleased version with a bug
 
 = 1.8.0 - 2022-05-05 =
 * New brand: PT Woo Plugins 🥳
-* Tested with WooCommerce 6.5.0-rc.1 and WordPress 6.0-beta2-53236
+* Tested up to WooCommerce 6.5.0-rc.1 and WordPress 6.0-beta2-53236
 
 = 1.7.2 - 2021-05-21 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Fix on the payment gateway: stock behaviour when setting the order “On hold”
@@ -434,32 +437,32 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * Drop support for WooCommerce below 3.0
 * Requires PHP 7
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Add the “Update URI” header
-* Tested with WordPress 5.8-alpha-50943 and WooCommerce 5.4-beta.1
+* Tested up to WordPress 5.8-alpha-50943 and WooCommerce 5.4-beta.1
 
 = 1.6.6 - 2021-03-10 =
-* Tested with WordPress 5.8-alpha-50516 and WooCommerce 5.1.0
+* Tested up to WordPress 5.8-alpha-50516 and WooCommerce 5.1.0
 
 = 1.6.5 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Hebrew translation (Thanks [fixerwolfe](https://profiles.wordpress.org/fixerwolfe/))
-* Tested with WordPress 5.7-alpha-49862 and WooCommerce 5.0.0-beta.1
+* Tested up to WordPress 5.7-alpha-49862 and WooCommerce 5.0.0-beta.1
 
 = 1.6.4 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Add option to not send the payment request email on the fake payment gateway
 * readme.txt update
-* Tested with WordPress 5.5-RC1-48708 and WooCommerce 4.4.0-beta.1
+* Tested up to WordPress 5.5-RC1-48708 and WooCommerce 4.4.0-beta.1
 
 = 1.6.3 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Make Autocomplete enabled by default and no longer beta
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Fix WooCommerce EU VAT Number integration
-* Tested with WordPress 5.5-alpha-47609 and WooCommerce 4.1.0-rc.1
+* Tested up to WordPress 5.5-alpha-47609 and WooCommerce 4.1.0-rc.1
 
 = 1.6.2 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Use WooCommerce Ajax endpoint instead of WordPress admin-ajax.php
-* Tested with WordPress 5.5-alpha-47547 and WooCommerce 4.0.1
+* Tested up to WordPress 5.5-alpha-47547 and WooCommerce 4.0.1
 
 = 1.6.0 =
 * [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New Autocomplete (BETA) feature while typing the customer email, first name, last name, company or phone number
-* Tested with WooCommerce 4.0.0-rc.1
+* Tested up to WooCommerce 4.0.0-rc.1
 
 = 1.5.3 =
 * New `shop_as_client_update_customer_data` filter so that developers can allow the customer details to be updated on their profile;
@@ -486,7 +489,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * Fix `Tested up to` tag
 
 = 1.0.4 =
-* Tested with WordPress 5.3.3-alpha-46995 and WooCommerce 3.9.0-rc.1
+* Tested up to WordPress 5.3.3-alpha-46995 and WooCommerce 3.9.0-rc.1
 
 = 1.0.3 =
 * Fix version number
@@ -501,10 +504,10 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * Preparation for the, soon to be released, PRO add-on
 * Search the customer also by billing email in addition to the profile email
 * Invoicing with InvoiceXpress for WooCommerce nag
-* Tested with WordPress 5.3.1-alpha-46798 and WooCommerce 3.8.1
+* Tested up to WordPress 5.3.1-alpha-46798 and WooCommerce 3.8.1
 
 = 0.6 =
-* Tested with WordPress 5.2.5-alpha and WooCommerce 3.8.0
+* Tested up to WordPress 5.2.5-alpha and WooCommerce 3.8.0
 
 = 0.5 =
 * Fix the order handler information - we now store it on a specific custom field and it will only be available for orders created after this plugin version
@@ -513,7 +516,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 0.4 =
 * Show the order handler on the order edit screen (Thanks Albert Amar / Israprods)
 * New `shop_as_client_allow_checkout` filter so that developers can allow other user roles to use the “Shop as client” functionality (Thanks CJ Ratliff / A+ Media for suggesting this)
-* Tested with WordPress 5.2.3-alpha-45552 and WooCommerce 3.7.0-beta.1
+* Tested up to WordPress 5.2.3-alpha-45552 and WooCommerce 3.7.0-beta.1
 * WordPress 4.9 minimum requirement
 * PHP 5.6 minimum requirement
 * Translations update
@@ -522,7 +525,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * Force field defaults
 * Update readme.txt
 * Fix plugin version number
-* Tested with WordPress 5.1.1 and WooCommerce 3.6.2
+* Tested up to WordPress 5.1.1 and WooCommerce 3.6.2
 
 = 0.2 =
 * The generated password for a new user account is now sent via email, unless `false` is returned to the `shop_as_client_email_password` filter

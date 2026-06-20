@@ -9,33 +9,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T16:22:32+00:00\n"
+"POT-Creation-Date: 2026-06-20T11:20:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.13.0-alpha-2616ff0\n"
 "X-Domain: shop-as-client\n"
 
 #. Plugin Name of the plugin
-#: shop-as-client.php
+#: shop-as-client.php:3
 msgid "Shop as Client for WooCommerce - Manual, Phone & Email Orders"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: shop-as-client.php
+#: shop-as-client.php:4
 msgid "https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/"
 msgstr ""
 
 #. Description of the plugin
-#: shop-as-client.php
+#: shop-as-client.php:5
 msgid "Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout."
 msgstr ""
 
 #. Author of the plugin
-#: shop-as-client.php
+#: shop-as-client.php:7
 msgid "Naked Cat Plugins (by Webdados)"
 msgstr ""
 
 #. Author URI of the plugin
-#: shop-as-client.php
+#: shop-as-client.php:8
 msgid "https://nakedcatplugins.com/"
 msgstr ""
 
