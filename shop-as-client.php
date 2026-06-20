@@ -488,60 +488,84 @@ add_action(
 			 *
 			 * @param WC_Order $order The order.
 			 */
-			function shop_as_client_woocommerce_admin_order_data_after_order_details( $order ) {
-				if ( shop_as_client_get_order_status( $order ) ) {
-					?>
-				<p class="form-field form-field-wide">
-					<label><?php esc_html_e( 'Shop as client', 'shop-as-client' ); ?>:</label>
+			/**
+			 * Render the Shop as Client metabox content.
+			 *
+			 * @param WP_Post|WC_Order $post_or_order Post object (posts mode) or order object (HPOS mode).
+			 */
+			function shop_as_client_order_metabox( $post_or_order ) {
+				$order = $post_or_order instanceof \WP_Post ? wc_get_order( $post_or_order->ID ) : $post_or_order;
+				if ( ! $order || ! shop_as_client_get_order_status( $order ) ) {
+					return;
+				}
+				?>
+				<p>
+					<strong><?php esc_html_e( 'Shop as client', 'shop-as-client' ); ?>:</strong>
+					<br>
 					<?php esc_html_e( 'Yes', 'shop-as-client' ); ?>
 				</p>
+				<?php
+				$user_id = $order->get_meta( '_billing_shop_as_client_handler_user_id' );
+				if ( $user_id ) {
+					?>
+					<p>
+						<strong><?php esc_html_e( 'Order handled by', 'shop-as-client' ); ?>:</strong>
+						<br>
+						<?php
+						$user = get_user_by( 'ID', $user_id );
+						if ( $user ) {
+							echo wp_kses_post(
+								sprintf(
+									'<a href="%s" target="_blank">%s</a>',
+									esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'user-edit.php' ) ) ),
+									sprintf(
+										'%s (%s)',
+										$user->display_name,
+										$user->nickname
+									)
+								)
+							);
+						} else {
+							echo esc_html(
+								sprintf(
+									/* translators: %d: user id */
+									__( 'User %d', 'shop-as-client' ),
+									$user_id
+								)
+							);
+						}
+						do_action( 'shop_as_client_after_order_handler', $order, $user_id );
+						?>
+					</p>
 					<?php
-					$user_id = $order->get_meta( '_billing_shop_as_client_handler_user_id' );
-					if ( $user_id ) {
-						?>
-						<p class="form-field form-field-wide">
-							<label><?php esc_html_e( 'Order handled by', 'shop-as-client' ); ?>:</label>
-							<?php
-							$user = get_user_by( 'ID', $user_id );
-							if ( $user ) {
-								echo wp_kses_post(
-									sprintf(
-										'<a href="%s" target="_blank">%s</a>',
-										esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'user-edit.php' ) ) ),
-										sprintf(
-											'%s (%s)',
-											$user->display_name,
-											$user->nickname
-										)
-									)
-								);
-							} else {
-								echo esc_html(
-									sprintf(
-										/* translators: $d: user id */
-										__( 'User %d', 'shop-as-client' ),
-										$user_id
-									)
-								);
-							}
-							do_action( 'shop_as_client_after_order_handler', $order, $user_id );
-							?>
-						</p>
-						<?php
-					}
-					$checkout = $order->get_meta( '_billing_shop_as_client_checkout' );
-					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-						?>
-						<p class="form-field form-field-wide">
-							<label><?php esc_html_e( 'Checkout', 'shop-as-client' ); ?>:</label>
-							<?php echo esc_html( $checkout ); ?>
-						</p>
-						<?php
-					}
-					do_action( 'shop_as_client_after_order_details', $order );
 				}
+				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					$checkout = $order->get_meta( '_billing_shop_as_client_checkout' );
+					?>
+					<p>
+						<strong><?php esc_html_e( 'Checkout', 'shop-as-client' ); ?>:</strong>
+						<br>
+						<?php echo esc_html( $checkout ); ?>
+					</p>
+					<?php
+				}
+				do_action( 'shop_as_client_after_order_details', $order );
 			}
-			add_action( 'woocommerce_admin_order_data_after_order_details', 'shop_as_client_woocommerce_admin_order_data_after_order_details' );
+			add_action(
+				'add_meta_boxes',
+				function () {
+					foreach ( array( 'shop_order', 'woocommerce_page_wc-orders' ) as $screen ) {
+						add_meta_box(
+							'shop-as-client',
+							__( 'Shop as Client', 'shop-as-client' ),
+							'shop_as_client_order_metabox',
+							$screen,
+							'side',
+							'default'
+						);
+					}
+				}
+			);
 
 			/**
 			 * Thank you page warning - https://github.com/woocommerce/woocommerce/pull/38983/
