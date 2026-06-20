@@ -256,10 +256,10 @@ class ShopAsClient_Extend_Store_Endpoint {
 				'shop_as_client_checkout_order_process_error',
 				sprintf(
 					/* translators: %s: error message */
-					__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
+					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
 					// Store API serializes this into a JSON response, so HTML-escaping
 					// is the wrong layer; sanitize the dynamic message instead.
-					sanitize_text_field( $user_id->get_error_message() )
+					esc_html( sanitize_text_field( $user_id->get_error_message() ) )
 				),
 				400
 			);
