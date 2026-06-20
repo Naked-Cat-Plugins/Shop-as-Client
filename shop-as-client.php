@@ -8,10 +8,10 @@
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
  * Domain Path:          /languages
- * Requires at least:    5.8
+ * Requires at least:    6.4
  * Tested up to:         7.0
  * Requires PHP:         7.4
- * WC requires at least: 7.1
+ * WC requires at least: 9.0
  * WC tested up to:      10.9
  * Requires Plugins:     woocommerce
  * License:              GPLv3
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'SHOPASCLIENT_REQUIRED_WC' ) ) {
-	define( 'SHOPASCLIENT_REQUIRED_WC', '7.1' );
+	define( 'SHOPASCLIENT_REQUIRED_WC', '9.0' );
 }
 define( 'SHOPASCLIENT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SHOPASCLIENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -574,10 +574,8 @@ add_action(
 				}
 				return false;
 			}
-			if ( version_compare( WC_VERSION, '7.8.1', '>=' ) ) {
-				add_filter( 'do_shortcode_tag', 'shop_as_client_checkout_order_received', 10, 2 );
-				add_filter( 'render_block_woocommerce/classic-shortcode', 'shop_as_client_checkout_order_received_block', 10, 2 );
-			}
+			add_filter( 'do_shortcode_tag', 'shop_as_client_checkout_order_received', 10, 2 );
+			add_filter( 'render_block_woocommerce/classic-shortcode', 'shop_as_client_checkout_order_received_block', 10, 2 );
 
 			/**
 			 * Markup for the "Order received" notice shown to the order handler
@@ -632,23 +630,6 @@ add_action(
 				}
 				return $block_content;
 			}
-
-			/**
-			 * Fix PRO updates to 2.3 - https://nakedcatplugins.com/shop-as-client-pro-add-on-not-working-after-updating-the-free-version-to-1-9-or-above-the-solution-is-here/
-			*/
-			add_action(
-				'plugins_loaded',
-				function () {
-					if ( is_admin() && class_exists( 'Shop_As_Client_Pro' ) ) {
-						if ( isset( $GLOBALS['Shop_As_Client_Pro'] ) ) {
-							if ( version_compare( $GLOBALS['Shop_As_Client_Pro']->version, '2.3', '<' ) ) {
-								$GLOBALS['Shop_As_Client_Pro']->update_checker();
-							}
-						}
-					}
-				},
-				15
-			);
 
 			if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
 

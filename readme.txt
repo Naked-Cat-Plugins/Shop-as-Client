@@ -202,8 +202,9 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
+* [TWEAK] Remove the "Fix PRO updates to 2.3" routine
 * [FIX] Show the "Order received" page notice for the order handler on Checkout pages built with the `woocommerce/classic-shortcode` block (previously only worked with the `[woocommerce_checkout]` shortcode)
-* [DEV] Requires ...
+* [DEV] Requires WordPress 6.4 and WooCommerce 9.0
 * [DEV] Tested up to WordPress 7.1-alpha-62536 and WooCommerce 10.9.0-beta.2
 
 = 7.5 - 2025-03-29 =
