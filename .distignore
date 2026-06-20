@@ -7,6 +7,8 @@ __MACOSX
 .git
 .github/*
 .github
+.claude/*
+.claude
 .svn/*
 .distignore
 .gitignore

@@ -3,17 +3,13 @@
  */
 import classnames from 'classnames';
 import { __, sprintf } from '@wordpress/i18n';
-import {
-	useEffect,
-	useState,
-	createInterpolateElement,
-} from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import { useEffect, createInterpolateElement, useState } from '@wordpress/element';
 import { ExternalLink } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { CheckboxControl } from '@woocommerce/blocks-components';
 import { getSetting } from '@woocommerce/settings';
-import { extensionCartUpdate } from '@woocommerce/blocks-checkout';
+import apiFetch from '@wordpress/api-fetch';
+import { dispatch, subscribe } from '@wordpress/data';
 import { CHECKOUT_STORE_KEY } from '@woocommerce/block-data';
 
 /**
@@ -33,6 +29,71 @@ const {
 	blockPosition,
 } = getSetting('ptwoo_shop_as_client_data');
 
+/**
+ * Cross-bundle Shop as Client state.
+ *
+ * Stateless block checkout keeps no transient state on the server — it rides
+ * each request instead. This single object is the client-side source of truth.
+ */
+const sac = (window.ShopAsClient = window.ShopAsClient || {});
+sac.state = sac.state || {
+	shopAsClient: false,
+	createUser: false,
+};
+
+/**
+ * Push the current SAC state onto the checkout request `extensions` payload, so
+ * the server can assign the order at checkout time. Called whenever the state
+ * changes.
+ */
+sac.sync = () => {
+	try {
+		dispatch(CHECKOUT_STORE_KEY).setExtensionData(EXTENSION_NAMESPACE, {
+			...sac.state,
+		});
+		return true;
+	} catch (error) {
+		// Checkout store not ready yet. A later toggle would re-sync, but the
+		// defaults may already be correct and the user may never toggle, so
+		// subscribe once and retry as soon as the store becomes available.
+		if (!sac.syncPending) {
+			sac.syncPending = true;
+			const unsubscribe = subscribe(() => {
+				if (sac.sync()) {
+					sac.syncPending = false;
+					unsubscribe();
+				}
+			});
+		}
+		return false;
+	}
+};
+
+/**
+ * Inject the `X-SAC-Active` header on Store API requests while SAC is active.
+ *
+ * The core /cart/update-customer route carries no extension payload, so this
+ * header is the only way to tell the server SAC is active on the cart-phase
+ * requests. The server uses it to suppress overwriting the manager's own saved
+ * billing/shipping (and third-party) profile with the client's values. It is
+ * not an auth boundary — order assignment is capability-checked server-side.
+ */
+if (!sac.middlewareRegistered) {
+	sac.middlewareRegistered = true;
+	apiFetch.use((options, next) => {
+		const path = options.path || options.url || '';
+		const isStoreApi =
+			typeof path === 'string' && path.indexOf('/wc/store/') !== -1;
+		if (isStoreApi && sac.state.shopAsClient) {
+			options.headers = {
+				...options.headers,
+				'X-SAC-Active': '1',
+			};
+		}
+		return next(options);
+	});
+}
+
 const Block = (props) => {
 	const { stepTitle, stepDescription, showStepNumber, className, inEditor } =
 		props;
@@ -40,45 +101,16 @@ const Block = (props) => {
 	const [shopAsClient, setShopAsClient] = useState(defaultShopAsClient);
 	const [createUser, setCreateUser] = useState(defaultCreateUser);
 
-	const {
-		__internalIncrementCalculating: disablePlaceOrderButton,
-		__internalDecrementCalculating: enablePlaceOrderButton,
-	} = useDispatch(CHECKOUT_STORE_KEY);
-
+	// Mirror the toggles into the shared state and the checkout extensions.
+	// No server round-trip: there is no server-side transient state to set.
 	useEffect(() => {
-		if (canCheckout) {
-			extensionCartUpdate({
-				namespace: EXTENSION_NAMESPACE,
-				data: {
-					resetCustomerData: true,
-				},
-			});
+		if (!canCheckout) {
+			return;
 		}
-		return () => {};
-	}, [canCheckout]);
-
-	useEffect(() => {
-		if (canCheckout) {
-			disablePlaceOrderButton();
-			extensionCartUpdate({
-				namespace: EXTENSION_NAMESPACE,
-				data: {
-					shopAsClient,
-					createUser,
-				},
-				cartPropsToReceive: ['extensions'],
-			}).then(() => {
-				enablePlaceOrderButton();
-			});
-		}
-	}, [
-		canCheckout,
-		extensionCartUpdate,
-		shopAsClient,
-		createUser,
-		disablePlaceOrderButton,
-		enablePlaceOrderButton,
-	]);
+		sac.state.shopAsClient = shopAsClient;
+		sac.state.createUser = createUser;
+		sac.sync();
+	}, [shopAsClient, createUser]);
 
 	if (!canCheckout) {
 		return null;
