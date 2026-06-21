@@ -201,11 +201,11 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 = 8.0 - TBA =
 * [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [NEW] Shop as Client order information is now displayed in a dedicated metabox on the order edit screen, compatible with both posts and HPOS modes
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
 * [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 * [TWEAK] Remove the “Fix PRO updates to 2.3” routine
 * [FIX] Show the “Order received” page notice for the order handler on Checkout pages built with the `woocommerce/classic-shortcode` block (previously only worked with the `[woocommerce_checkout]` shortcode)
-* [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Cart price change badge correctly reflects the WooCommerce natural price using `wc_price()` formatting on both the classic and block cart
 * [DEV] Requires WordPress 6.4 and WooCommerce 9.0
 * [DEV] Tested up to WordPress 7.1-alpha-62536 and WooCommerce 10.9.0-beta.2

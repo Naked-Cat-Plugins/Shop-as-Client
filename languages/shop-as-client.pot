@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-20T11:41:58+00:00\n"
+"POT-Creation-Date: 2026-06-21T09:53:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.13.0-alpha-2616ff0\n"
 "X-Domain: shop-as-client\n"
@@ -60,6 +60,7 @@ msgstr ""
 
 #: shop-as-client.php:82
 #: shop-as-client.php:99
+#: shop-as-client.php:560
 msgid "Shop as Client"
 msgstr ""
 
@@ -81,7 +82,7 @@ msgstr ""
 #: shop-as-client.php:189
 #: shop-as-client.php:249
 #: shop-as-client.php:266
-#: shop-as-client.php:496
+#: shop-as-client.php:505
 msgid "Yes"
 msgstr ""
 
@@ -136,7 +137,7 @@ msgid "Add a column with the order handler and allow filtering by handler on the
 msgstr ""
 
 #: shop-as-client.php:240
-#: shop-as-client.php:495
+#: shop-as-client.php:503
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
 #: includes/blocks/shop-as-client/attributes.js:20
@@ -159,25 +160,25 @@ msgstr ""
 msgid "Do you want to load the customer details automatically?<br/>Get the PRO add-on!"
 msgstr ""
 
-#: shop-as-client.php:503
+#: shop-as-client.php:512
 msgid "Order handled by"
 msgstr ""
 
-#. translators: $d: user id
-#: shop-as-client.php:522
+#. translators: %d: user id
+#: shop-as-client.php:532
 #, php-format
 msgid "User %d"
 msgstr ""
 
-#: shop-as-client.php:536
+#: shop-as-client.php:546
 msgid "Checkout"
 msgstr ""
 
-#: shop-as-client.php:591
+#: shop-as-client.php:613
 msgid "Get the PRO add-on to fix this"
 msgstr ""
 
-#: shop-as-client.php:593
+#: shop-as-client.php:615
 msgid "<strong>Shop as client</strong><br/>Since WooCommerce 7.8.1 only the order owner/customer is able to see the \"Order received\" details."
 msgstr ""
 
