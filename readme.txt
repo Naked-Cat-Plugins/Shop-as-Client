@@ -69,7 +69,6 @@ The result is a clean, correct WooCommerce order created on behalf of the custom
 * Allow guest orders when needed
 * Works with both the classic and the block-based WooCommerce checkouts
 * Uses your existing checkout workflow and extensions
-* Redirects to the plugin settings page right after activation so you can configure it straight away
 
 === PRO add-on features ===
 
@@ -77,7 +76,7 @@ The [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocomme
 
 * Live customer search with autocomplete results while typing
 * “Request payment by email” payment gateway to finalize orders and send payment links to customers
-* “Invoice or Purchase Order” payment gateway for orders to be paid later via invoice, or already authorised via a Purchase Order — with optional PO number field at checkout
+* “Invoice or Purchase Order” payment gateway for orders to be invoiced later or already paid via PO — optional PO number field, and a “Payment already received” checkbox that automatically marks the order as paid when ticked
 * Search registered customers by email address, name, company, billing and shipping addresses, or any other profile field
 * Optionally search on previous orders to find customers faster or previous guest orders
 * Allow staff to adjust product prices for special deals or negotiated orders (compatible with WooPayments multi-currency)
@@ -204,7 +203,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [NEW] Shop as Client order information is now displayed in a dedicated metabox on the order edit screen, compatible with both posts and HPOS modes
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
-* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New "Invoice or Purchase Order" payment gateway — place orders without immediate payment or against an existing PO, with optional PO number field; works on both classic and block checkout
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New "Invoice or Purchase Order" payment gateway — optional PO number field, configurable order status, and a "Payment already received" checkbox that automatically marks the order as paid when ticked; works on both classic and block checkout
 * [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 * [TWEAK] Remove the “Fix PRO updates to 2.3” routine
