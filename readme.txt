@@ -69,6 +69,7 @@ The result is a clean, correct WooCommerce order created on behalf of the custom
 * Allow guest orders when needed
 * Works with both the classic and the block-based WooCommerce checkouts
 * Uses your existing checkout workflow and extensions
+* Redirects to the plugin settings page right after activation so you can configure it straight away
 
 === PRO add-on features ===
 
