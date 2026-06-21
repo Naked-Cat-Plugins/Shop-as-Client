@@ -202,12 +202,12 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [NEW] Shop as Client order information is now displayed in a dedicated metabox on the order edit screen, compatible with both posts and HPOS modes
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
+* [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): New "Invoice or Purchase Order" payment gateway — place orders without immediate payment or against an existing PO, with optional PO number field; works on both classic and block checkout
 * [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 * [TWEAK] Remove the “Fix PRO updates to 2.3” routine
 * [FIX] Show the “Order received” page notice for the order handler on Checkout pages built with the `woocommerce/classic-shortcode` block (previously only worked with the `[woocommerce_checkout]` shortcode)
 * [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Cart was not transferred to the customer when using the “Optionally, switch to X” User Switching link on both the classic and block checkout
-* [FIX] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): “Optionally, switch to X” User Switching link restored on the block checkout
 * [DEV] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Cart price change badge correctly reflects the WooCommerce natural price using `wc_price()` formatting on both the classic and block cart
 * [DEV] Requires WordPress 6.4 and WooCommerce 9.0
 * [DEV] Tested up to WordPress 7.1-alpha-62536 and WooCommerce 10.9.0-beta.2
