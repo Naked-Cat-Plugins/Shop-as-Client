@@ -1,9 +1,8 @@
-# Shop as Client (free) — block checkout
+# Shop as Client (free) — block checkout (v8.0, released)
 
-**Released (live): v7.5 — stateful (WC session).**
-**This working tree: stateless redesign** (branch `feature/improve-block-checkout-flow`),
-which supersedes the released design on the next release. Both are documented
-below; the code in this tree is the **stateless** one.
+**Current release: v8.0 — stateless, request-driven block checkout.**
+The v7.5 stateful WC-session design is obsolete; all code on `main` is the
+stateless one.
 
 The free plugin owns the block-checkout core and is deliberately **unaware of the
 Pro add-on** (no "selected customer" concept, no third-party field knowledge).
@@ -31,20 +30,20 @@ No transient server state. State rides each request:
     the order still gets the client's address. Third-party fields are Pro's job.
 
 Full Free↔Pro contract + the third-party snapshot/restore subtlety:
-`shop-as-client-pro-add-on/.claude/CLAUDE.md`.
+`shop-as-client-pro/.claude/CLAUDE.md`.
 
-## Released design (v7.5, for reference)
+## SAC order metabox
 
-The shipped version is **stateful**, using `wc()->session`:
+`shop_as_client_order_metabox()` registered via `add_meta_boxes` on both
+`shop_order` (posts mode) and `woocommerce_page_wc-orders` (HPOS). Fires
+`shop_as_client_after_order_details` for Pro to add extra fields (PO number,
+User Switching link, etc.).
 
-- `store_api_update_callback` persists the toggles to session keys
-  (`ptwoo-shop-as-client_shop_as_client` / `_create_user`) and snapshots the
-  manager's own billing/shipping into `_current_customer_data`.
-- `process_order` @100 assigns the order, then `restore_customer_data()` re-applies
-  the manager's snapshot onto `wc()->customer`.
-- The Store-API schema/data callbacks are empty stubs (population is the Pro
-  add-on's job, via its own session + `customCheckoutData`).
-- Known issues this redesign fixes: WC-session whole-blob write race, swallowed
-  user-create errors, no clean guest-order flag.
+## Settings
+
+Plugin settings live under WooCommerce → Settings → Accounts & Privacy →
+Shop as Client (section `shop_as_client`). Redirect to settings on activation.
+
+## WooCommerce minimum: 9.0 | WordPress minimum: 6.4
 
 Tests: sibling `shop-as-client-tests` plugin.
