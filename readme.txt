@@ -76,7 +76,8 @@ The result is a clean, correct WooCommerce order created on behalf of the custom
 The [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) expands staff ordering workflows with powerful tools:
 
 * Live customer search with autocomplete results while typing
-* Fake “Request payment by email” gateway to finalize orders and send payment links to customers
+* “Request payment by email” payment gateway to finalize orders and send payment links to customers
+* “Invoice or Purchase Order” payment gateway for orders to be paid later via invoice, or already authorised via a Purchase Order — with optional PO number field at checkout
 * Search registered customers by email address, name, company, billing and shipping addresses, or any other profile field
 * Optionally search on previous orders to find customers faster or previous guest orders
 * Allow staff to adjust product prices for special deals or negotiated orders (compatible with WooPayments multi-currency)
