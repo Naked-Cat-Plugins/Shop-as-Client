@@ -3,7 +3,7 @@
  * Plugin Name:          Shop as Client for WooCommerce - Manual, Phone & Email Orders
  * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout.
- * Version:              8.0
+ * Version:              8.0.1
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
@@ -30,6 +30,9 @@ define( 'SHOPASCLIENT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SHOPASCLIENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SHOPASCLIENT_PRO_OUT_LINK', 'https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=' . rawurlencode( esc_url( home_url( '/' ) ) ) . '&utm_medium=link&utm_campaign=shop_as_client_plugin' );
 
+// If Pro is also active, we need at least this version of it
+define( 'SHOPASCLIENT_FREE_REQUIRED_PRO', '8.0' );
+
 /**
  * Check if WooCommerce is active
  * plugins_loaded is too soon for code in functions.php to run - This needs to be addressed, but it probably won't work because on the initialization of blocks
@@ -38,6 +41,45 @@ add_action(
 	'plugins_loaded',
 	function () {
 		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, SHOPASCLIENT_REQUIRED_WC, '>=' ) ) {
+
+			if ( function_exists( '\Webdados\ShopAsClientPro\init' ) ) {
+				// SHOPASCLIENT_PRO_PLUGIN_FILE is only defined at plugins_loaded priority 9.
+				// Read the version directly from the file header instead.
+				$pro_path = WP_PLUGIN_DIR . '/shop-as-client-pro/shop-as-client-pro.php';
+				if ( file_exists( $pro_path ) ) {
+					if ( ! function_exists( 'get_plugin_data' ) ) {
+						include ABSPATH . '/wp-admin/includes/plugin.php';
+					}
+					$pro_data    = get_plugin_data( $pro_path, false, false );
+					$pro_version = $pro_data['Version'] ?? '';
+					if ( $pro_version && version_compare( $pro_version, SHOPASCLIENT_FREE_REQUIRED_PRO, '<' ) ) {
+						add_action(
+							'admin_notices',
+							function () use ( $pro_version ) {
+								?>
+								<div class="notice notice-error">
+									<p>
+										<?php
+										echo wp_kses_post(
+											sprintf(
+												/* translators: %1$s: plugin name, %2$s: required version, %3$s: current version */
+												__( '%1$s requires at least version %2$s of the PRO add-on. You have version %3$s. Please update or disable the PRO add-on.', 'shop-as-client' ),
+												'<strong>Shop as Client</strong>',
+												SHOPASCLIENT_FREE_REQUIRED_PRO,
+												$pro_version
+											)
+										);
+										?>
+									</p>
+								</div>
+								<?php
+							}
+						);
+						// Get out of here — can't run with an old PRO version.
+						return;
+					}
+				}
+			}
 
 			/**
 			 * Version
@@ -50,12 +92,13 @@ add_action(
 
 			/**
 			 * Languages and scripts
+			 * Do not change this function name as is needed for the PRO add-on to work properly
 			 */
 			function shop_as_client_init() {
 				// Load scripts
-				add_action( 'wp_enqueue_scripts', 'shop_as_client_enqueue_scripts' );
+				add_action( 'wp_enqueue_scripts', 'shop_as_client_enqueue_classic_scripts' );
 			}
-			add_action( 'plugins_loaded', 'shop_as_client_init', 7 );
+			add_action( 'init', 'shop_as_client_init' ); // Used to be plugins_loaded, but init makes more sense
 
 			/**
 			 * Fake settings link
@@ -276,13 +319,13 @@ add_action(
 			/**
 			 * Enqueue scripts - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
 			 */
-			function shop_as_client_enqueue_scripts() {
+			function shop_as_client_enqueue_classic_scripts() {
 				if (
-				function_exists( 'is_checkout' )
-				&&
-				is_checkout()
-				&&
-				( ! has_block( 'woocommerce/checkout' ) ) // Not on the Blocks checkout
+					function_exists( 'is_checkout' )
+					&&
+					is_checkout()
+					&&
+					( ! has_block( 'woocommerce/checkout' ) ) // Not on the Blocks checkout
 				) {
 					wp_enqueue_script( 'shop-as-client', plugins_url( 'js/functions.js', __FILE__ ), array( 'jquery' ), '1.3.0', true );
 					wp_localize_script(

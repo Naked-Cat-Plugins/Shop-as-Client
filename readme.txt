@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.0
+Stable tag: 8.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -199,7 +199,10 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= 8.0 - TBA =
+= 8.0.1 - 2026-06-25 =
+* [FIX] The Free plugin cannot run alongside a PRO add-on version below 8.0
+
+= 8.0 - 2026-06-22 =
 * [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [NEW] Shop as Client order information is now displayed in a dedicated metabox on the order edit screen, compatible with both posts and HPOS modes
 * [NEW] [PRO add-on](https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
