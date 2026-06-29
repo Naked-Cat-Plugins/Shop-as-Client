@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.0.1
+Stable tag: 8.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -198,6 +198,9 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
 
 == Changelog ==
+
+= 8.0.2 - 2026-06-29 =
+* [FIX] Make sure the Pro add-on can update after 8.0.1
 
 = 8.0.1 - 2026-06-25 =
 * [FIX] The Free plugin cannot run alongside a PRO add-on version below 8.0

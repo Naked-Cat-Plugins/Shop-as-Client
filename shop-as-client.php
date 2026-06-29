@@ -3,7 +3,7 @@
  * Plugin Name:          Shop as Client for WooCommerce - Manual, Phone & Email Orders
  * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout.
- * Version:              8.0.1
+ * Version:              8.0.2
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
@@ -42,45 +42,6 @@ add_action(
 	function () {
 		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, SHOPASCLIENT_REQUIRED_WC, '>=' ) ) {
 
-			if ( function_exists( '\Webdados\ShopAsClientPro\init' ) ) {
-				// SHOPASCLIENT_PRO_PLUGIN_FILE is only defined at plugins_loaded priority 9.
-				// Read the version directly from the file header instead.
-				$pro_path = WP_PLUGIN_DIR . '/shop-as-client-pro/shop-as-client-pro.php';
-				if ( file_exists( $pro_path ) ) {
-					if ( ! function_exists( 'get_plugin_data' ) ) {
-						include ABSPATH . '/wp-admin/includes/plugin.php';
-					}
-					$pro_data    = get_plugin_data( $pro_path, false, false );
-					$pro_version = $pro_data['Version'] ?? '';
-					if ( $pro_version && version_compare( $pro_version, SHOPASCLIENT_FREE_REQUIRED_PRO, '<' ) ) {
-						add_action(
-							'admin_notices',
-							function () use ( $pro_version ) {
-								?>
-								<div class="notice notice-error">
-									<p>
-										<?php
-										echo wp_kses_post(
-											sprintf(
-												/* translators: %1$s: plugin name, %2$s: required version, %3$s: current version */
-												__( '%1$s requires at least version %2$s of the PRO add-on. You have version %3$s. Please update or disable the PRO add-on.', 'shop-as-client' ),
-												'<strong>Shop as Client</strong>',
-												SHOPASCLIENT_FREE_REQUIRED_PRO,
-												$pro_version
-											)
-										);
-										?>
-									</p>
-								</div>
-								<?php
-							}
-						);
-						// Get out of here — can't run with an old PRO version.
-						return;
-					}
-				}
-			}
-
 			/**
 			 * Version
 			 */
@@ -99,6 +60,32 @@ add_action(
 				add_action( 'wp_enqueue_scripts', 'shop_as_client_enqueue_classic_scripts' );
 			}
 			add_action( 'init', 'shop_as_client_init' ); // Used to be plugins_loaded, but init makes more sense
+
+			/**
+			 * Enqueue scripts - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
+			 */
+			function shop_as_client_enqueue_classic_scripts() {
+				if (
+					function_exists( 'is_checkout' )
+					&&
+					is_checkout()
+					&&
+					( ! has_block( 'woocommerce/checkout' ) ) // Not on the Blocks checkout
+				) {
+					wp_enqueue_script( 'shop-as-client', plugins_url( 'js/functions.js', __FILE__ ), array( 'jquery' ), '1.3.0', true );
+					wp_localize_script(
+						'shop-as-client',
+						'shop_as_client',
+						array(
+							'txt_pro' => sprintf(
+								'<p><a href="%s" target="_blank">%s</a></p>',
+								esc_url( SHOPASCLIENT_PRO_OUT_LINK ),
+								__( 'Do you want to load the customer details automatically?<br/>Get the PRO add-on!', 'shop-as-client' )
+							),
+						)
+					);
+				}
+			}
 
 			/**
 			 * Fake settings link
@@ -270,6 +257,78 @@ add_action(
 				return false;
 			}
 
+			if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
+
+				/* Blocks */
+				add_action(
+					'woocommerce_blocks_loaded',
+					function () {
+						require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
+
+						add_action(
+							'woocommerce_blocks_checkout_block_registration',
+							function ( $integration_registry ) {
+								$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
+							}
+						);
+					}
+				);
+
+				/* Blocks - Extend Store endpoint */
+				add_action(
+					'woocommerce_blocks_loaded',
+					function () {
+						require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
+
+						( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
+					}
+				);
+
+			}
+
+			/**
+			 * Bail out if the PRO add-on is active and the version is too old.
+			 * The checkout is still not going to work properly, but the Pro Add-On will be able to update itself.
+			 */
+			if ( function_exists( '\Webdados\ShopAsClientPro\init' ) ) {
+				// SHOPASCLIENT_PRO_PLUGIN_FILE is only defined at plugins_loaded priority 9.
+				// Read the version directly from the file header instead.
+				$pro_path = WP_PLUGIN_DIR . '/shop-as-client-pro/shop-as-client-pro.php';
+				if ( file_exists( $pro_path ) ) {
+					if ( ! function_exists( 'get_plugin_data' ) ) {
+						include ABSPATH . '/wp-admin/includes/plugin.php';
+					}
+					$pro_data    = get_plugin_data( $pro_path, false, false );
+					$pro_version = $pro_data['Version'] ?? '';
+					if ( $pro_version && version_compare( $pro_version, SHOPASCLIENT_FREE_REQUIRED_PRO, '<' ) ) {
+						add_action(
+							'admin_notices',
+							function () use ( $pro_version ) {
+								?>
+								<div class="notice notice-error">
+									<p>
+										<?php
+										echo wp_kses_post(
+											sprintf(
+												/* translators: %1$s: plugin name, %2$s: required version, %3$s: current version */
+												__( '%1$s requires at least version %2$s of the PRO add-on. You have version %3$s. Please update or disable the PRO add-on.', 'shop-as-client' ),
+												'<strong>Shop as Client</strong>',
+												SHOPASCLIENT_FREE_REQUIRED_PRO,
+												$pro_version
+											)
+										);
+										?>
+									</p>
+								</div>
+								<?php
+							}
+						);
+						// Get out of here — can't run with an old PRO version.
+						return;
+					}
+				}
+			}
+
 			/**
 			 * Our field - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
 			 *
@@ -315,32 +374,6 @@ add_action(
 				return $fields;
 			}
 			add_filter( 'woocommerce_checkout_fields', 'shop_as_client_init_woocommerce_checkout_fields', PHP_INT_MAX );
-
-			/**
-			 * Enqueue scripts - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
-			 */
-			function shop_as_client_enqueue_classic_scripts() {
-				if (
-					function_exists( 'is_checkout' )
-					&&
-					is_checkout()
-					&&
-					( ! has_block( 'woocommerce/checkout' ) ) // Not on the Blocks checkout
-				) {
-					wp_enqueue_script( 'shop-as-client', plugins_url( 'js/functions.js', __FILE__ ), array( 'jquery' ), '1.3.0', true );
-					wp_localize_script(
-						'shop-as-client',
-						'shop_as_client',
-						array(
-							'txt_pro' => sprintf(
-								'<p><a href="%s" target="_blank">%s</a></p>',
-								esc_url( SHOPASCLIENT_PRO_OUT_LINK ),
-								__( 'Do you want to load the customer details automatically?<br/>Get the PRO add-on!', 'shop-as-client' )
-							),
-						)
-					);
-				}
-			}
 
 			/**
 			 * Force our field defaults - Shop as Client
@@ -696,35 +729,6 @@ add_action(
 					}
 				}
 				return $block_content;
-			}
-
-			if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
-
-				/* Blocks */
-				add_action(
-					'woocommerce_blocks_loaded',
-					function () {
-						require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
-
-						add_action(
-							'woocommerce_blocks_checkout_block_registration',
-							function ( $integration_registry ) {
-								$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
-							}
-						);
-					}
-				);
-
-				/* Blocks - Extend Store endpoint */
-				add_action(
-					'woocommerce_blocks_loaded',
-					function () {
-						require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
-
-						( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
-					}
-				);
-
 			}
 
 			/* Simple Order Approval nag */
