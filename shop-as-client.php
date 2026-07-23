@@ -118,12 +118,12 @@ add_action(
 			 * Settings - Free plugin only (hidden when PRO is active)
 			 */
 			function shop_as_client_get_settings() {
-				// rel="noopener" + a screen-reader-only note (WCAG 3.2.5: opening a
-				// new tab without warning is an unannounced context change).
+				// A screen-reader-only note (WCAG 3.2.5: opening a new tab
+				// without warning is an unannounced context change).
 				$description = sprintf(
 					/* translators: %1$s: link open, %2$s: link close */
 					__( 'Available on the %1$sPRO Add-on%2$s', 'shop-as-client' ),
-					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '" target="_blank" rel="noopener noreferrer">',
+					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '" target="_blank">',
 					'<span class="screen-reader-text">' . esc_html__( ' (opens in a new tab)', 'shop-as-client' ) . '</span></a>'
 				);
 				return array(
@@ -606,9 +606,8 @@ add_action(
 								sprintf(
 									// A screen-reader-only "(opens in a new tab)" note is
 									// required (WCAG 3.2.5) since target="_blank" changes
-									// context without warning otherwise; rel="noopener"
-									// avoids the new tab getting a window.opener reference.
-									'<a href="%s" target="_blank" rel="noopener noreferrer">%s<span class="screen-reader-text">%s</span></a>',
+									// context without warning otherwise.
+									'<a href="%s" target="_blank">%s<span class="screen-reader-text">%s</span></a>',
 									esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'user-edit.php' ) ) ),
 									sprintf(
 										'%s (%s)',

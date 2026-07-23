@@ -200,8 +200,8 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 == Changelog ==
 
 = TBA =
-* [FIX] Accessibility: the "PRO Add-on" upsell link in the plugin's settings now warns screen readers it opens in a new tab, and no longer passes a window.opener reference to it
-* [FIX] Accessibility: the "Order handled by" link in the order edit screen's Shop as Client metabox now warns screen readers it opens in a new tab, and no longer passes a window.opener reference to it
+* [FIX] Accessibility: the "PRO Add-on" upsell link in the plugin's settings now warns screen readers it opens in a new tab
+* [FIX] Accessibility: the "Order handled by" link in the order edit screen's Shop as Client metabox now warns screen readers it opens in a new tab
 * [FIX] AJAX handler for dismissing the "Simple Order Approval for WooCommerce" admin notice now verifies a nonce and requires the manage_woocommerce capability
 * [FIX] Block checkout error messages from the Store API are no longer double-escaped, so they no longer show literal HTML entities in the checkout error notice
 * [DEV] Tested up to ... and WooCommerce ...
