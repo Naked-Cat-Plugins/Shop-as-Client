@@ -602,13 +602,19 @@ add_action(
 						if ( $user ) {
 							echo wp_kses_post(
 								sprintf(
-									'<a href="%s" target="_blank">%s</a>',
+									// A screen-reader-only "(opens in a new tab)" note is
+									// required (WCAG 3.2.5) since target="_blank" changes
+									// context without warning otherwise; rel="noopener"
+									// avoids the new tab getting a window.opener reference.
+									'<a href="%s" target="_blank" rel="noopener noreferrer">%s<span class="screen-reader-text">%s</span></a>',
 									esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'user-edit.php' ) ) ),
 									sprintf(
 										'%s (%s)',
 										$user->display_name,
 										$user->nickname
-									)
+									),
+									/* translators: hidden text appended to a link that opens in a new browser tab */
+									esc_html__( ' (opens in a new tab)', 'shop-as-client' )
 								)
 							);
 						} else {
