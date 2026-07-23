@@ -17,6 +17,7 @@ function ptwoo_simple_order_approval_nag() {
 				type: 'POST',
 				data: {
 					action: 'dismiss_ptwoo_simple_order_approval_nag',
+					nonce: '<?php echo esc_js( wp_create_nonce( 'ptwoo_simple_order_approval_nag_dismiss' ) ); ?>',
 				}
 			});
 		});
@@ -55,6 +56,10 @@ add_action( 'admin_notices', 'ptwoo_simple_order_approval_nag' );
  * Dismiss Simple Order Approval for WooCommerce nag
  */
 function dismiss_ptwoo_simple_order_approval_nag() {
+	check_ajax_referer( 'ptwoo_simple_order_approval_nag_dismiss', 'nonce' );
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		wp_die();
+	}
 	// Transient for everyone
 	$days       = 90;
 	$expiration = $days * DAY_IN_SECONDS;

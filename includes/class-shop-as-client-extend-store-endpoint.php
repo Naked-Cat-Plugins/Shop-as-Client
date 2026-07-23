@@ -259,7 +259,7 @@ class ShopAsClient_Extend_Store_Endpoint {
 					esc_html__( 'Shop as Client failed to create user: %s', 'shop-as-client' ),
 					// Store API serializes this into a JSON response, so HTML-escaping
 					// is the wrong layer; sanitize the dynamic message instead.
-					esc_html( sanitize_text_field( $user_id->get_error_message() ) )
+					sanitize_text_field( $user_id->get_error_message() )
 				),
 				400
 			);
