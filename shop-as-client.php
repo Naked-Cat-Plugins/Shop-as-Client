@@ -437,6 +437,16 @@ add_action(
 						} elseif (
 							( ! empty( $user_email ) )
 							&&
+							// TRADEOFF: wp_usermeta.meta_value is not indexed, so this is
+							// effectively a full scan of every 'billing_email' row on stores
+							// with a large customer table, and it runs on this plugin's core,
+							// expected-to-be-frequent path (phone/email order, billing email
+							// differs from the matched account's own profile email). Known,
+							// accepted tradeoff for now (see GitHub issue #29 on the PRO
+							// add-on repo, filed there per our disclosure policy) - do not
+							// "fix" the ignored linter warnings below by adding more of this
+							// meta_query pattern elsewhere without addressing the root cause
+							// (e.g. caching the lookup, or using wc_get_orders() instead).
 							( $users = get_users( // phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition.Found, Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
 								// Get user by WooCommerce billing email
 								array(
