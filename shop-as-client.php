@@ -118,11 +118,13 @@ add_action(
 			 * Settings - Free plugin only (hidden when PRO is active)
 			 */
 			function shop_as_client_get_settings() {
+				// rel="noopener" + a screen-reader-only note (WCAG 3.2.5: opening a
+				// new tab without warning is an unannounced context change).
 				$description = sprintf(
 					/* translators: %1$s: link open, %2$s: link close */
 					__( 'Available on the %1$sPRO Add-on%2$s', 'shop-as-client' ),
-					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '" target="_blank">',
-					'</a>'
+					'<a href="' . esc_url( SHOPASCLIENT_PRO_OUT_LINK ) . '" target="_blank" rel="noopener noreferrer">',
+					'<span class="screen-reader-text">' . esc_html__( ' (opens in a new tab)', 'shop-as-client' ) . '</span></a>'
 				);
 				return array(
 					array(

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-23T14:45:01+00:00\n"
+"POT-Creation-Date: 2026-07-23T14:54:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.13.0-alpha-2616ff0\n"
 "X-Domain: shop-as-client\n"
@@ -49,7 +49,7 @@ msgstr ""
 
 #. translators: %s: error message
 #: includes/class-shop-as-client-extend-store-endpoint.php:259
-#: shop-as-client.php:473
+#: shop-as-client.php:475
 #, php-format
 msgid "Shop as Client failed to create user: %s"
 msgstr ""
@@ -63,91 +63,97 @@ msgid "Settings"
 msgstr ""
 
 #: shop-as-client.php:112
-#: shop-as-client.php:129
-#: shop-as-client.php:652
+#: shop-as-client.php:131
+#: shop-as-client.php:654
 msgid "Shop as Client"
 msgstr ""
 
 #. translators: %1$s: link open, %2$s: link close
-#: shop-as-client.php:123
+#: shop-as-client.php:125
 #, php-format
 msgid "Available on the %1$sPRO Add-on%2$s"
 msgstr ""
 
-#: shop-as-client.php:138
+#. translators: hidden text appended to a link that opens in a new browser tab
+#: shop-as-client.php:127
+#: shop-as-client.php:619
+msgid " (opens in a new tab)"
+msgstr ""
+
+#: shop-as-client.php:140
 msgid "Shop as client field default"
 msgstr ""
 
-#: shop-as-client.php:142
-#: shop-as-client.php:156
-#: shop-as-client.php:171
-#: shop-as-client.php:185
-#: shop-as-client.php:205
-#: shop-as-client.php:219
-#: shop-as-client.php:351
-#: shop-as-client.php:368
-#: shop-as-client.php:591
+#: shop-as-client.php:144
+#: shop-as-client.php:158
+#: shop-as-client.php:173
+#: shop-as-client.php:187
+#: shop-as-client.php:207
+#: shop-as-client.php:221
+#: shop-as-client.php:353
+#: shop-as-client.php:370
+#: shop-as-client.php:593
 msgid "Yes"
 msgstr ""
 
-#: shop-as-client.php:143
-#: shop-as-client.php:157
-#: shop-as-client.php:172
-#: shop-as-client.php:186
-#: shop-as-client.php:206
-#: shop-as-client.php:220
-#: shop-as-client.php:352
+#: shop-as-client.php:145
+#: shop-as-client.php:159
+#: shop-as-client.php:174
+#: shop-as-client.php:188
+#: shop-as-client.php:208
+#: shop-as-client.php:222
+#: shop-as-client.php:354
 msgid "No"
 msgstr ""
 
-#: shop-as-client.php:152
+#: shop-as-client.php:154
 msgid "Create user field default"
 msgstr ""
 
-#: shop-as-client.php:166
+#: shop-as-client.php:168
 msgid "Search on orders"
 msgstr ""
 
-#: shop-as-client.php:167
+#: shop-as-client.php:169
 msgid "By default, the search is only performed on registered users by their registration and billing email, but if you enable this option it will also be done on orders (if not found as user), so you can get data from guest customers."
 msgstr ""
 
-#: shop-as-client.php:180
+#: shop-as-client.php:182
 msgid "Update customer"
 msgstr ""
 
-#: shop-as-client.php:181
+#: shop-as-client.php:183
 msgid "Update the customer details on his profile"
 msgstr ""
 
-#: shop-as-client.php:194
+#: shop-as-client.php:196
 msgid "Clear checkout fields"
 msgstr ""
 
-#: shop-as-client.php:196
+#: shop-as-client.php:198
 msgid "Default all checkout fields to blank for Administrators and Shop Managers"
 msgstr ""
 
-#: shop-as-client.php:200
+#: shop-as-client.php:202
 msgid "Only on the classic checkout"
 msgstr ""
 
-#: shop-as-client.php:214
+#: shop-as-client.php:216
 msgid "Handler on orders list"
 msgstr ""
 
-#: shop-as-client.php:215
+#: shop-as-client.php:217
 msgid "Add a column with the order handler and allow filtering by handler on the admin orders list"
 msgstr ""
 
 #. translators: %1$s: plugin name, %2$s: required version, %3$s: current version
-#: shop-as-client.php:314
+#: shop-as-client.php:316
 #, php-format
 msgid "%1$s requires at least version %2$s of the PRO add-on. You have version %3$s. Please update or disable the PRO add-on."
 msgstr ""
 
-#: shop-as-client.php:342
-#: shop-as-client.php:589
+#: shop-as-client.php:344
+#: shop-as-client.php:591
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
 #: includes/blocks/shop-as-client/attributes.js:20
@@ -155,41 +161,36 @@ msgstr ""
 msgid "Shop as client"
 msgstr ""
 
-#: shop-as-client.php:359
+#: shop-as-client.php:361
 #: build/ptwoo-shop-as-client-block-frontend.js:1
 #: build/ptwoo-shop-as-client-block.js:1
 #: includes/blocks/shop-as-client/block.js:142
 msgid "Create user (if not found by email)?"
 msgstr ""
 
-#: shop-as-client.php:369
+#: shop-as-client.php:371
 msgid "No (leave as guest)"
 msgstr ""
 
-#: shop-as-client.php:598
+#: shop-as-client.php:600
 msgid "Order handled by"
 msgstr ""
 
-#. translators: hidden text appended to a link that opens in a new browser tab
-#: shop-as-client.php:617
-msgid " (opens in a new tab)"
-msgstr ""
-
 #. translators: %d: user id
-#: shop-as-client.php:624
+#: shop-as-client.php:626
 #, php-format
 msgid "User %d"
 msgstr ""
 
-#: shop-as-client.php:638
+#: shop-as-client.php:640
 msgid "Checkout"
 msgstr ""
 
-#: shop-as-client.php:705
+#: shop-as-client.php:707
 msgid "Get the PRO add-on to fix this"
 msgstr ""
 
-#: shop-as-client.php:707
+#: shop-as-client.php:709
 msgid "<strong>Shop as client</strong><br/>Since WooCommerce 7.8.1 only the order owner/customer is able to see the \"Order received\" details."
 msgstr ""
 
