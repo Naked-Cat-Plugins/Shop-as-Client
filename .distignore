@@ -31,3 +31,4 @@ includes/blocks/*
 shop-as-client.code-workspace
 .wordpress-org/*
 .wordpress-org
+AUDIT.md
