@@ -199,9 +199,10 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= 8.0.3 - TBA =
+= TBA =
 * [FIX] AJAX handler for dismissing the "Simple Order Approval for WooCommerce" admin notice now verifies a nonce and requires the manage_woocommerce capability
 * [FIX] Block checkout error messages from the Store API are no longer double-escaped, so they no longer show literal HTML entities in the checkout error notice
+* [DEV] Tested up to ... and WooCommerce ...
 
 = 8.0.2 - 2026-06-29 =
 * [FIX] Make sure the Pro add-on can update after 8.0.1
