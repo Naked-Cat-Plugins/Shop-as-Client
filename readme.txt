@@ -2,7 +2,7 @@
 Contributors: nakedcatplugins, webdados 
 Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 5.8
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 8.0.2
 License: GPLv3
@@ -202,8 +202,8 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 == Changelog ==
 
 = TBA =
-* [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price change: optionally show the product’s Cost of Goods Sold (WooCommerce 9.5+) in the price-edit form, so staff can see the margin before granting a discount
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price change: optional guardrails - disallow free products, enforce a minimum markup above cost, or set a floor on how far below the original price staff can go
+* [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price change: optionally show the product’s Cost of Goods Sold (WooCommerce 9.5+) in the price-edit form, so staff can see the margin before granting a discount
 * [NEW] Accessibility: links that open in a new tab are now properly announced to screen readers
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Accessibility: “Search customer” is now fully screen-reader friendly on both classic and block checkout, announcing full customer details instead of internal codes
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Accessibility: the order handler control and the license settings links are now easier to navigate with a screen reader
