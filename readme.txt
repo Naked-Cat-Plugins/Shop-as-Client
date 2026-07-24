@@ -209,7 +209,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Accessibility: the order handler control and the license settings links are now easier to navigate with a screen reader
 * [FIX] Security: added a missing permission check on an internal admin notice
 * [FIX] Fixed garbled characters occasionally appearing in block checkout error messages
-* [DEV] Tested up to ... and WooCommerce ...
+* [DEV] Tested up to WordPress 7.1-beta3-62830 and WooCommerce 11.0.0-beta.2
 
 = 8.0.2 - 2026-06-29 =
 * [FIX] Make sure the Pro add-on can update after 8.0.1
