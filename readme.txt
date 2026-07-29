@@ -1,7 +1,7 @@
 === Shop as Client for WooCommerce - Manual, Phone & Email Orders ===
 Contributors: nakedcatplugins, webdados 
 Tags: ecommerce, customer, checkout, phone order, mail order
-Requires at least: 5.8
+Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 8.0.2
@@ -207,9 +207,17 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] Accessibility: links that open in a new tab are now properly announced to screen readers
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Accessibility: “Search customer” is now fully screen-reader friendly on both classic and block checkout, announcing full customer details instead of internal codes
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Accessibility: the order handler control and the license settings links are now easier to navigate with a screen reader
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Accessibility: closing the block cart’s price-edit form now returns keyboard focus to the “Edit price” button instead of dropping it
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Accessibility: the Invoice/PO gateway’s Purchase Order number field is now properly marked as required for screen readers
+* [FIX] [PRO add-on](https://wbds.pt/xeP): “Search customer” on the block checkout now requires a minimum number of characters before searching, matching the classic checkout
+* [FIX] [PRO add-on](https://wbds.pt/xeP): User Switching now correctly recognizes any custom staff role allowed to use Shop as Client, not just Administrators and Shop Managers
+* [FIX] [PRO add-on](https://wbds.pt/xeP): The Invoice/PO and Request Payment by Email gateways no longer load their scripts and settings text for shoppers who can’t use them on the block checkout
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Fixed a stray number showing up on the “switch back to manager” confirmation message
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Fixed special characters (like curly quotes and dashes) sometimes showing up as garbled text in customer search results
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Avoid a rare checkout fatal error caused by a plugin loading-order edge case
 * [FIX] Security: added a missing permission check on an internal admin notice
 * [FIX] Fixed garbled characters occasionally appearing in block checkout error messages
-* [DEV] Tested up to WordPress 7.1-beta3-62830 and WooCommerce 11.0.0-beta.2
+* [DEV] Tested up to WordPress 7.1-beta3-62830 and WooCommerce 11.0.0-rc.1
 
 = 8.0.2 - 2026-06-29 =
 * [FIX] Make sure the Pro add-on can update after 8.0.1
