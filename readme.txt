@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.1
+Stable tag: 8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,7 @@ Try a demo of the PRO add-on for free [here](https://nakedcatplugins.com/product
 
 Already know our other WooCommerce (premium) plugins?
 
+* [VAT Number and EU VIES Validation for WooCommerce](https://nakedcatplugins.com/product/vat-number-and-eu-vies-validation-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Collect and validate VAT identification numbers for the whole European Union, confirm them against VIES and remove VAT on qualifying intra-EU B2B orders
 * [Advanced Coupon Restrictions for WooCommerce](https://nakedcatplugins.com/product/advanced-coupon-restrictions-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Create coupons for any Product Taxonomy, User details, and Order destination.
 * [Simple Checkout Fields Manager for WooCommerce](https://wbds.pt/lGG) - Add custom fields and manage (remove, make required or optional) core fields on the new WooCommerce Block-based Checkout
 * [Simple WooCommerce Order Approval](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - The hassle-free solution for WooCommerce order approval before payment
@@ -200,6 +201,10 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
 
 == Changelog ==
+
+= 8.2 - 2026-08-28 =
+* [NEW] [PRO add-on](https://wbds.pt/xeP): Get the VAT number from the selected customer when [VAT Number and EU VIES Validation for WooCommerce](https://nakedcatplugins.com/product/vat-number-and-eu-vies-validation-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) is active, on both the classic and the block checkout
+* [DEV] Tested up to WordPress 7.2-alpha-63347 and WooCommerce 11.1.0-beta.2
 
 = 8.1 - 2026-07-29 =
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price change: optional guardrails - disallow free products, enforce a minimum markup above cost, or set a floor on how far below the original price staff can go

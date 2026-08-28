@@ -3,7 +3,7 @@
  * Plugin Name:          Shop as Client for WooCommerce - Manual, Phone & Email Orders
  * Plugin URI:           https://nakedcatplugins.com/product/shop-as-client-for-woocommerce-pro-add-on/
  * Description:          Create manual, phone, POS, or email orders in WooCommerce. Shop admins and staff can place customer orders directly from the frontend checkout.
- * Version:              8.1
+ * Version:              8.2
  * Author:               Naked Cat Plugins (by Webdados)
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
@@ -12,7 +12,7 @@
  * Tested up to:         7.1
  * Requires PHP:         7.4
  * WC requires at least: 9.0
- * WC tested up to:      11.0
+ * WC tested up to:      11.1
  * Requires Plugins:     woocommerce
  * License:              GPLv3
  **/
@@ -135,7 +135,7 @@ add_action(
 						'type'  => 'title',
 						'id'    => 'shop_as_client_options',
 					),
-					// Disabled fields here (shop as client default, create user field default, search on orders, update customer, clear checkout fields, Handler)
+					// Disabled fields here (shop as client default, create user field default, search on orders, update customer, clear checkout fields, Handler, cart price change)
 					array(
 						'title'             => __( 'Shop as client field default', 'shop-as-client' ),
 						'id'                => 'shop_as_client_pro_shop_as_client_default',
@@ -222,6 +222,24 @@ add_action(
 							'no'  => __( 'No', 'shop-as-client' ),
 						),
 						'default'           => 'yes',
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+					),
+					array(
+						'title'             => __( 'Allow changing cart price', 'shop-as-client' ),
+						'desc'              => (
+							__( 'Allow Administrators and Shop Managers to edit product prices in the cart while shopping as customer', 'shop-as-client' )
+							. ' (' . __( 'Experimental', 'shop-as-client' ) . ')'
+							. '<br/>' . $description
+						),
+						'id'                => 'shop_as_client_pro_cart_price_change',
+						'type'              => 'select',
+						'options'           => array(
+							'yes' => __( 'Yes', 'shop-as-client' ),
+							'no'  => __( 'No', 'shop-as-client' ),
+						),
+						'default'           => 'no',
 						'custom_attributes' => array(
 							'disabled' => 'disabled',
 						),
