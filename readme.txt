@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.2
+Stable tag: 8.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -201,6 +201,11 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
 
 == Changelog ==
+
+= 8.3 - 2026-09-22 =
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Picking a customer on the classic checkout ran the search twice and refreshed the order totals more times than needed, which could leave shipping methods and payment options missing on stores with a slow payment gateway
+* [FIX] [PRO add-on](https://wbds.pt/xeP): Cart price change: “Reset to Original” put the price back correctly but the block cart totals kept showing the old custom price until the page was reloaded
+* [DEV] Tested up to WordPress 7.2-alpha-63789 and WooCommerce 11.2.0-beta.1
 
 = 8.2 - 2026-08-28 =
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Get the VAT number from the selected customer when [VAT Number and EU VIES Validation for WooCommerce](https://nakedcatplugins.com/product/vat-number-and-eu-vies-validation-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) is active, on both the classic and the block checkout
