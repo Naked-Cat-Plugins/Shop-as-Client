@@ -601,16 +601,21 @@ add_action(
 			 */
 			function shop_as_client_order_metabox( $post_or_order ) {
 				$order = $post_or_order instanceof \WP_Post ? wc_get_order( $post_or_order->ID ) : $post_or_order;
-				if ( ! $order || ! shop_as_client_get_order_status( $order ) ) {
+				if ( ! $order ) {
 					return;
 				}
+				$shop_as_client = shop_as_client_get_order_status( $order );
 				?>
 				<p>
 					<strong><?php esc_html_e( 'Shop as client', 'shop-as-client' ); ?>:</strong>
 					<br>
-					<?php esc_html_e( 'Yes', 'shop-as-client' ); ?>
+					<?php $shop_as_client ? esc_html_e( 'Yes', 'shop-as-client' ) : esc_html_e( 'No', 'shop-as-client' ); ?>
 				</p>
 				<?php
+				// Nothing else to show for an order the customer placed themselves
+				if ( ! $shop_as_client ) {
+					return;
+				}
 				$user_id = $order->get_meta( '_billing_shop_as_client_handler_user_id' );
 				if ( $user_id ) {
 					?>

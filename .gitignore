@@ -57,3 +57,6 @@ shop-as-client.code-workspace
 readme.before20260329.txt
 _todo.txt
 AUDIT.md
+
+# PHPUnit
+.phpunit.cache/

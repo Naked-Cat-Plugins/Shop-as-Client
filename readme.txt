@@ -203,6 +203,14 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
+= TBA =
+* [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price editing can now be limited to Administrators and the staff members you allow on their user profile, instead of everyone who can use Shop as Client
+* [NEW] [PRO add-on](https://wbds.pt/xeP): Staff allowed to change cart prices can now also do it after switching to a customer account with User Switching
+* [TWEAK] The Shop as Client box on the order screen now says “No” for orders that were not placed as a client, instead of being empty
+* [FIX] [PRO add-on](https://wbds.pt/xeP): The Invoice or Purchase Order payment method is now removed from the checkout when the license has expired, as the payment methods settings already said
+* [FIX] [PRO add-on](https://wbds.pt/xeP): The block cart no longer fails to load for staff when cart price editing is on but the license is not activated
+* [DEV] Tested up to WordPress 7.2-beta3-65031 and WooCommerce 11.3.0-beta.1
+
 = 8.3 - 2026-09-22 =
 * [FIX] [PRO add-on](https://wbds.pt/xeP): Picking a customer on the classic checkout ran the search twice and refreshed the order totals more times than needed, which could leave shipping methods and payment options missing on stores with a slow payment gateway
 * [FIX] [PRO add-on](https://wbds.pt/xeP): Cart price change: “Reset to Original” put the price back correctly but the block cart totals kept showing the old custom price until the page was reloaded
