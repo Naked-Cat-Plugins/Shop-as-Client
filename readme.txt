@@ -76,7 +76,7 @@ The [PRO add-on](https://wbds.pt/xeP) expands staff ordering workflows with powe
 
 * Live customer search with autocomplete results while typing
 * “Request payment by email” payment gateway to finalize orders and send payment links to customers
-* “Invoice or Purchase Order” payment gateway for orders to be invoiced later or already paid via PO — optional PO number field, and a “Payment already received” checkbox that automatically marks the order as paid when ticked
+* “Invoice or Purchase Order” payment gateway for orders to be invoiced later or already paid via PO, with an optional PO number field, and a “Payment already received” checkbox that automatically marks the order as paid when ticked
 * Search registered customers by email address, name, company, billing and shipping addresses, or any other profile field
 * Optionally search on previous orders to find customers faster or previous guest orders
 * Allow staff to adjust product prices for special deals or negotiated orders (compatible with WooPayments multi-currency)
@@ -249,7 +249,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Changing product prices in the cart is now also supported on the WooCommerce block cart, in addition to the existing classic cart support
 * [NEW] [PRO add-on](https://wbds.pt/xeP): New “Invoice or Purchase Order” payment gateway - optional PO number field, configurable order status, and a “Payment already received” checkbox that automatically marks the order as paid when ticked; works on both classic and block checkout
 * [NEW] Shop as Client order information is now displayed in a dedicated metabox on the order edit screen, compatible with both posts and HPOS modes
-* [NEW] Block checkout rewritten as a stateless, request-driven flow — no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
+* [NEW] Block checkout rewritten as a stateless, request-driven flow: no more WooCommerce session / user meta transient state, fixing the session write race and stale-selection issues
 * [TWEAK] Redirect to plugin settings after activation
 * [TWEAK] Do not show the “Simple Order Approval for WooCommerce” plugin advertising notice so often
 * [TWEAK] Remove the “Fix PRO updates to 2.3” routine

@@ -343,7 +343,7 @@ add_action(
 								<?php
 							}
 						);
-						// Get out of here — can't run with an old PRO version.
+						// Get out of here, can't run with an old PRO version.
 						return;
 					}
 				}
