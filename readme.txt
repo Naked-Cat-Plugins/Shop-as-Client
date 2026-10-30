@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.3
+Stable tag: 8.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,13 +80,14 @@ The [PRO add-on](https://wbds.pt/xeP) expands staff ordering workflows with powe
 * Search registered customers by email address, name, company, billing and shipping addresses, or any other profile field
 * Optionally search on previous orders to find customers faster or previous guest orders
 * Allow staff to adjust product prices for special deals or negotiated orders (compatible with WooPayments multi-currency)
+* Choose which staff members can adjust prices, also after switching to a customer account with User Switching
 * Show the product’s Cost of Goods Sold (WooCommerce 9.5+) when adjusting its price, so staff can see the margin before granting a discount
 * Set guardrails on price changes: disallow free products, enforce a minimum markup above cost, or set a floor on the allowed discount
 
 **Advanced features for developers and power users**
 
 * [Developer filter](https://gist.github.com/webdados/de05d48a99063ac25f6462b1dedba2ee) to add custom fields to the automatically filled checkout details
-* [User Switching](https://wordpress.org/plugins/user-switching/) integration, to benefit from the fact that the customer is logged in, and still use our plugin functionalities, like the payment request gateway and seller tracking
+* [User Switching](https://wordpress.org/plugins/user-switching/) integration, to benefit from the fact that the customer is logged in, and still use our plugin functionalities, like the payment request gateway, cart price editing and seller tracking
 * Start the order with a blank checkout form
 * Set default values for the “Shop as client” and “Create user” fields
 * Automatically update the customer details on their profile after checking out
@@ -172,7 +173,7 @@ No. Yes. It’s complicated...
 
 The logged-in user is the Administrator or Shop Manager. It’s not possible to integrate with the vast amount of user or user role-based discount plugins when the logged-in user is not the customer himself, so any customer roled-based discounts will not be applied.
 
-However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager who switched to the customer account as the order handler upon checkout, thus allowing them to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway and seller tracking.
+However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager who switched to the customer account as the order handler upon checkout, thus allowing them to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway, cart price editing and seller tracking.
 
 = Is this plugin compatible with the new WooCommerce High-Performance Order Storage? =
 
@@ -203,7 +204,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= TBA =
+= 8.4 - 2026-10-30 =
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price editing can now be limited to Administrators and the staff members you allow on their user profile, instead of everyone who can use Shop as Client
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Staff allowed to change cart prices can now also do it after switching to a customer account with User Switching
 * [TWEAK] The Shop as Client box on the order screen now says “No” for orders that were not placed as a client, instead of being empty
