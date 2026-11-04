@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.4
+Stable tag: 8.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -204,6 +204,10 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
+= 8.5 - 2026-11-04 =
+* [TWEAK] [PRO add-on](https://wbds.pt/xeP): With an expired license, the PRO settings stay visible and keep working as saved, read only until the license is renewed
+* [DEV] Tested up to WordPress 7.2-beta3-65031 and WooCommerce 11.3.0-beta.1
+
 = 8.4 - 2026-10-30 =
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Cart price editing can now be limited to Administrators and the staff members you allow on their user profile, instead of everyone who can use Shop as Client
 * [NEW] [PRO add-on](https://wbds.pt/xeP): Staff allowed to change cart prices can now also do it after switching to a customer account with User Switching
@@ -259,16 +263,16 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 * [DEV] Requires WordPress 6.4 and WooCommerce 9.0
 * [DEV] Tested up to WordPress 7.1-alpha-62536 and WooCommerce 10.9.0-beta.2
 
-= 7.5 - 2025-03-29 =
+= 7.5 - 2026-03-29 =
 * [NEW] Renamed from “Shop as Client for WooCommerce” to “Shop as Client for WooCommerce - Manual, Phone & Email Orders”
 * [TWEAK] readme.txt file completely revised
 
-= 7.4 - 2025-03-25 =
+= 7.4 - 2026-03-25 =
 * [NEW] Free plugin ownership transferred from [Marco Almeida | Webdados](https://profiles.wordpress.org/webdados/) to [Naked Cat Plugins](https://profiles.wordpress.org/nakedcatplugins/) on WordPress.org - No worries, we’re the same people :-)
 * [TWEAK] Settings moved to a new section called “Shop as client” under “Accounts & Privacy”
 * [DEV] Tested up to 7.0-RC1-62112 and WooCommerce 10.6.1
 
-= 7.3 - 2025-02-13 =
+= 7.3 - 2026-02-13 =
 * [FIX] [PRO add-on](https://wbds.pt/xeP): Build release ZIP GitHub action to make sure WordPress detects a direct upload as the same plugin instead of creating a new folder
 * [DEV] [PRO add-on](https://wbds.pt/xeP): Updater v13.1
 * [DEV] Tested up to WordPress 7.0-alpha-61630 and WooCommerce 10.5.1
