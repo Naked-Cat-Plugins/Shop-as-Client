@@ -122,7 +122,7 @@ Unlike backend order creation, Shop as Client keeps your existing checkout logic
 * Taxes and fees
 * Integrations that only run on checkout
 
-Mostly everything works exactly as if the customer placed the order themselves.
+Almost everything works exactly as if the customer placed the order themselves.
 
 === 🚀 Upgrade to PRO ===
 
@@ -169,9 +169,9 @@ Add [this](https://gist.github.com/webdados/0f1a8e5ca2cd98276a9ae73918e9b842) to
 
 = I’m giving discounts user or user role-based. Will this work? =
 
-No. Yes. It’s complicated...
+Not on its own.
 
-The logged-in user is the Administrator or Shop Manager. It’s not possible to integrate with the vast amount of user or user role-based discount plugins when the logged-in user is not the customer himself, so any customer roled-based discounts will not be applied.
+The logged-in user is the Administrator or Shop Manager. It’s not possible to integrate with the vast number of user or user role-based discount plugins when the logged-in user is not the customer himself, so any customer role-based discounts will not be applied.
 
 However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager who switched to the customer account as the order handler upon checkout, thus allowing them to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway, cart price editing and seller tracking.
 
@@ -188,7 +188,7 @@ Known limitations:
 * Only core WooCommerce fields are saved to the customer user, and not custom or 3rd party fields, if the `shop_as_client_update_customer_data` filter is set to `true`;
 * No warning about the lack of information on the “Order Received” / “Thank You” page on WooCommerce 7.8.1 and above;
 * PRO add-on: The `shop_as_client_pro_customer_data` filter does not work;
-* Report to us if you find more limitations, using the [support forum](https://wordpress.org/support/plugin/shop-as-client/);
+* Report to us if you find more limitations, using the [support forum](https://wordpress.org/support/plugin/shop-as-client/).
 
 = Can I contribute with a translation? =
 
@@ -200,7 +200,7 @@ You can report any security bugs found in the source code of this plugin through
 
 = More FAQs =
 
-Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin)
+Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin).
 
 == Changelog ==
 
