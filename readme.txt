@@ -142,7 +142,7 @@ Already know our other WooCommerce (premium) plugins?
 * [VAT Number and EU VIES Validation for WooCommerce](https://nakedcatplugins.com/product/vat-number-and-eu-vies-validation-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Collect and validate VAT identification numbers for the whole European Union, confirm them against VIES and remove VAT on qualifying intra-EU B2B orders
 * [EU Guarantee Notice and GARAN Label for WordPress and WooCommerce](https://nakedcatplugins.com/product/eu-guarantee-notice-and-garan-label-for-wordpress-and-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Show the mandatory EU guarantee notice and the EU GARAN label with the official European Commission artwork, and let Proof of Notice check every day that the notice is still on your site
 * [Advanced Coupon Restrictions for WooCommerce](https://nakedcatplugins.com/product/advanced-coupon-restrictions-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Create coupons for any Product Taxonomy, User details, and Order destination.
-* [Simple Checkout Fields Manager for WooCommerce](https://wbds.pt/lGG) - Add custom fields and manage (remove, make required or optional) core fields on the new WooCommerce Block-based Checkout
+* [Simple Checkout Fields Manager for WooCommerce](https://wbds.pt/lGG) - Add custom fields and manage (remove, make required or optional) core fields on the WooCommerce Block-based Checkout
 * [Simple WooCommerce Order Approval](https://nakedcatplugins.com/product/simple-woocommerce-order-approval/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - The hassle-free solution for WooCommerce order approval before payment
 * [Taxonomy/Term and Role based Discounts for WooCommerce](https://nakedcatplugins.com/product/taxonomy-term-and-role-based-discounts-for-woocommerce-pro-add-on/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Easily create bulk discount rules for products based on any taxonomy terms (built-in or custom)
 * [DPD / SEUR / Geopost Pickup and Lockers network for WooCommerce](https://nakedcatplugins.com/product/dpd-seur-geopost-pickup-and-lockers-network-for-woocommerce/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin) - Deliver your WooCommerce orders on the DPD and SEUR Pickup network of Parcelshops and Lockers in 21 European countries
@@ -175,11 +175,11 @@ The logged-in user is the Administrator or Shop Manager. It’s not possible to 
 
 However, our PRO add-on integrates with the [User Switching](https://wordpress.org/plugins/user-switching/) plugin and sets the Administrator or Shop Manager who switched to the customer account as the order handler upon checkout, thus allowing them to benefit from the fact that the customer is logged in and still use our plugin functionalities, like the payment request gateway, cart price editing and seller tracking.
 
-= Is this plugin compatible with the new WooCommerce High-Performance Order Storage? =
+= Is this plugin compatible with WooCommerce High-Performance Order Storage? =
 
 Yes, from version 2.1 onwards.
 
-= Is this plugin compatible with the new WooCommerce block-based Cart and Checkout? =
+= Is this plugin compatible with the WooCommerce block-based Cart and Checkout? =
 
 Yes, on the Free version from version 3.5 onwards and on the [PRO add-on](https://wbds.pt/xeP) from version 3.6 onwards.
 
