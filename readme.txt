@@ -97,6 +97,7 @@ The [PRO add-on](https://wbds.pt/xeP) expands staff ordering workflows with powe
 	* [WooCommerce EU VAT Number](https://woocommerce.com/products/eu-vat-number/)
 	* [Invoicing with InvoiceXpress for WooCommerce](https://invoicewoo.com/)
 	* [NIF (Num. de Contribuinte Português) for WooCommerce](https://wordpress.org/plugins/nif-num-de-contribuinte-portugues-for-woocommerce/)
+	* [VAT Number and EU VIES Validation for WooCommerce](https://nakedcatplugins.com/product/vat-number-and-eu-vies-validation-for-woocommerce/)
 * Technical support
 * Continued development
 
