@@ -8,10 +8,10 @@
  * Author URI:           https://nakedcatplugins.com/
  * Text Domain:          shop-as-client
  * Domain Path:          /languages
- * Requires at least:    6.4
+ * Requires at least:    6.9
  * Tested up to:         7.1
  * Requires PHP:         7.4
- * WC requires at least: 9.0
+ * WC requires at least: 10.6
  * WC tested up to:      11.3
  * Requires Plugins:     woocommerce
  * License:              GPLv3
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'SHOPASCLIENT_REQUIRED_WC' ) ) {
-	define( 'SHOPASCLIENT_REQUIRED_WC', '9.0' );
+	define( 'SHOPASCLIENT_REQUIRED_WC', '10.6' );
 }
 define( 'SHOPASCLIENT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SHOPASCLIENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -277,34 +277,30 @@ add_action(
 				return false;
 			}
 
-			if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
+			/* Blocks */
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
 
-				/* Blocks */
-				add_action(
-					'woocommerce_blocks_loaded',
-					function () {
-						require_once __DIR__ . '/includes/class-shop-as-client-checkout-blocks.php';
+					add_action(
+						'woocommerce_blocks_checkout_block_registration',
+						function ( $integration_registry ) {
+							$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
+						}
+					);
+				}
+			);
 
-						add_action(
-							'woocommerce_blocks_checkout_block_registration',
-							function ( $integration_registry ) {
-								$integration_registry->register( new \ShopAsClient_Checkout_Blocks() );
-							}
-						);
-					}
-				);
+			/* Blocks - Extend Store endpoint */
+			add_action(
+				'woocommerce_blocks_loaded',
+				function () {
+					require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
 
-				/* Blocks - Extend Store endpoint */
-				add_action(
-					'woocommerce_blocks_loaded',
-					function () {
-						require_once __DIR__ . '/includes/class-shop-as-client-extend-store-endpoint.php';
-
-						( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
-					}
-				);
-
-			}
+					( new ShopAsClient_Extend_Store_Endpoint() )->initialize();
+				}
+			);
 
 			/**
 			 * Bail out if the PRO add-on is active and the version is too old.
@@ -797,6 +793,28 @@ add_action(
 						define( 'PTWOO_SIMPLE_ORDER_APPROVAL_NAG', true );
 						require_once 'simple_order_approval_nag/simple_order_approval_nag.php';
 					}
+				}
+			);
+		} else {
+			/**
+			 * WooCommerce missing or older than required: nothing above runs, so say why
+			 */
+			add_action(
+				'admin_notices',
+				function () {
+					if ( ! current_user_can( 'activate_plugins' ) ) {
+						return;
+					}
+					echo wp_kses_post(
+						sprintf(
+							'<div class="notice notice-error"><p>%s</p></div>',
+							sprintf(
+								/* translators: %s: WooCommerce version */
+								__( '<strong>Shop as Client for WooCommerce</strong> requires <strong>WooCommerce %s</strong> or above.', 'shop-as-client' ),
+								SHOPASCLIENT_REQUIRED_WC
+							)
+						)
+					);
 				}
 			);
 		}

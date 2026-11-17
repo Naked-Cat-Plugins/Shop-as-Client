@@ -1,7 +1,7 @@
 === Shop as Client for WooCommerce - Manual, Phone & Email Orders ===
 Contributors: nakedcatplugins, webdados 
 Tags: ecommerce, customer, checkout, phone order, mail order
-Requires at least: 6.4
+Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 8.5
@@ -204,6 +204,9 @@ You can report any security bugs found in the source code of this plugin through
 Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-for-woocommerce-pro-add-on-faq/?utm_source=wordpress.org&utm_medium=link&utm_campaign=shopasclient_woocommerce_plugin).
 
 == Changelog ==
+
+= TBA =
+* [DEV] Requires WordPress 6.9 and WooCommerce 10.6
 
 = 8.5 - 2026-11-04 =
 * [TWEAK] [PRO add-on](https://wbds.pt/xeP): With an expired license, the PRO settings stay visible and keep working as saved, read only until the license is renewed

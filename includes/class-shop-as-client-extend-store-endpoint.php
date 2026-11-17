@@ -91,17 +91,15 @@ class ShopAsClient_Extend_Store_Endpoint {
 
 		// Accept our `{ shopAsClient, createUser }` payload on the checkout
 		// endpoint's `extensions` field.
-		if ( function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
-			woocommerce_store_api_register_endpoint_data(
-				array(
-					'endpoint'        => 'checkout',
-					'namespace'       => $this->get_name(),
-					'schema_callback' => array( $this, 'checkout_schema' ),
-					'data_callback'   => '__return_empty_array',
-					'schema_type'     => ARRAY_A,
-				)
-			);
-		}
+		woocommerce_store_api_register_endpoint_data(
+			array(
+				'endpoint'        => 'checkout',
+				'namespace'       => $this->get_name(),
+				'schema_callback' => array( $this, 'checkout_schema' ),
+				'data_callback'   => '__return_empty_array',
+				'schema_type'     => ARRAY_A,
+			)
+		);
 
 		add_action( 'woocommerce_store_api_checkout_update_customer_from_request', array( $this, 'capture_checkout_state' ), 10, 2 );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_order' ), 100 );
