@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.5
+Stable tag: 8.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -205,8 +205,9 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= TBA =
+= 8.6 - 2026-11-17 =
 * [DEV] Requires WordPress 6.9 and WooCommerce 10.6
+* [DEV] Tested up to WordPress 7.2-RC1-65559 and WooCommerce 11.3.0
 
 = 8.5 - 2026-11-04 =
 * [TWEAK] [PRO add-on](https://wbds.pt/xeP): With an expired license, the PRO settings stay visible and keep working as saved, read only until the license is renewed
