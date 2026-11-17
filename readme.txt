@@ -187,7 +187,7 @@ Yes, on the Free version from version 3.5 onwards and on the [PRO add-on](https:
 Known limitations:
 
 * Only core WooCommerce fields are saved to the customer user, and not custom or 3rd party fields, if the `shop_as_client_update_customer_data` filter is set to `true`;
-* No warning about the lack of information on the “Order Received” / “Thank You” page on WooCommerce 7.8.1 and above;
+* No warning about the lack of information on the “Order Received” / “Thank You” page;
 * PRO add-on: The `shop_as_client_pro_customer_data` filter does not work;
 * Report to us if you find more limitations, using the [support forum](https://wordpress.org/support/plugin/shop-as-client/).
 
