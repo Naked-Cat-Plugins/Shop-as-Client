@@ -196,7 +196,7 @@ Sure. Go to [GlotPress](https://translate.wordpress.org/projects/wp-plugins/shop
 
 = Where do I report security vulnerabilities found in this plugin? =  
  
-You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/shop-as-client). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
+You can report any security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/9e5fbb55-aef8-4474-83bd-aa658eb54d7a). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
 
 = More FAQs =
 
