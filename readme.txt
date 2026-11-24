@@ -205,6 +205,10 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
+= TBA =
+* [NEW] Open the Shop as Client settings from the WordPress Command Palette (Ctrl+K, or Cmd+K on a Mac)
+* [FIX] On the classic checkout, when a customer and the staff member placing the order had the same billing email, the order was assigned to the staff member instead of the customer
+
 = 8.6 - 2026-11-17 =
 * [DEV] Requires WordPress 6.9 and WooCommerce 10.6
 * [DEV] Tested up to WordPress 7.2-RC1-65559 and WooCommerce 11.3.0

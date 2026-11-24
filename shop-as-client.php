@@ -104,6 +104,32 @@ add_action(
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'shop_as_client_add_settings_link' );
 
 			/**
+			 * Command Palette: the settings are a section inside WooCommerce's own, not a menu
+			 * item, so WordPress makes no command out of them by itself.
+			 *
+			 * Attached to core's own script, so no file of ours is loaded.
+			 */
+			function shop_as_client_command_palette() {
+				if ( ! current_user_can( 'manage_woocommerce' ) || ! wp_script_is( 'wp-commands', 'registered' ) ) {
+					return;
+				}
+				$command = array(
+					'name'        => 'shop-as-client/settings',
+					'label'       => __( 'Shop as Client: Settings', 'shop-as-client' ),
+					'searchLabel' => __( 'Shop as Client settings, manual orders, phone orders, orders placed by staff', 'shop-as-client' ),
+					'url'         => admin_url( 'admin.php?page=wc-settings&tab=account&section=shop_as_client' ),
+				);
+				wp_add_inline_script(
+					'wp-commands',
+					'if ( window.wp && wp.data && wp.commands && wp.commands.store ) { ( function ( c ) { ' .
+					'wp.data.dispatch( wp.commands.store ).registerCommand( { name: c.name, label: c.label, searchLabel: c.searchLabel, category: "view", ' .
+					'callback: function ( a ) { if ( a && a.close ) { a.close(); } window.location.href = c.url; } } ); ' .
+					'} )( ' . wp_json_encode( $command, JSON_HEX_TAG ) . ' ); }'
+				);
+			}
+			add_action( 'admin_enqueue_scripts', 'shop_as_client_command_palette' );
+
+			/**
 			 * Register the section under Accounts & Privacy
 			 */
 			add_filter(
@@ -426,6 +452,32 @@ add_action(
 			}
 
 			/**
+			 * Users with a WooCommerce billing email - Used by both the classic and blocks checkout
+			 *
+			 * The user meta value is not indexed, so the database reads the billing email of every
+			 * customer. Measured (issue #29 on the PRO add-on repository): about 20 ms with 20,000
+			 * customers and 0.3 to 0.8 seconds with 100,000, once per order and only when no account
+			 * has the email as its own. Simpler queries are not faster, and orders are not a safe
+			 * source, as an older order can belong to the staff member who placed it.
+			 *
+			 * @param string $user_email The billing email.
+			 * @return int[] User IDs, sorted by login.
+			 */
+			function shop_as_client_get_user_ids_by_billing_email( $user_email ) {
+				return array_map(
+					'absint',
+					get_users(
+						array(
+							'fields'       => 'ID',
+							'meta_key'     => 'billing_email', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+							'meta_value'   => $user_email, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+							'meta_compare' => '=',
+						)
+					)
+				);
+			}
+
+			/**
 			 * Set order user - Inspiration: https://gist.github.com/twoelevenjay/80294a635969a54e4693
 			 * Classic checkout only - Blocks alternative missing - https://github.com/woocommerce/woocommerce/issues/44530
 			 *
@@ -453,27 +505,11 @@ add_action(
 						} elseif (
 							( ! empty( $user_email ) )
 							&&
-							// TRADEOFF: wp_usermeta.meta_value is not indexed, so this is
-							// effectively a full scan of every 'billing_email' row on stores
-							// with a large customer table, and it runs on this plugin's core,
-							// expected-to-be-frequent path (phone/email order, billing email
-							// differs from the matched account's own profile email). Known,
-							// accepted tradeoff for now (see GitHub issue #29 on the PRO
-							// add-on repo, filed there per our disclosure policy) - do not
-							// "fix" the ignored linter warnings below by adding more of this
-							// meta_query pattern elsewhere without addressing the root cause
-							// (e.g. caching the lookup, or using wc_get_orders() instead).
-							( $users = get_users( // phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition.Found, Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
-								// Get user by WooCommerce billing email
-								array(
-									'meta_key'     => 'billing_email', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-									'meta_value'   => $user_email, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-									'meta_compare' => '=',
-								)
-							) )
+							( $user_ids = shop_as_client_get_user_ids_by_billing_email( $user_email ) ) // phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition.Found, Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
 						) {
-							// User found - We should check for more than one... (There's no real solution for this)
-							$user_id = $users[0]->ID;
+							// User found - If more than one has this billing email, a customer before the staff member placing the order
+							$other_ids = array_diff( $user_ids, array( get_current_user_id() ) );
+							$user_id   = $other_ids ? reset( $other_ids ) : reset( $user_ids );
 						} else {
 							// Create user or guest?
 							$billing_shop_as_client_create_user = isset( $_POST['billing_shop_as_client_create_user'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['billing_shop_as_client_create_user'] ) ) ) : '';

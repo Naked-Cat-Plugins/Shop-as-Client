@@ -310,33 +310,11 @@ class ShopAsClient_Extend_Store_Endpoint {
 			return $user->ID;
 		}
 
-		// TRADEOFF: wp_usermeta.meta_value is not indexed, so this is effectively a
-		// full scan of every 'billing_email' row on stores with a large customer
-		// table, and it runs on this plugin's core, expected-to-be-frequent path
-		// (phone/email order, billing email differs from the matched account's own
-		// profile email). Known, accepted tradeoff for now (see GitHub issue #29 on
-		// the PRO add-on repo, filed there per our disclosure policy) - do not "fix"
-		// the ignored linter warning below by adding more of this meta_query pattern
-		// elsewhere without addressing the root cause (e.g. caching the lookup, or
-		// using wc_get_orders() instead).
-		$query = new \WP_User_Query(
-			array(
-				'fields'     => 'ID',
-				'exclude'    => array( get_current_user_id() ),
-				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'     => 'billing_email',
-						'value'   => $user_email,
-						'compare' => '=',
-					),
-				),
-			)
-		);
-
-		$user_ids = $query->get_results();
+		// Never the staff member placing the order
+		$user_ids = array_diff( shop_as_client_get_user_ids_by_billing_email( $user_email ), array( get_current_user_id() ) );
 
 		if ( ! empty( $user_ids ) ) {
-			return absint( reset( $user_ids ) );
+			return reset( $user_ids );
 		}
 
 		if ( $create_user ) {
