@@ -4,7 +4,7 @@ Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.6
+Stable tag: 8.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -205,9 +205,13 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= TBA =
+= 8.7 - 2026-11-24 =
 * [NEW] Open the Shop as Client settings from the WordPress Command Palette (Ctrl+K, or Cmd+K on a Mac)
 * [FIX] On the classic checkout, when a customer and the staff member placing the order had the same billing email, the order was assigned to the staff member instead of the customer
+* [FIX] [PRO add-on](https://wbds.pt/xeP): On the classic checkout, choosing a customer without a shipping address could stop shipping methods and totals from updating, with payment plugins such as Wallee active
+* [FIX] [PRO add-on](https://wbds.pt/xeP): On the classic cart, an edited price no longer shows “Original sale price” next to the regular price when the discount comes from another plugin, such as Taxonomy Discounts
+* [FIX] [PRO add-on](https://wbds.pt/xeP): On the block cart, the original price next to an edited price is no longer the price of a sale that has not started yet
+* [DEV] Tested up to WordPress 7.2-RC1-65559 and WooCommerce 11.3.0
 
 = 8.6 - 2026-11-17 =
 * [DEV] Requires WordPress 6.9 and WooCommerce 10.6
