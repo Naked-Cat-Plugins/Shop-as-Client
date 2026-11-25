@@ -205,6 +205,9 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
+= TBA =
+* [FIX] The settings page opens by itself only when you activate the plugin alone in the WordPress admin. Activating it with WP-CLI no longer cancels the next WP-CLI plugin command
+
 = 8.7 - 2026-11-24 =
 * [NEW] Open the Shop as Client settings from the WordPress Command Palette (Ctrl+K, or Cmd+K on a Mac)
 * [FIX] On the classic checkout, when a customer and the staff member placing the order had the same billing email, the order was assigned to the staff member instead of the customer

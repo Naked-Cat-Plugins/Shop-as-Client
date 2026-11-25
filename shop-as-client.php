@@ -869,34 +869,38 @@ add_action(
 
 /**
  * On activation, set a transient so we can redirect to the settings page.
+ * Only when this plugin alone is activated in wp-admin: never with WP-CLI, the REST API or a bulk activation.
  */
-register_activation_hook(
-	__FILE__,
-	function () {
-		set_transient( 'shop_as_client_activation_redirect_' . get_current_user_id(), true, 30 );
+function shop_as_client_activation() {
+	if (
+		( defined( 'WP_CLI' ) && WP_CLI )
+		|| ! is_admin()
+		|| isset( $_REQUEST['checked'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	) {
+		return;
 	}
-);
+	set_transient( 'shop_as_client_activation_redirect_' . get_current_user_id(), true, 30 );
+}
+register_activation_hook( __FILE__, 'shop_as_client_activation' );
 
 /**
  * Redirect to the settings page after single (non-bulk) activation.
  */
-add_action(
-	'admin_init',
-	function () {
-		// Do not redirect during AJAX requests.
-		if ( wp_doing_ajax() ) {
-			return;
-		}
-		$transient_key = 'shop_as_client_activation_redirect_' . get_current_user_id();
-		if ( get_transient( $transient_key ) ) {
-			delete_transient( $transient_key );
-			// Do not redirect on bulk activation.
-			if ( ! isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				wp_safe_redirect( admin_url( 'admin.php?page=wc-settings&tab=account&section=shop_as_client' ) );
-				exit;
-			}
+function shop_as_client_activation_redirect() {
+	// WP-CLI also fires admin_init, for its plugin commands, and the redirect would end the command. Do not redirect during AJAX requests either.
+	if ( wp_doing_ajax() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+		return;
+	}
+	$transient_key = 'shop_as_client_activation_redirect_' . get_current_user_id();
+	if ( get_transient( $transient_key ) ) {
+		delete_transient( $transient_key );
+		// Do not redirect on bulk activation.
+		if ( ! isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_safe_redirect( admin_url( 'admin.php?page=wc-settings&tab=account&section=shop_as_client' ) );
+			exit;
 		}
 	}
-);
+}
+add_action( 'admin_init', 'shop_as_client_activation_redirect' );
 
 /* If you're reading this you must know what you're doing ;-) Greetings from sunny Portugal! */
