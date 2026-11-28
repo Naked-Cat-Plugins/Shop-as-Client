@@ -62,13 +62,27 @@ add_action(
 			add_action( 'init', 'shop_as_client_init' ); // Used to be plugins_loaded, but init makes more sense
 
 			/**
+			 * Whether the current page is a checkout, classic or block.
+			 * WooCommerce's is_checkout() misses a page with the checkout block that is not the shop's checkout page.
+			 *
+			 * @return bool
+			 */
+			function shop_as_client_is_checkout() {
+				if ( ! function_exists( 'is_checkout' ) ) {
+					return false;
+				}
+				if ( is_checkout() ) {
+					return true;
+				}
+				return is_singular() && has_block( 'woocommerce/checkout', get_queried_object_id() );
+			}
+
+			/**
 			 * Enqueue scripts - Classic checkout only - Blocks checkout in includes/class-shop-as-client-checkout-blocks.php
 			 */
 			function shop_as_client_enqueue_classic_scripts() {
 				if (
-					function_exists( 'is_checkout' )
-					&&
-					is_checkout()
+					shop_as_client_is_checkout()
 					&&
 					( ! has_block( 'woocommerce/checkout' ) ) // Not on the Blocks checkout
 				) {
@@ -653,7 +667,47 @@ add_action(
 				}
 				WC()->customer->set_props( $props );
 				WC()->customer->save();
+				if ( WC()->session ) {
+					WC()->session->set( 'shop_as_client_client_details', null );
+				}
 			}
+
+			/**
+			 * Note in the staff member's session that it now holds a client's details.
+			 * Set on every checkout update made while shopping as a client, cleared by shop_as_client_restore_session_customer().
+			 */
+			function shop_as_client_mark_session_customer() {
+				if ( is_user_logged_in() && function_exists( 'WC' ) && WC()->session && shop_as_client_can_checkout() ) {
+					WC()->session->set( 'shop_as_client_client_details', 'yes' );
+				}
+			}
+
+			/**
+			 * Classic checkout: an order review update made while shopping as a client puts the client's details in the session.
+			 *
+			 * @param string $post_data The checkout form data, URL-encoded.
+			 */
+			function shop_as_client_woocommerce_checkout_update_order_review( $post_data ) {
+				$data = array();
+				wp_parse_str( (string) $post_data, $data );
+				if ( isset( $data['billing_shop_as_client'] ) && 'yes' === $data['billing_shop_as_client'] ) {
+					shop_as_client_mark_session_customer();
+				}
+			}
+			add_action( 'woocommerce_checkout_update_order_review', 'shop_as_client_woocommerce_checkout_update_order_review' );
+
+			/**
+			 * A checkout left without placing the order: the next time the checkout is opened, the staff member starts again from their own details.
+			 */
+			function shop_as_client_restore_session_customer_on_checkout() {
+				if ( ! function_exists( 'WC' ) || ! WC()->session || is_wc_endpoint_url() || ! shop_as_client_is_checkout() ) {
+					return;
+				}
+				if ( 'yes' === WC()->session->get( 'shop_as_client_client_details' ) ) {
+					shop_as_client_restore_session_customer();
+				}
+			}
+			add_action( 'template_redirect', 'shop_as_client_restore_session_customer_on_checkout' );
 
 			/**
 			 * Information on the order edit screen

@@ -89,6 +89,9 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 */
 	public function initialize() {
 
+		// Customer details sent while shopping as a client end up in the staff member's session.
+		add_action( 'woocommerce_store_api_cart_update_customer_from_request', array( $this, 'mark_session_customer' ) );
+
 		// Accept our `{ shopAsClient, createUser }` payload on the checkout
 		// endpoint's `extensions` field.
 		woocommerce_store_api_register_endpoint_data(
@@ -159,6 +162,18 @@ class ShopAsClient_Extend_Store_Endpoint {
 	 */
 	public static function is_sac_request() {
 		return ! empty( $_SERVER['HTTP_X_SAC_ACTIVE'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- boolean presence check only.
+	}
+
+	/**
+	 * Note in the session that it holds a client's details, when the block checkout
+	 * updates the customer while shopping as a client.
+	 *
+	 * @return void
+	 */
+	public function mark_session_customer() {
+		if ( static::is_sac_request() && function_exists( 'shop_as_client_mark_session_customer' ) ) {
+			shop_as_client_mark_session_customer();
+		}
 	}
 
 	/**

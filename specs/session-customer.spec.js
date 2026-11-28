@@ -105,3 +105,38 @@ test( 'a classic Shop as Client order leaves the staff member their own details 
 	await expect( email ).toBeVisible( { timeout: 20_000 } );
 	await expect( email ).not.toHaveValue( clientEmail );
 } );
+
+test( 'a block Shop as Client checkout left without ordering does not reopen with the client\'s details', async ( { page } ) => {
+	const clientEmail = `${ client.login }@example.com`;
+	const cartReady = () => window.wp?.data?.select( 'wc/store/cart' )?.hasFinishedResolution( 'getCartData' );
+
+	nc.emptyCart( adminId );
+	await nc.login( page );
+	await nc.addToCart( page, productId );
+	await page.goto( checkoutBlocks );
+	await page.waitForFunction( cartReady );
+	await page.waitForTimeout( 1000 );
+
+	await page.getByLabel( 'Shop as client', { exact: true } ).check();
+	await page.locator( '#email' ).fill( clientEmail );
+	await page.locator( '#email' ).blur();
+	const city = page.locator( '#shipping-city' );
+	if ( await city.count() ) {
+		await city.fill( 'Faro' );
+		await city.blur();
+	}
+	// The client's details reach the session.
+	await expect.poll( () => sessionEmail( adminId ), { timeout: 15_000 } ).toBe( clientEmail );
+
+	// Leave without ordering and come back.
+	await page.goto( nc.env.url + '/' );
+	await page.goto( checkoutBlocks );
+	await page.waitForFunction( cartReady );
+	await page.waitForTimeout( 1000 );
+
+	expect( sessionEmail( adminId ) ).not.toBe( clientEmail );
+	await expect( page.locator( '#email' ) ).not.toHaveValue( clientEmail );
+	if ( await city.count() ) {
+		await expect( city ).not.toHaveValue( 'Faro' );
+	}
+} );
