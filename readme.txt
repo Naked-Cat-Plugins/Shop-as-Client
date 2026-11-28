@@ -206,6 +206,7 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 == Changelog ==
 
 = TBA =
+* [FIX] The checkout page editor no longer reports the Shop as Client step as invalid on block checkouts created before version 8.0
 * [FIX] The settings page opens by itself only when you activate the plugin alone in the WordPress admin. Activating it with WP-CLI no longer cancels the next WP-CLI plugin command
 
 = 8.7 - 2026-11-24 =

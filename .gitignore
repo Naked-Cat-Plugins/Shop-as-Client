@@ -61,3 +61,8 @@ AUDIT.md
 # PHPUnit
 .phpunit.cache/
 .claude/settings.local.json
+
+# Playwright
+/test-results/
+/playwright-report/
+specs/.auth/

@@ -29,6 +29,15 @@ tests
 .phpunit.cache/*
 .phpunit.cache
 
+# Playwright tests (run with the shared nakedcat-plugin-tests library)
+playwright.config.js
+specs/*
+specs
+test-results/*
+test-results
+playwright-report/*
+playwright-report
+
 # Local ZIP creation tool
 createzip.command
 
