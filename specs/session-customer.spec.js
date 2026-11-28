@@ -118,15 +118,17 @@ test( 'a block Shop as Client checkout left without ordering does not reopen wit
 	await page.waitForTimeout( 1000 );
 
 	await page.getByLabel( 'Shop as client', { exact: true } ).check();
-	await page.locator( '#email' ).fill( clientEmail );
-	await page.locator( '#email' ).blur();
 	const city = page.locator( '#shipping-city' );
-	if ( await city.count() ) {
-		await city.fill( 'Faro' );
-		await city.blur();
-	}
-	// The client's details reach the session.
-	await expect.poll( () => sessionEmail( adminId ), { timeout: 15_000 } ).toBe( clientEmail );
+	// Typing can be lost while the block checkout is still starting up, so retry until the client's details reach the session.
+	await expect( async () => {
+		await page.locator( '#email' ).fill( clientEmail );
+		await page.locator( '#email' ).blur();
+		if ( await city.count() ) {
+			await city.fill( 'Faro' );
+			await city.blur();
+		}
+		await expect.poll( () => sessionEmail( adminId ), { timeout: 5_000 } ).toBe( clientEmail );
+	} ).toPass( { timeout: 30_000 } );
 
 	// Leave without ordering and come back.
 	await page.goto( nc.env.url + '/' );

@@ -2,9 +2,9 @@
 Contributors: nakedcatplugins, webdados 
 Tags: ecommerce, customer, checkout, phone order, mail order
 Requires at least: 6.9
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 8.7
+Stable tag: 8.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -205,10 +205,11 @@ Check out the [PRO add-on FAQs](https://nakedcatplugins.com/faqs/shop-as-client-
 
 == Changelog ==
 
-= TBA =
+= 8.8 - 2026-11-28 =
 * [FIX] After placing an order for a customer, or leaving the checkout without placing it, the staff member's next checkout no longer opens with that customer's email and addresses
 * [FIX] The checkout page editor no longer reports the Shop as Client step as invalid on block checkouts created before version 8.0
 * [FIX] The settings page opens by itself only when you activate the plugin alone in the WordPress admin. Activating it with WP-CLI no longer cancels the next WP-CLI plugin command
+* [DEV] Tested up to WordPress 7.2-RC3-65782 and WooCommerce 11.3.1
 
 = 8.7 - 2026-11-24 =
 * [NEW] Open the Shop as Client settings from the WordPress Command Palette (Ctrl+K, or Cmd+K on a Mac)
