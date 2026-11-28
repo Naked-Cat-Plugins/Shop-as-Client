@@ -617,9 +617,43 @@ add_action(
 					$order->update_meta_data( '_billing_shop_as_client_handler_user_id', get_current_user_id() );
 					$order->update_meta_data( '_billing_shop_as_client_checkout', 'classic' );
 					$order->save();
+					shop_as_client_restore_session_customer();
 				}
 			}
 			add_action( 'woocommerce_checkout_update_order_meta', 'shop_as_client_woocommerce_checkout_update_order_meta', 10, 2 );
+
+			/**
+			 * Put the staff member's own saved details back into their session after a Shop as Client order.
+			 *
+			 * WooCommerce copies the posted (client) address into the logged-in user's session customer, and
+			 * keeps using it while the user's profile is unchanged, which it is, because Shop as Client stops
+			 * the staff member's own details from being updated. Without this, the next checkout opens with
+			 * the previous client's email and addresses.
+			 * The existing WC()->customer object is changed, not replaced: WooCommerce saves that same object
+			 * again on shutdown.
+			 */
+			function shop_as_client_restore_session_customer() {
+				if ( ! is_user_logged_in() || ! function_exists( 'WC' ) || ! WC()->customer instanceof WC_Customer ) {
+					return;
+				}
+				$keys = class_exists( 'ShopAsClient_Extend_Store_Endpoint' ) ? ShopAsClient_Extend_Store_Endpoint::$default_checkout_keys : array();
+				if ( empty( $keys ) ) {
+					return;
+				}
+				try {
+					$own = new WC_Customer( get_current_user_id() ); // From the user's saved details, not the session.
+				} catch ( Exception $e ) {
+					return;
+				}
+				$props = array();
+				foreach ( $keys as $key ) {
+					if ( is_callable( array( $own, "get_$key" ) ) ) {
+						$props[ $key ] = $own->{"get_$key"}( 'edit' );
+					}
+				}
+				WC()->customer->set_props( $props );
+				WC()->customer->save();
+			}
 
 			/**
 			 * Information on the order edit screen

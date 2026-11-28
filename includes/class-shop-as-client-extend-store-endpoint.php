@@ -281,6 +281,11 @@ class ShopAsClient_Extend_Store_Endpoint {
 			$customer->save();
 		}
 
+		// The staff member's session must not keep the client's details for their next checkout.
+		if ( function_exists( 'shop_as_client_restore_session_customer' ) ) {
+			shop_as_client_restore_session_customer();
+		}
+
 		do_action( 'shop_as_client_checkout_order_processed', $order, $user_id );
 	}
 
